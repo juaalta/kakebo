@@ -9,6 +9,18 @@ const routes: Routes = [
   {
     path: "about",
     loadChildren: "@routes/about/about.module#AboutModule"
+  },
+  {
+    path: "savings",
+    loadChildren: "@routes/kakebo/kakebo.module#KakeboModule"
+  },
+  {
+    path: "not-found",
+    loadChildren: "@routes/not-found/not-found.module#NotFoundModule"
+  },
+  {
+    path: "**",
+    redirectTo: "not-found"
   }
 ];
 

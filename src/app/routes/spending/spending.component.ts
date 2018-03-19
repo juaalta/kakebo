@@ -1,15 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "kab-about",
+  selector: "kab-spending",
   template: `
-    <h1>
-      about works!
-    </h1>
+  <h2>
+    Track your expenses
+  </h2>
   `,
   styles: []
 })
-export class AboutComponent implements OnInit {
+export class SpendingComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}

@@ -6,12 +6,7 @@ import { Component } from "@angular/core";
   <section class="container">
     <kab-header class="row"></kab-header>
     <hr>
-    <section class="row">
-      <kab-nav class="column column-20"></kab-nav>
-      <section class="column float-left">
-        <router-outlet ></router-outlet>
-      </section>
-    </section>
+    <router-outlet ></router-outlet>
     <hr>
     <kab-footer class="row"></kab-footer>
   </section>

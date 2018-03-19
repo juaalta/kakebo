@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "kab-home",
   template: `
-  <h1>Kakebo</h1>  
+    <h1>Kakebo</h1>  
   `,
   styles: []
 })

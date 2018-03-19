@@ -1,15 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "kab-about",
+  selector: "kab-review",
   template: `
-    <h1>
-      about works!
-    </h1>
+  <h2>
+    Review your balance
+  </h2>
   `,
   styles: []
 })
-export class AboutComponent implements OnInit {
+export class ReviewComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}

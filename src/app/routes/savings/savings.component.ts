@@ -1,0 +1,19 @@
+import { Component, OnInit } from "@angular/core";
+
+@Component({
+  selector: "kab-savings",
+  template: `
+  <section class="row">
+    <kab-nav class="column column-20"></kab-nav>
+    <section class="column float-left">
+      <router-outlet></router-outlet>
+    </section>    
+  </section>
+  `,
+  styles: []
+})
+export class SavingsComponent implements OnInit {
+  constructor() {}
+
+  ngOnInit() {}
+}

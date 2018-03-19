@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
   selector: "kab-header",
   template: `
     <a class="button button-clear" routerLink="">Kakebo</a>
+    <a class="button button-clear" routerLink="savings">Savings</a>
     <a class="button button-clear" routerLink="about">About</a>
   `,
   styles: []
