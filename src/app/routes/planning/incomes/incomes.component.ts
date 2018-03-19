@@ -12,14 +12,14 @@ import { Component, OnInit } from "@angular/core";
       <tr>
         <th>Income</th>
         <th>Amount</th>
-        <th>X</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Description</td>
-        <td>1987</td>
-        <td>X</td>
+      <tr *ngFor="let projection of projections">
+        <td>{{ projection.description }}</td>
+        <td>{{ projection.amount }}</td>
+        <td><button (click)="delete(projection)">X</button>  </td>
       </tr>
     </tbody>
   </table>
@@ -27,7 +27,11 @@ import { Component, OnInit } from "@angular/core";
   styles: []
 })
 export class IncomesComponent implements OnInit {
+  public projections = [];
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.projections.push({ description: "Salary", amount: 1987 });
+  }
+  public delete(projection) {}
 }

@@ -8,16 +8,18 @@ import { Component, OnInit } from "@angular/core";
   <table>
     <thead>
       <tr>
+        <th>Category</th>
         <th>Expense</th>
         <th>Amount</th>
         <th>X</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Description</td>
-        <td>495</td>
-        <td>X</td>
+    <tr *ngFor="let expense of expenses">
+    <td>{{ expense.category }}</td>
+    <td>{{ expense.description }}</td>
+    <td>{{ expense.amount }}</td>
+    <td><button (click)="delete(expense)">X</button>  </td>
       </tr>
     </tbody>
   </table>
@@ -25,7 +27,15 @@ import { Component, OnInit } from "@angular/core";
   styles: []
 })
 export class ExpensesListComponent implements OnInit {
+  public expenses = [];
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.expenses.push({
+      category: "General",
+      description: "Clothes",
+      amount: 495
+    });
+  }
+  public delete(expense) {}
 }
