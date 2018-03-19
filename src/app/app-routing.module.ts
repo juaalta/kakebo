@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: "savings",
-    loadChildren: "@routes/kakebo/kakebo.module#KakeboModule"
+    loadChildren: "@routes/savings/savings.module#SavingsModule"
   },
   {
     path: "not-found",
