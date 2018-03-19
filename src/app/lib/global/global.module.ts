@@ -10,4 +10,4 @@ import { CommonModule } from '@angular/common';
 /**
  * Core module with providers for the Root Module
  */
-export class ToolsModule { }
+export class GlobalModule { }
