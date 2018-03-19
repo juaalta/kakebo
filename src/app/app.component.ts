@@ -1,19 +1,23 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  selector: 'kab-root',
+  selector: "kab-root",
   template: `
-    <header>
-      <h1>Kakebo</h1>
-      <blockquote>
-        <p><em>The japanese art of saving money</em></p>
-      </blockquote>
-    </header>  
-    <router-outlet></router-outlet>
-    
+  <section class="container">
+    <kab-header class="row"></kab-header>
+    <hr>
+    <section class="row">
+      <kab-nav class="column column-20"></kab-nav>
+      <section class="column float-left">
+        <router-outlet ></router-outlet>
+      </section>
+    </section>
+    <hr>
+    <kab-footer class="row"></kab-footer>
+  </section>
   `,
   styles: []
 })
 export class AppComponent {
-  title = 'kab';
+  title = "kab";
 }
