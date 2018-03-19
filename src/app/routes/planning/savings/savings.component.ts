@@ -1,15 +1,16 @@
 import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "kab-savings",
   template: `
   <h3>I want to save</h3>
-  <form>
+  <form [formGroup]="form" (submit)="submit(form.value)"> 
     <fieldset>
       <label for="amount">Left to expend</label>
-      <input type="number" name="left" readonly>
+      <input type="number" formControlName="toExpend" readonly>
       <label for="amount">Amount to save</label>
-      <input type="number" name="amount">
+      <input type="number" formControlName="toSave">
       <input class="button-primary" type="submit" value="Save">
     </fieldset>
   </form>
@@ -17,7 +18,17 @@ import { Component, OnInit } from "@angular/core";
   styles: []
 })
 export class SavingsComponent implements OnInit {
-  constructor() {}
+  public form: FormGroup;
+  constructor(private formbuilder: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.formbuilder.group({
+      toExpend: 519,
+      toSave: 0
+    });
+  }
+
+  public submit(newProyection) {
+    console.log(newProyection);
+  }
 }

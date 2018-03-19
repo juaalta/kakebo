@@ -1,21 +1,23 @@
 import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "kab-prevision",
   template: `
   <h3>Prevision</h3>
-  <form>
+  <form [formGroup]="form" (submit)="submit(form.value)">
     <fieldset>
-      <select id="ageRangeField">
-        <option value="1">Income</option>
-        <option value="-1">Regular Outgoings</option>
+      <label for="kindOfPrevision">Kind of prevision</label>
+      <select formControlName="kindOfPrevision" name="kindOfPrevision">
+        <option value="1">Projected Income</option>
+        <option value="-1">Regular Outgoing</option>
       </select>
       <label for="date">Date</label>
-      <input type="date" name="date">
+      <input type="date" formControlName="date">
       <label for="description">Description</label>
-      <input type="text" name="description">
+      <input type="text" formControlName="description">
       <label for="amount">Amount</label>
-      <input type="number" name="amount">
+      <input type="number" formControlName="amount">
       <input class="button-primary" type="submit" value="Save">
     </fieldset>
   </form>
@@ -23,7 +25,19 @@ import { Component, OnInit } from "@angular/core";
   styles: []
 })
 export class PrevisionComponent implements OnInit {
-  constructor() {}
+  public form: FormGroup;
+  constructor(private formbuilder: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.formbuilder.group({
+      kindOfPrevision: -1,
+      date: new Date(),
+      description: "",
+      amount: 0
+    });
+  }
+
+  public submit(newProyection) {
+    console.log(newProyection);
+  }
 }

@@ -4,11 +4,12 @@ import { HeaderComponent } from "./layout/header/header.component";
 import { FooterComponent } from "./layout/footer/footer.component";
 import { NavComponent } from "./layout/nav/nav.component";
 import { RouterModule } from "@angular/router";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   declarations: [HeaderComponent, FooterComponent, NavComponent],
-  exports: [HeaderComponent, FooterComponent, NavComponent]
+  exports: [ReactiveFormsModule, HeaderComponent, FooterComponent, NavComponent]
 })
 /**
  * Shared module with components for every view

@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "kab-new-expense",
   template: `
   <h3>New Expense</h3>
-  <form>
+  <form [formGroup]="form" (submit)="submit(form.value)">
     <fieldset>
-      <select id="ageRangeField">
+      <label for="expenseCategory">Category</label>
+      <select id="expenseCategory">
         <option value="G">General</option>
         <option value="L">Leisure</option>
         <option value="C">Culture</option>
@@ -25,7 +27,19 @@ import { Component, OnInit } from "@angular/core";
   styles: []
 })
 export class NewExpenseComponent implements OnInit {
-  constructor() {}
+  public form: FormGroup;
+  constructor(private formbuilder: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.formbuilder.group({
+      expenseCategory: "G",
+      date: new Date(),
+      description: "",
+      amount: 0
+    });
+  }
+
+  public submit(newProyection) {
+    console.log(newProyection);
+  }
 }
