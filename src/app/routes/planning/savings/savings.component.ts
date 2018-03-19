@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "kab-savings",
@@ -11,7 +11,7 @@ import { FormGroup, FormBuilder } from "@angular/forms";
       <input type="number" formControlName="toExpend" readonly>
       <label for="amount">Amount to save</label>
       <input type="number" formControlName="toSave">
-      <input class="button-primary" type="submit" value="Save">
+      <input class="button-primary" type="submit" value="Save" [disabled]="form.invalid">
     </fieldset>
   </form>
   `,
@@ -24,7 +24,7 @@ export class SavingsComponent implements OnInit {
   ngOnInit() {
     this.form = this.formbuilder.group({
       toExpend: 519,
-      toSave: 0
+      toSave: [0, Validators.required]
     });
   }
 

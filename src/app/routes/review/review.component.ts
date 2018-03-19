@@ -7,21 +7,21 @@ import { Component, OnInit } from "@angular/core";
     Review your balance
   </h2>
   <main>
-  <dd>
-    <dt>Total Income</dt>
-    <dd><strong>{{balance.incoming}}</strong></dd>
-  <dl>
-    <dt>Regular Outgoing</dt>
-    <dd><strong>{{balance.outgoing}}</strong></dd>
-  </dl>
-  <dl>
-    <dt>Expenses</dt>
-    <dd><strong>{{balance.expenses}}</strong></dd>
-  </dl>
-  <dl>
-    <dt>Saving</dt>
-    <dd><strong>{{balance.savings}}</strong></dd>
-  </dl>
+    <dd>
+      <dt>Total Income</dt>
+      <dd><strong>{{balance.incoming}}</strong></dd>
+    <dl>
+      <dt>Regular Outgoing</dt>
+      <dd><strong>{{balance.outgoing}}</strong></dd>
+    </dl>
+    <dl>
+      <dt>Expenses</dt>
+      <dd><strong>{{balance.expenses}}</strong></dd>
+    </dl>
+    <dl>
+      <dt>Saving</dt>
+      <dd><strong>{{balance.savings}}</strong></dd>
+    </dl>
   </main>
   `,
   styles: []

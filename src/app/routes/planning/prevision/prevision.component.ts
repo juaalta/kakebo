@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "kab-prevision",
@@ -18,7 +18,7 @@ import { FormGroup, FormBuilder } from "@angular/forms";
       <input type="text" formControlName="description">
       <label for="amount">Amount</label>
       <input type="number" formControlName="amount">
-      <input class="button-primary" type="submit" value="Save">
+      <input class="button-primary" type="submit" value="Save" [disabled]="form.invalid">
     </fieldset>
   </form>
   `,
@@ -33,7 +33,7 @@ export class PrevisionComponent implements OnInit {
       kindOfPrevision: -1,
       date: new Date(),
       description: "",
-      amount: 0
+      amount: [0, Validators.required]
     });
   }
 

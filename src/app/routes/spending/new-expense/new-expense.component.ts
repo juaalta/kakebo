@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "kab-new-expense",
@@ -20,7 +20,7 @@ import { FormGroup, FormBuilder } from "@angular/forms";
       <input type="text" name="description">
       <label for="amount">Amount</label>
       <input type="number" name="amount">
-      <input class="button-primary" type="submit" value="Save">
+      <input class="button-primary" type="submit" value="Save" [disabled]="form.invalid" >
     </fieldset>
   </form>
   `,
@@ -35,7 +35,7 @@ export class NewExpenseComponent implements OnInit {
       expenseCategory: "G",
       date: new Date(),
       description: "",
-      amount: 0
+      amount: [0, Validators.required]
     });
   }
 
