@@ -7,7 +7,7 @@ import { PlanComponent } from "./plan.component";
 import { IncomesComponent } from "./incomes/incomes.component";
 import { OutgoingsComponent } from "./outgoings/outgoings.component";
 import { PrevisionComponent } from "./prevision/prevision.component";
-import { SavingsComponent } from "./savings/savings.component";
+import { GoalComponent } from "@routes/control/plan/goal/goal.component";
 
 @NgModule({
   imports: [CommonModule, PlanRoutingModule, ComponentsModule],
@@ -16,7 +16,7 @@ import { SavingsComponent } from "./savings/savings.component";
     IncomesComponent,
     OutgoingsComponent,
     PrevisionComponent,
-    SavingsComponent
+    GoalComponent
   ]
 })
 export class PlanningModule {}

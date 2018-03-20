@@ -4,21 +4,19 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 @Component({
   selector: "kab-prevision",
   template: `
-  <h3>Prevision</h3>
+  <h3>Set your Previsions</h3>
   <form [formGroup]="form" (submit)="submit(form.value)">
     <fieldset>
-      <label for="kindOfPrevision">Kind of prevision</label>
-      <select formControlName="kindOfPrevision" name="kindOfPrevision">
-        <option value="1">Projected Income</option>
-        <option value="-1">Regular Outgoing</option>
-      </select>
+      <label for="kind">Kind of prevision</label>
+      <input type="radio" name="kind" formControlName="kind" value="I"> + Projected Income: <small>Salary, extras</small><br>
+      <input type="radio" name="kind" formControlName="kind" value="O"> - Regular Outgoing: <small>Mortgage, energy, phone</small><br>
       <label for="date">Date</label>
       <input type="date" formControlName="date">
       <label for="description">Description</label>
       <input type="text" formControlName="description">
       <label for="amount">Amount</label>
       <input type="number" formControlName="amount">
-      <input class="button-primary" type="submit" value="Save" [disabled]="form.invalid">
+      <input class="button-primary" type="submit" value="Save Prevision" [disabled]="form.invalid">
     </fieldset>
   </form>
   `,
@@ -30,7 +28,7 @@ export class PrevisionComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formbuilder.group({
-      kindOfPrevision: -1,
+      kind: [null, Validators.required],
       date: new Date(),
       description: "",
       amount: [0, Validators.required]

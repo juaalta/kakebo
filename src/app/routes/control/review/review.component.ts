@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MonthBalance } from "@routes/control/models/month_balance.model";
 
 @Component({
   selector: "kab-review",
@@ -9,29 +10,32 @@ import { Component, OnInit } from "@angular/core";
   <main>
     <dd>
       <dt>Total Income</dt>
-      <dd><strong>{{balance.incoming}}</strong></dd>
+      <dd><strong>{{month_balance.incomes}}</strong></dd>
     <dl>
-      <dt>Regular Outgoing</dt>
-      <dd><strong>{{balance.outgoing}}</strong></dd>
+      <dt>Regular Outgoings</dt>
+      <dd><strong>{{month_balance.outgoigns}}</strong></dd>
     </dl>
     <dl>
       <dt>Expenses</dt>
-      <dd><strong>{{balance.expenses}}</strong></dd>
+      <dd><strong>{{month_balance.expenses}}</strong></dd>
     </dl>
     <dl>
-      <dt>Saving</dt>
-      <dd><strong>{{balance.savings}}</strong></dd>
+      <dt>Savings</dt>
+      <dd><strong>{{month_balance.savings}}</strong></dd>
     </dl>
   </main>
   `,
   styles: []
 })
 export class ReviewComponent implements OnInit {
-  public balance = {
-    incoming: 1987,
-    outgoing: 357,
+  public month_balance: MonthBalance = {
+    year: 2018,
+    month: 4,
+    incomes: 1987,
+    outgoigns: 357,
     expenses: 495,
-    savings: 1135
+    savings: 1135,
+    goal: 0
   };
   constructor() {}
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import { JournalEntry } from "@routes/control/models/journal_entry.model";
 
 @Component({
   selector: "kab-outgoings",
   template: `
-  <h3>Regular Outgoings <span class="float-right">357 €</span></h3>
-  <p>Mortgage, energy, communications...</p>
+  <h3>Regular Outgoings <span class="float-right">{{projections[0].amount}} €</span></h3>
   <table>
     <thead>
       <tr>
@@ -25,11 +25,18 @@ import { Component, OnInit } from "@angular/core";
   styles: []
 })
 export class OutgoingsComponent implements OnInit {
-  public projections = [];
+  public projections: JournalEntry[] = [];
   constructor() {}
 
   ngOnInit() {
-    this.projections.push({ description: "Mortgage", amount: 357 });
+    this.projections.push({
+      year: 2018,
+      month: 4,
+      day: 1,
+      kind: "O",
+      description: "Mortgage",
+      amount: 867
+    });
   }
   public delete(projection) {}
 }

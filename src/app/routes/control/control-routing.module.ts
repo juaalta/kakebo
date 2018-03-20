@@ -9,11 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: "plan",
-        loadChildren: "@routes/control/planning/planning.module#PlanningModule"
+        loadChildren: "@routes/control/plan/plan.module#PlanningModule"
       },
       {
         path: "track",
-        loadChildren: "@routes/control/spending/spending.module#SpendingModule"
+        loadChildren: "@routes/control/track/track.module#TrackModule"
       },
       {
         path: "review",

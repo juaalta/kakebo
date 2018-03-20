@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { TrackComponent } from "@routes/monthly_control/track/track.component";
+import { TrackComponent } from "@routes/control/track/track.component";
 
 const routes: Routes = [
   {

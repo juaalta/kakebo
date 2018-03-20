@@ -11,13 +11,8 @@ const routes: Routes = [
     loadChildren: "@routes/about/about.module#AboutModule"
   },
   {
-    path: "savings",
-    loadChildren: "@routes/savings/savings.module#SavingsModule"
-  },
-  {
     path: "control/:y/:m",
-    loadChildren:
-      "@routes/monthly_control/monthly_control.module#MonthlyControlModule"
+    loadChildren: "@routes/control/control.module#ControlModule"
   },
   {
     path: "not-found",

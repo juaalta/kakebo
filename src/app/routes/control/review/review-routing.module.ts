@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ReviewComponent } from "@routes/monthly_control/review/review.component";
+import { ReviewComponent } from "@routes/control/review/review.component";
 
 const routes: Routes = [
   {
