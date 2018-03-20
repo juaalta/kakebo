@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-
+import { JournalEntry } from "@routes/control/models/journal_entry.model";
+import { expenseCategories } from "@routes/control/models/expenseCategories.model";
 @Component({
   selector: "kab-expenses-list",
   template: `
@@ -16,7 +17,7 @@ import { Component, OnInit } from "@angular/core";
     </thead>
     <tbody>
     <tr *ngFor="let expense of expenses">
-    <td>{{ expense.category }}</td>
+    <td>{{ expenseCategories[expense.expenseCategory] }}</td>
     <td>{{ expense.description }}</td>
     <td>{{ expense.amount }}</td>
     <td><button (click)="delete(expense)">X</button>  </td>
@@ -27,14 +28,19 @@ import { Component, OnInit } from "@angular/core";
   styles: []
 })
 export class ExpensesListComponent implements OnInit {
-  public expenses = [];
+  public expenseCategories = expenseCategories;
+  public expenses: JournalEntry[] = [];
   constructor() {}
 
   ngOnInit() {
     this.expenses.push({
-      category: "General",
+      kind: "E",
+      year: 2018,
+      month: 4,
+      day: 1,
+      expenseCategory: "G",
       description: "Clothes",
-      amount: 495
+      amount: 159
     });
   }
   public delete(expense) {}
