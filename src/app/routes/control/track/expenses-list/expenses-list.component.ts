@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
-import { expenseCategories } from "@routes/control/models/expenseCategories.model";
+
 @Component({
   selector: "kab-expenses-list",
   template: `
-  <h3>Expenses <span class="float-right">495 €</span></h3>
+  <h3>Expenses <span class="float-right">{{ expenses[0].amount }} €</span></h3>
   <p>General, Leisure, Culture, Extras...</p>
   <table>
     <thead>
@@ -17,7 +17,7 @@ import { expenseCategories } from "@routes/control/models/expenseCategories.mode
     </thead>
     <tbody>
     <tr *ngFor="let expense of expenses">
-    <td>{{ expenseCategories[expense.expenseCategory] }}</td>
+    <td>{{ expense.expenseCategory | categoryName }}</td>
     <td>{{ expense.description }}</td>
     <td>{{ expense.amount }}</td>
     <td><button (click)="delete(expense)">X</button>  </td>
@@ -28,7 +28,6 @@ import { expenseCategories } from "@routes/control/models/expenseCategories.mode
   styles: []
 })
 export class ExpensesListComponent implements OnInit {
-  public expenseCategories = expenseCategories;
   public expenses: JournalEntry[] = [];
   constructor() {}
 

@@ -5,7 +5,7 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
 @Component({
   selector: "kab-contol",
   template: `
-  <h1>Available On {{ month_balance.month }} of {{ month_balance.year }} <span class="float-right">{{available}} €</span></h1>
+  <h1>Available On {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{available}} €</span></h1>
   <section class="row">
     <aside class="column column-20">
       <kab-nav></kab-nav>

@@ -10,7 +10,7 @@ import { expenseCategories } from "@routes/control/models/expenseCategories.mode
     <fieldset>
       <label for="expenseCategory">Category</label>
       <select id="expenseCategory" formControlName="expenseCategory">
-        <option *ngFor="let expenseCategory of objectKeys(expenseCategories)" [value]="expenseCategory">{{expenseCategories[expenseCategory]}}</option>
+        <option *ngFor="let expenseCategory of expenseCategories | objectKeys" [value]="expenseCategory">{{ expenseCategory | categoryName }}</option>
       </select>
       <label for="date">Date</label>
       <input type="date" formControlName="date">
@@ -26,7 +26,6 @@ import { expenseCategories } from "@routes/control/models/expenseCategories.mode
 })
 export class NewExpenseComponent implements OnInit {
   public expenseCategories = expenseCategories;
-  public objectKeys = Object.keys;
   public form: FormGroup;
   private expense: JournalEntry;
   constructor(private formbuilder: FormBuilder) {}

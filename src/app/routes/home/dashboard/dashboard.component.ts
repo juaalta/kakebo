@@ -20,8 +20,8 @@ import { Component, OnInit } from "@angular/core";
     </thead>
     <tbody>
       <tr *ngFor="let balance of balances" >
-        <td>{{ balance.year }}</td>
-        <td><a [routerLink]="['control',2018,4]"> {{ balance.month }}</a></td>
+        <td><a [routerLink]="['control',2018,4]"> {{ balance.year }} </a></td>
+        <td><a [routerLink]="['control',2018,4]"> {{ balance.month | monthName }}</a></td>
         <td>{{ balance.incoming }}</td>
         <td>{{ balance.outgoing }}</td>
         <td>{{ balance.expenses }}</td>
