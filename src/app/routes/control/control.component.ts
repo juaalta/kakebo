@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "kab-monthly-contol",
+  selector: "kab-contol",
   template: `
   <h1>On {{ month }} of {{ year }} you have... <span class="float-right">1135 €</span></h1>
   <section class="row">
@@ -14,7 +14,7 @@ import { ActivatedRoute } from "@angular/router";
   `,
   styles: []
 })
-export class MonthlyControlComponent implements OnInit {
+export class ControlComponent implements OnInit {
   public month;
   public year;
   constructor(private activatedRoute: ActivatedRoute) {}

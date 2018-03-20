@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "kab-spending",
+  selector: "kab-tarck",
   template: `
     <header>
       <h2> Track your expenses </h2>
@@ -17,7 +17,7 @@ import { Component, OnInit } from "@angular/core";
   `,
   styles: []
 })
-export class SpendingComponent implements OnInit {
+export class TrackComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}

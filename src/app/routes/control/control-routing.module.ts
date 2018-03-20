@@ -1,23 +1,23 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { SavingsComponent } from "@routes/savings/savings.component";
+import { ControlComponent } from "@routes/control/control.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: SavingsComponent,
+    component: ControlComponent,
     children: [
       {
         path: "plan",
-        loadChildren: "@routes/planning/planning.module#PlanningModule"
+        loadChildren: "@routes/control/planning/planning.module#PlanningModule"
       },
       {
         path: "track",
-        loadChildren: "@routes/spending/spending.module#SpendingModule"
+        loadChildren: "@routes/control/spending/spending.module#SpendingModule"
       },
       {
         path: "review",
-        loadChildren: "@routes/review/review.module#ReviewModule"
+        loadChildren: "@routes/control/review/review.module#ReviewModule"
       }
     ]
   }
@@ -27,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SavingsRoutingModule {}
+export class ControlRoutingModule {}

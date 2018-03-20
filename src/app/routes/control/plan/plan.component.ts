@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: "kab-planning",
+  selector: "kab-plan",
   template: `
     <header>
       <h2>
@@ -21,7 +21,7 @@ import { Component, OnInit } from "@angular/core";
   `,
   styles: []
 })
-export class PlanningComponent implements OnInit {
+export class PlanComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
