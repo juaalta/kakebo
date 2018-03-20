@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
   selector: "kab-home",
   template: `
     <h1>Kakebo</h1>  
+    <kab-dashboard></kab-dashboard>
   `,
   styles: []
 })
