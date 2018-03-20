@@ -4,9 +4,11 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
 @Component({
   selector: "kab-review",
   template: `
-  <h2>
-    Review your balance
-  </h2>
+  <header>
+    <h2>
+      Review your balance
+    </h2>
+  </header>
   <main>
     <dd>
       <dt>Total Income</dt>

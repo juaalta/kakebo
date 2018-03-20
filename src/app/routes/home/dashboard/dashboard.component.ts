@@ -3,8 +3,10 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "kab-dashboard",
   template: `
-  <h3>Monthly balances <span class="float-right">495 €</span></h3>
-  <p>General, Leisure, Culture, Extras...</p>
+  <header>
+    <h3>Monthly balances <span class="float-right">495 €</span></h3>
+    <p>General, Leisure, Culture, Extras...</p>
+  </header>
   <table>
     <thead>
       <tr>

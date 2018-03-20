@@ -7,10 +7,12 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
   template: `
   <h1>Available On {{ month_balance.month }} of {{ month_balance.year }} <span class="float-right">{{available}} €</span></h1>
   <section class="row">
-    <kab-nav class="column column-20"></kab-nav>
-    <section class="column float-left">
+    <aside class="column column-20">
+      <kab-nav></kab-nav>
+    </aside>  
+    <main class="column float-left">
       <router-outlet></router-outlet>
-    </section>    
+    </main>    
   </section>
   `,
   styles: []
