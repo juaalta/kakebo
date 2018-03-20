@@ -33,10 +33,10 @@ export class ReviewComponent implements OnInit {
   public month_balance: MonthBalance = {
     year: 2018,
     month: 4,
-    incomes: 1987,
-    outgoigns: 357,
-    expenses: 495,
-    savings: 1135,
+    incomes: 0,
+    outgoigns: 0,
+    expenses: 0,
+    savings: 0,
     goal: 0
   };
   constructor() {}

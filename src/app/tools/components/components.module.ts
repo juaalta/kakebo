@@ -7,6 +7,7 @@ import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MonthNamePipe } from "./month-name.pipe";
 import { ObjectKeysPipe } from "./object-keys.pipe";
+import { WidgetComponent } from "./layout/widget/widget.component";
 
 @NgModule({
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
@@ -15,7 +16,8 @@ import { ObjectKeysPipe } from "./object-keys.pipe";
     FooterComponent,
     NavComponent,
     MonthNamePipe,
-    ObjectKeysPipe
+    ObjectKeysPipe,
+    WidgetComponent
   ],
   exports: [
     ReactiveFormsModule,
@@ -23,7 +25,8 @@ import { ObjectKeysPipe } from "./object-keys.pipe";
     FooterComponent,
     NavComponent,
     MonthNamePipe,
-    ObjectKeysPipe
+    ObjectKeysPipe,
+    WidgetComponent
   ]
 })
 /**

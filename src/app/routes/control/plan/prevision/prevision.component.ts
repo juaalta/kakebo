@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { JournalEntry } from "@routes/control/models/journal_entry.model";
 
 @Component({
   selector: "kab-prevision",
@@ -23,19 +24,24 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
   styles: []
 })
 export class PrevisionComponent implements OnInit {
+  @Output() public saveProjection = new EventEmitter<JournalEntry>();
   public form: FormGroup;
   constructor(private formbuilder: FormBuilder) {}
 
   ngOnInit() {
     this.form = this.formbuilder.group({
       kind: [null, Validators.required],
-      date: new Date(),
+      date: new Date().toISOString().substring(0, 10),
       description: "",
       amount: [0, Validators.required]
     });
   }
 
-  public submit(newProyection) {
-    console.log(newProyection);
+  public submit(newProjection: JournalEntry) {
+    this.saveProjection.emit(newProjection);
+    this.form.reset({
+      amount: 0,
+      date: new Date().toISOString().substring(0, 10)
+    });
   }
 }

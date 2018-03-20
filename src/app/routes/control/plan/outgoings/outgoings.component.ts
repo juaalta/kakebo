@@ -1,10 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  OnChanges
+} from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 
 @Component({
   selector: "kab-outgoings",
   template: `
-  <h3>Regular Outgoings <span class="float-right">{{projections[0].amount}} €</span></h3>
+  <h3>Regular Outgoings <span class="float-right">{{totalAmount}} €</span></h3>
   <table>
     <thead>
       <tr>
@@ -14,7 +22,7 @@ import { JournalEntry } from "@routes/control/models/journal_entry.model";
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let projection of projections">
+      <tr *ngFor="let projection of projectionsToList">
         <td>{{ projection.description }}</td>
         <td>{{ projection.amount }}</td>
         <td><button (click)="delete(projection)">X</button>  </td>
@@ -24,19 +32,21 @@ import { JournalEntry } from "@routes/control/models/journal_entry.model";
   `,
   styles: []
 })
-export class OutgoingsComponent implements OnInit {
-  public projections: JournalEntry[] = [];
+export class OutgoingsComponent implements OnInit, OnChanges {
+  @Input() public projectionsToList: JournalEntry[] = [];
+  @Output() public deleteProjection = new EventEmitter<JournalEntry>();
+  public totalAmount = 0;
   constructor() {}
 
-  ngOnInit() {
-    this.projections.push({
-      year: 2018,
-      month: 4,
-      day: 1,
-      kind: "O",
-      description: "Mortgage",
-      amount: 867
-    });
+  ngOnInit() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.projectionsToList) {
+      this.totalAmount = this.projectionsToList
+        .map(p => p.amount)
+        .reduce((state, current) => state + current, 0);
+    }
   }
-  public delete(projection) {}
+  public delete(projection: JournalEntry) {
+    this.deleteProjection.emit(projection);
+  }
 }
