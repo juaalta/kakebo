@@ -8,7 +8,7 @@ import { SavingsGoal } from "@routes/control/models/savings_goal.model";
   template: `
     <header>
       <h2>
-        Plan your incomes and regular outgoings
+        Set saving goal of {{ this.month_balance.goal }} € and left to expend <span class="float-right">{{availableToExpend}} €</span>
       </h2>
     </header>
     <main class="row">
@@ -34,7 +34,17 @@ export class PlanComponent implements OnInit {
   public projectedEntries: JournalEntry[] = [];
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
-  public month_balance: MonthBalance;
+  public month_balance: MonthBalance = {
+    year: 0,
+    month: 0,
+    incomes: 0,
+    outgoigns: 0,
+    expenses: 0,
+    savings: 0,
+    goal: 0
+  };
+  public availableToExpend = 0;
+
   constructor() {}
 
   ngOnInit() {}
@@ -54,22 +64,25 @@ export class PlanComponent implements OnInit {
       ...this.month_balance,
       goal: savingsGoal.goalToSave
     };
+    this.updateAvailableAmount();
   }
   private updateFilterdeLists() {
     this.projectedIncomes = this.projectedEntries.filter(p => p.kind === "I");
     this.projectedOutgoings = this.projectedEntries.filter(p => p.kind === "O");
     this.month_balance = {
-      year: 2018,
-      month: 4,
-      incomes: this.projectedIncomes
-        .map(p => p.amount)
-        .reduce((state, current) => state + current, 0),
-      outgoigns: this.projectedOutgoings
-        .map(p => p.amount)
-        .reduce((state, current) => state + current, 0),
-      expenses: 0,
-      savings: 0,
-      goal: 0
+      ...this.month_balance,
+      incomes: this.sumAmount(this.projectedIncomes),
+      outgoigns: this.sumAmount(this.projectedOutgoings)
     };
+    this.updateAvailableAmount();
   }
+  private updateAvailableAmount() {
+    this.availableToExpend =
+      this.month_balance.incomes -
+      this.month_balance.outgoigns -
+      this.month_balance.goal;
+  }
+
+  private sumAmount = (entries: JournalEntry[]) =>
+    entries.map(p => p.amount).reduce((state, current) => state + current, 0);
 }

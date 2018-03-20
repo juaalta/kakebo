@@ -5,7 +5,7 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
 @Component({
   selector: "kab-contol",
   template: `
-  <h1>Available On {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{available}} €</span></h1>
+  <h1>Saving On {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{savings}} €</span></h1>
   <section class="row">
     <aside class="column column-20">
       <kab-nav></kab-nav>
@@ -18,12 +18,12 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
   styles: []
 })
 export class ControlComponent implements OnInit {
-  public available = 0;
+  public savings = 0;
   public month_balance: MonthBalance = {
-    year: 2018,
-    month: 4,
-    incomes: 1987,
-    outgoigns: 867,
+    year: 0,
+    month: 0,
+    incomes: 0,
+    outgoigns: 0,
     expenses: 0,
     savings: 0,
     goal: 0
@@ -35,7 +35,7 @@ export class ControlComponent implements OnInit {
 
     this.month_balance.month = params["m"];
     this.month_balance.year = params["y"];
-    this.available =
+    this.savings =
       this.month_balance.incomes -
       this.month_balance.outgoigns -
       this.month_balance.expenses;

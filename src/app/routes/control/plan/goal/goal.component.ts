@@ -25,6 +25,7 @@ import { SavingsGoal } from "@routes/control/models/savings_goal.model";
         <input class="button-primary" type="submit" value="Save Goal" [disabled]="form.invalid">
       </fieldset>
     </form>
+    {{month_balance | json}}
   </section>
   `,
   styles: []
@@ -43,7 +44,7 @@ export class GoalComponent implements OnInit, OnChanges {
           this.month_balance.incomes -
           this.month_balance.outgoigns -
           this.month_balance.expenses,
-        goalToSave: 0
+        goalToSave: this.month_balance.goal
       };
       this.form = this.formbuilder.group({
         available: month_goal.available,
