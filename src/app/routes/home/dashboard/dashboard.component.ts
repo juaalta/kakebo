@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 
 @Component({
   selector: "kab-dashboard",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <header>
     <h3>Monthly balances <span class="float-right">495 €</span></h3>

@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
 
 @Component({
   selector: "kab-plan",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header>
       <h2>

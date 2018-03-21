@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 
 @Component({
   selector: "kab-contol",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <h1>Saving On {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{savings}} €</span></h1>
   <section class="row">

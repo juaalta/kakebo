@@ -1,9 +1,10 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 
 @Component({
   selector: "kab-prevision",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <h3>Set your Previsions</h3>
   <form [formGroup]="form" (submit)="submit(form.value)">

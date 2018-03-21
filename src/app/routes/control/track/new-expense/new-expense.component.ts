@@ -1,9 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { expenseCategories } from "@routes/control/models/expenseCategories.model";
 @Component({
   selector: "kab-new-expense",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <h3>Record a new Expense</h3>
   <form [formGroup]="form" (submit)="submit(form.value)">

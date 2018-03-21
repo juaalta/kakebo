@@ -5,12 +5,14 @@ import {
   EventEmitter,
   Output,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 
 @Component({
   selector: "kab-incomes",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <header>
     <h3>Projected Incomes <span class="float-right">{{totalAmount}} €</span></h3>

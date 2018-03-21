@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 
 @Component({
   selector: "kab-review",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <header>
     <h2>

@@ -4,12 +4,14 @@ import {
   Output,
   EventEmitter,
   Input,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 
 @Component({
   selector: "kab-expenses-list",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <h3>Expenses <span class="float-right">{{ totalAmount }} €</span></h3>
   <p>General, Leisure, Culture, Extras...</p>

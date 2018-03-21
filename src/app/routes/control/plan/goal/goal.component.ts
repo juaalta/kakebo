@@ -5,7 +5,8 @@ import {
   EventEmitter,
   Output,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
@@ -13,6 +14,7 @@ import { SavingsGoal } from "@routes/control/models/savings_goal.model";
 
 @Component({
   selector: "kab-goal",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <section *ngIf="month_balance">
     <h3>Set your saving goal</h3>
