@@ -38,14 +38,15 @@ export class DashboardComponent implements OnInit {
   public balance = {
     year: 2018,
     month: 4,
-    incoming: 1987,
-    outgoing: 357,
-    expenses: 495,
-    savings: 1135
+    incoming: 0,
+    outgoing: 0,
+    expenses: 0,
+    savings: 0
   };
   constructor() {}
 
   ngOnInit() {
+    this.balances = [...this.balances, this.balance];
     this.balances.push(this.balance);
   }
 }

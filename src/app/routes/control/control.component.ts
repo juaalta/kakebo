@@ -33,9 +33,7 @@ export class ControlComponent implements OnInit {
 
   ngOnInit() {
     const params = this.activatedRoute.snapshot.params;
-
-    this.month_balance.month = params["m"];
-    this.month_balance.year = params["y"];
+    this.month_balance = {...this.month_balance, month:params["m"],year:params["y"]};
     this.savings =
       this.month_balance.incomes -
       this.month_balance.outgoigns -
