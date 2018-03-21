@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
+import { PlanService } from "@routes/control/plan/plan.service";
 
 @Component({
   selector: "kab-plan",
@@ -32,7 +33,6 @@ import { SavingsGoal } from "@routes/control/models/savings_goal.model";
   styles: []
 })
 export class PlanComponent implements OnInit {
-  public projectedEntries: JournalEntry[] = [];
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance = {
@@ -46,18 +46,16 @@ export class PlanComponent implements OnInit {
   };
   public availableToExpend = 0;
 
-  constructor() {}
+  constructor(private planService:PlanService) {}
 
   ngOnInit() {}
 
   saveNewEntry(projectedEntry: JournalEntry) {
-    this.projectedEntries = [...this.projectedEntries, projectedEntry];
+    this.planService.postNewEntry(projectedEntry);
     this.updateFilterdeLists();
   }
   deleteAnEntry(projectedEntry: JournalEntry) {
-    this.projectedEntries = this.projectedEntries.filter(
-      p => p !== projectedEntry
-    );
+    this.planService.delete(projectedEntry);
     this.updateFilterdeLists();
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
@@ -67,23 +65,9 @@ export class PlanComponent implements OnInit {
     };
     this.updateAvailableAmount();
   }
-  private updateFilterdeLists() {
-    this.projectedIncomes = this.projectedEntries.filter(p => p.kind === "I");
-    this.projectedOutgoings = this.projectedEntries.filter(p => p.kind === "O");
-    this.month_balance = {
-      ...this.month_balance,
-      incomes: this.sumAmount(this.projectedIncomes),
-      outgoigns: this.sumAmount(this.projectedOutgoings)
-    };
-    this.updateAvailableAmount();
-  }
-  private updateAvailableAmount() {
-    this.availableToExpend =
-      this.month_balance.incomes -
-      this.month_balance.outgoigns -
-      this.month_balance.goal;
-  }
 
-  private sumAmount = (entries: JournalEntry[]) =>
-    entries.map(p => p.amount).reduce((state, current) => state + current, 0);
+  private updateFilterdeLists() {
+    this.projectedIncomes = this.planService.projectedIncomes;
+  }
+  
 }
