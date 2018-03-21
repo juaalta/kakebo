@@ -1,4 +1,10 @@
-import { Component, OnInit, EventEmitter, Output, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy
+} from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 
@@ -38,7 +44,9 @@ export class PrevisionComponent implements OnInit {
     });
   }
 
-  public submit(newProjection: JournalEntry) {
+  public submit(newProjection) {
+    newProjection.year = new Date(newProjection.date).getFullYear();
+    newProjection.month = new Date(newProjection.date).getMonth() + 1;
     this.saveProjection.emit(newProjection);
     this.form.reset({
       amount: 0,

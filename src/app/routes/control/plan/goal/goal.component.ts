@@ -20,10 +20,9 @@ import { SavingsGoal } from "@routes/control/models/savings_goal.model";
     <h3>Set your saving goal</h3>
     <form [formGroup]="form" (submit)="submit(form.value)"> 
       <fieldset>
-        <label for="available">Available</label>
-        <input type="number" formControlName="available" readonly>
         <label for="goalToSave">Goal to save</label>
         <input type="number" formControlName="goalToSave">
+        <p><small>Maximun {{month_balance.savings}}</small></p>
         <input class="button-primary" type="submit" value="Save Goal" [disabled]="form.invalid">
       </fieldset>
     </form>
@@ -41,25 +40,21 @@ export class GoalComponent implements OnInit, OnChanges {
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.month_balance) {
-      const month_goal: SavingsGoal = {
-        available:
-          this.month_balance.incomes -
-          this.month_balance.outgoigns -
-          this.month_balance.expenses,
-        goalToSave: this.month_balance.goal
-      };
       this.form = this.formbuilder.group({
-        available: month_goal.available,
         goalToSave: [
-          month_goal.goalToSave,
-          [Validators.required, Validators.max(month_goal.available)]
+          this.month_balance.goal,
+          [Validators.required, Validators.max(this.month_balance.savings)]
         ]
       });
     }
   }
 
-  public submit(month_goal: SavingsGoal) {
-    console.log(month_goal);
+  public submit(value) {
+    const month_goal: SavingsGoal = {
+      year: this.month_balance.year,
+      month: this.month_balance.month,
+      goalToSave: value.goalToSave
+    };
     this.setGoal.emit(month_goal);
   }
 }

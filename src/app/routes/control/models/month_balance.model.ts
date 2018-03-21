@@ -7,4 +7,5 @@ export interface MonthBalance {
   expenses: number;
   savings: number;
   goal: number;
+  available: number;
 }

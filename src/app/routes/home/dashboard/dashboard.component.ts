@@ -21,8 +21,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
     </thead>
     <tbody>
       <tr *ngFor="let balance of balances" >
-        <td><a [routerLink]="['control',2018,4]"> {{ balance.year }} </a></td>
-        <td><a [routerLink]="['control',2018,4]"> {{ balance.month | monthName }}</a></td>
+        <td><a [routerLink]="['control',balance.year,balance.month]"> {{ balance.year }} </a></td>
+        <td><a [routerLink]="['control',balance.year,balance.month]"> {{ balance.month | monthName }}</a></td>
         <td>{{ balance.incoming }}</td>
         <td>{{ balance.outgoing }}</td>
         <td>{{ balance.expenses }}</td>
@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
   public balances = [];
   public balance = {
     year: 2018,
-    month: 4,
+    month: 3,
     incoming: 0,
     outgoing: 0,
     expenses: 0,
@@ -47,6 +47,5 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.balances = [...this.balances, this.balance];
-    this.balances.push(this.balance);
   }
 }

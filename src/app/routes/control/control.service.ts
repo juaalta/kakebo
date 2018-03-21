@@ -13,7 +13,8 @@ export class ControlService {
     outgoigns: 0,
     expenses: 0,
     savings: 0,
-    goal: 0
+    goal: 0,
+    available: 0
   };
   get journalEntries() {
     return [...this._journalEntries];
@@ -71,11 +72,13 @@ export class ControlService {
     }
     return monthBalance;
   }
-  public updateMonthBalance(monthBalance: MonthBalance) {
-    const i = this._monthBalances.findIndex(m => m._id === monthBalance._id);
-    if (i) {
-      this._monthBalances[i] = { ...monthBalance };
-    }
+  public updateMonthGoal(monthBalance: MonthBalance) {
+    let monthBalanceTemp = this.getMonthBalance(
+      monthBalance.year,
+      monthBalance.month
+    );
+    monthBalanceTemp.goal = monthBalance.goal;
+    this.calculateMonthBalance(monthBalance.year, monthBalance.month);
   }
   public deleteMonthBalance(aMonthBalance: MonthBalance) {
     this._monthBalances = this.deleteFromArray(
@@ -92,6 +95,12 @@ export class ControlService {
     monthBalance.outgoigns = this.sumAmount(
       this.filterJournalsByKind("O", year, month)
     );
+    monthBalance.expenses = this.sumAmount(
+      this.filterJournalsByKind("E", year, month)
+    );
+    monthBalance.savings =
+      monthBalance.incomes - monthBalance.outgoigns - monthBalance.expenses;
+    monthBalance.available = monthBalance.savings - monthBalance.goal;
   }
   private postToArray = (array: any[], element: any) => [...array, element];
   private deleteFromArray = (array: any[], element: any) =>

@@ -15,7 +15,7 @@ import { PlanService } from "@routes/control/plan/plan.service";
   template: `
     <header>
       <h2>
-        Set saving goal of {{ this.month_balance.goal }} € and left to expend <span class="float-right">{{availableToExpend}} €</span>
+        Set saving goal of {{ month_balance.goal }} € and left to expend <span class="float-right">{{month_balance.available}} €</span>
       </h2>
     </header>
     <main class="row">
@@ -41,9 +41,8 @@ export class PlanComponent implements OnInit {
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance;
-  public availableToExpend = 0;
-  private year: 2018;
-  private month: 4;
+  private year = 2018;
+  private month = 3;
 
   constructor(private planService: PlanService) {}
 
@@ -60,8 +59,6 @@ export class PlanComponent implements OnInit {
     this.getData();
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
-    savingsGoal.year = this.year;
-    savingsGoal.month = this.month;
     this.planService.setGoalForMonth(savingsGoal);
     this.getData();
   }
@@ -70,6 +67,5 @@ export class PlanComponent implements OnInit {
     this.projectedIncomes = this.planService.projectedIncomes;
     this.projectedOutgoings = this.planService.projectedOutgoins;
     this.month_balance = this.planService.month_balance;
-    this.availableToExpend = this.planService.availableToExpend;
   }
 }

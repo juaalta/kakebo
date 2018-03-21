@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { expenseCategories } from "@routes/control/models/expenseCategories.model";
@@ -40,9 +46,10 @@ export class NewExpenseComponent implements OnInit {
     });
   }
 
-  public submit(expense: JournalEntry) {
-    console.log(expense);
+  public submit(expense: any) {
     expense.kind = "E";
+    expense.year = new Date(expense.date).getFullYear();
+    expense.month = new Date(expense.date).getMonth() + 1;
     this.saveExpense.emit(expense);
   }
 }

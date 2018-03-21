@@ -1,12 +1,14 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
+import { ControlService } from "@routes/control/control.service";
 
 @Component({
   selector: "kab-contol",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <h1>Saving On {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{savings}} €</span></h1>
+  <h1>Savings on {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{month_balance.savings}} €</span></h1>
+  <h4>Have spent {{month_balance.outgoigns + month_balance.expenses}} € </h4>
   <section class="row">
     <aside class="column column-20">
       <kab-nav></kab-nav>
@@ -20,23 +22,18 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
 })
 export class ControlComponent implements OnInit {
   public savings = 0;
-  public month_balance: MonthBalance = {
-    year: 0,
-    month: 0,
-    incomes: 0,
-    outgoigns: 0,
-    expenses: 0,
-    savings: 0,
-    goal: 0
-  };
-  constructor(private activatedRoute: ActivatedRoute) {}
+  public month_balance: MonthBalance;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private controlService: ControlService
+  ) {}
 
   ngOnInit() {
     const params = this.activatedRoute.snapshot.params;
-    this.month_balance = {...this.month_balance, month:params["m"],year:params["y"]};
-    this.savings =
-      this.month_balance.incomes -
-      this.month_balance.outgoigns -
-      this.month_balance.expenses;
+    this.month_balance = this.controlService.getMonthBalance(
+      +params["y"],
+      +params["m"]
+    );
   }
 }

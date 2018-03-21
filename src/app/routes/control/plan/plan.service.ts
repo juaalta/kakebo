@@ -9,7 +9,6 @@ export class PlanService {
   private _projectedIncomes: JournalEntry[] = [];
   private _projectedOutgoings: JournalEntry[] = [];
   private _month_balance: MonthBalance | any = {};
-  private _availableToExpend = 0;
 
   get projectedIncomes() {
     return [...this._projectedIncomes];
@@ -19,9 +18,6 @@ export class PlanService {
   }
   get month_balance() {
     return { ...this._month_balance };
-  }
-  get availableToExpend() {
-    return this._availableToExpend;
   }
   constructor(private controlService: ControlService) {}
 
@@ -39,8 +35,11 @@ export class PlanService {
       savingsGoal.month
     );
     this._month_balance.goal = savingsGoal.goalToSave;
-    this.controlService.updateMonthBalance(this._month_balance);
-    this.calculateAvailableAmount();
+    this.controlService.updateMonthGoal(this._month_balance);
+    this._month_balance = this.controlService.getMonthBalance(
+      savingsGoal.year,
+      savingsGoal.month
+    );
   }
 
   private getData(year: number, month: number) {
@@ -55,13 +54,5 @@ export class PlanService {
       month
     );
     this._month_balance = this.controlService.getMonthBalance(year, month);
-    this.calculateAvailableAmount();
-  }
-
-  private calculateAvailableAmount() {
-    this._availableToExpend =
-      this._month_balance.incomes -
-      this._month_balance.outgoigns -
-      this._month_balance.goal;
   }
 }
