@@ -1,4 +1,9 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy
+} from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
@@ -37,8 +42,10 @@ export class PlanComponent implements OnInit {
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance;
   public availableToExpend = 0;
+  private year: 2018;
+  private month: 4;
 
-  constructor(private planService:PlanService) {}
+  constructor(private planService: PlanService) {}
 
   ngOnInit() {
     this.getData();
@@ -53,23 +60,16 @@ export class PlanComponent implements OnInit {
     this.getData();
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
+    savingsGoal.year = this.year;
+    savingsGoal.month = this.month;
     this.planService.setGoalForMonth(savingsGoal);
     this.getData();
   }
 
-  private getData(){
-    this.getFilterdeLists();
-    this.getMonthBalance();
-    this.getAvailableAmount();
-  }
-  private getFilterdeLists() {
+  private getData() {
     this.projectedIncomes = this.planService.projectedIncomes;
     this.projectedOutgoings = this.planService.projectedOutgoins;
-  }
-  private getMonthBalance(){
     this.month_balance = this.planService.month_balance;
-  }
-  private getAvailableAmount() {
     this.availableToExpend = this.planService.availableToExpend;
   }
 }

@@ -1,4 +1,5 @@
 export interface MonthBalance {
+  _id?: string;
   year: number;
   month: number;
   incomes: number;
