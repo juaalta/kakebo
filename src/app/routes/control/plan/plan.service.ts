@@ -2,21 +2,14 @@ import { Injectable } from '@angular/core';
 import { ControlService } from '@routes/control/control.service';
 import { JournalEntry } from '@routes/control/models/journal_entry.model';
 import { MonthBalance } from '@routes/control/models/month_balance.model';
+import { SavingsGoal } from '@routes/control/models/savings_goal.model';
 
 @Injectable()
 export class PlanService {
 
-  private _projectedIncomes: JournalEntry[];
-  private _projectedOutgoings: JournalEntry[];
-  private _month_balance: MonthBalance = {
-    year: 0,
-    month: 0,
-    incomes: 0,
-    outgoigns: 0,
-    expenses: 0,
-    savings: 0,
-    goal: 0
-  };
+  private _projectedIncomes: JournalEntry[] = [];
+  private _projectedOutgoings: JournalEntry[] = [];
+  private _month_balance: MonthBalance | any= {};
   private _availableToExpend = 0;
 
   get projectedIncomes(){
@@ -28,22 +21,44 @@ export class PlanService {
   get month_balance(){
     return {...this._month_balance};
   }
-
+  get availableToExpend(){
+    return this._availableToExpend;
+  }
   constructor(private controlService:ControlService) { }
 
   public postNewEntry(projectedEntry: JournalEntry) {
     this.controlService.postJournalEntry(projectedEntry);
-    this.updateFilterdeLists();
+    this.updateFilterdeLists(projectedEntry.year, projectedEntry.month);
+  }
+  public deleteEntry(projectedEntry: JournalEntry) {
+    this.controlService.deleteJournalEntry(projectedEntry);
+    this.updateFilterdeLists(projectedEntry.year, projectedEntry.month);
+  }
+  public setGoalForMonth(savingsGoal: SavingsGoal) {
+    this._month_balance = this.controlService.getMonthBalance(this._month_balance.year, this._month_balance.month);
+    this._month_balance = {
+      ...this._month_balance,
+      goal: savingsGoal.goalToSave
+    };
+    this.controlService.updateMonthBalance(this._month_balance);
+    this.updateAvailableAmount();
   }
 
-  private updateFilterdeLists() {
-    this._projectedIncomes = this.controlService.journalEntries.filter(p => p.kind === "I");
-    this._projectedOutgoings = this.controlService.journalEntries.filter(p => p.kind === "O");
+  private updateFilterdeLists(year: number, month:number) {
+    this._projectedIncomes = this.controlService.journalEntries
+      .filter(p => p.kind === "I" && p.year===year && p.month===month );
+    this._projectedOutgoings = this.controlService.journalEntries
+      .filter(p => p.kind === "O" && p.year===year && p.month===month);
+    this.updateMothBalance(year, month);
+  }
+  private updateMothBalance(year: number, month:number){
+    this._month_balance = this.controlService.getMonthBalance(year, month);
     this._month_balance = {
       ...this._month_balance,
       incomes: this.sumAmount(this._projectedIncomes),
       outgoigns: this.sumAmount(this._projectedOutgoings)
     };
+    this.controlService.updateMonthBalance(this._month_balance);
     this.updateAvailableAmount();
   }
   private updateAvailableAmount() {

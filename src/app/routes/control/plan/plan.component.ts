@@ -35,39 +35,41 @@ import { PlanService } from "@routes/control/plan/plan.service";
 export class PlanComponent implements OnInit {
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
-  public month_balance: MonthBalance = {
-    year: 0,
-    month: 0,
-    incomes: 0,
-    outgoigns: 0,
-    expenses: 0,
-    savings: 0,
-    goal: 0
-  };
+  public month_balance: MonthBalance;
   public availableToExpend = 0;
 
   constructor(private planService:PlanService) {}
 
-  ngOnInit() {}
-
-  saveNewEntry(projectedEntry: JournalEntry) {
-    this.planService.postNewEntry(projectedEntry);
-    this.updateFilterdeLists();
+  ngOnInit() {
+    this.getData();
   }
-  deleteAnEntry(projectedEntry: JournalEntry) {
-    this.planService.delete(projectedEntry);
-    this.updateFilterdeLists();
+
+  public saveNewEntry(projectedEntry: JournalEntry) {
+    this.planService.postNewEntry(projectedEntry);
+    this.getData();
+  }
+  public deleteAnEntry(projectedEntry: JournalEntry) {
+    this.planService.deleteEntry(projectedEntry);
+    this.getData();
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
-    this.month_balance = {
-      ...this.month_balance,
-      goal: savingsGoal.goalToSave
-    };
-    this.updateAvailableAmount();
+    this.planService.setGoalForMonth(savingsGoal);
+    this.getData();
   }
 
-  private updateFilterdeLists() {
-    this.projectedIncomes = this.planService.projectedIncomes;
+  private getData(){
+    this.getFilterdeLists();
+    this.getMonthBalance();
+    this.getAvailableAmount();
   }
-  
+  private getFilterdeLists() {
+    this.projectedIncomes = this.planService.projectedIncomes;
+    this.projectedOutgoings = this.planService.projectedOutgoins;
+  }
+  private getMonthBalance(){
+    this.month_balance = this.planService.month_balance;
+  }
+  private getAvailableAmount() {
+    this.availableToExpend = this.planService.availableToExpend;
+  }
 }
