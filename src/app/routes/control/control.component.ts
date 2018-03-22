@@ -7,8 +7,8 @@ import { ControlService } from "@routes/control/control.service";
   selector: "kab-contol",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <h1>Savings on {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{month_balance.savings}} €</span></h1>
-  <h4>Have spent {{month_balance.outgoigns + month_balance.expenses}} € </h4>
+  <h1>Balance on {{month_balance.month | monthName }} of {{ month_balance.year }} <span class="float-right">{{month_balance.savings}} €</span></h1>
+  <p>Have spent {{month_balance.outgoigns + month_balance.expenses}} € and want to save {{month_balance.goal}} € </p>
   <section class="row">
     <aside class="column column-20">
       <kab-nav></kab-nav>

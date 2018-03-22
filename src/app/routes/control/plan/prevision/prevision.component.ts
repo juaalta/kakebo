@@ -3,7 +3,8 @@ import {
   OnInit,
   EventEmitter,
   Output,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  Input
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
@@ -31,6 +32,8 @@ import { JournalEntry } from "@routes/control/models/journal_entry.model";
   styles: []
 })
 export class PrevisionComponent implements OnInit {
+  @Input() public year:number;
+  @Input() public month:number;
   @Output() public saveProjection = new EventEmitter<JournalEntry>();
   public form: FormGroup;
   constructor(private formbuilder: FormBuilder) {}
@@ -38,19 +41,20 @@ export class PrevisionComponent implements OnInit {
   ngOnInit() {
     this.form = this.formbuilder.group({
       kind: [null, Validators.required],
-      date: new Date().toISOString().substring(0, 10),
+      date: [new Date(this.year, this.month,1,12,0,0).toISOString().substring(0, 10)],
       description: "",
       amount: [0, Validators.required]
     });
   }
 
   public submit(newProjection) {
-    newProjection.year = new Date(newProjection.date).getFullYear();
-    newProjection.month = new Date(newProjection.date).getMonth() + 1;
+    newProjection.year = this.year;
+    newProjection.month = this.month;
+    newProjection.day = new Date(newProjection.date).getDay();
     this.saveProjection.emit(newProjection);
     this.form.reset({
       amount: 0,
-      date: new Date().toISOString().substring(0, 10)
+      date:new Date(this.year, this.month,1,12,0,0).toISOString().substring(0, 10)
     });
   }
 }

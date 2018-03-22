@@ -3,7 +3,8 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  Input
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
@@ -32,6 +33,8 @@ import { expenseCategories } from "@routes/control/models/expenseCategories.mode
   styles: []
 })
 export class NewExpenseComponent implements OnInit {
+  @Input() public year:number;
+  @Input() public month:number;
   @Output() saveExpense = new EventEmitter<JournalEntry>();
   public expenseCategories = expenseCategories;
   public form: FormGroup;
@@ -40,7 +43,7 @@ export class NewExpenseComponent implements OnInit {
   ngOnInit() {
     this.form = this.formbuilder.group({
       expenseCategory: [null, Validators.required],
-      date: new Date().toISOString().substring(0, 10),
+      date: new Date(this.year, this.month,1,12,0,0).toISOString().substring(0, 10),
       description: "",
       amount: [0, Validators.required]
     });
@@ -48,8 +51,9 @@ export class NewExpenseComponent implements OnInit {
 
   public submit(expense: any) {
     expense.kind = "E";
-    expense.year = new Date(expense.date).getFullYear();
-    expense.month = new Date(expense.date).getMonth() + 1;
+    expense.year = this.year;
+    expense.month = this.month;
+    expense.day = new Date(expense.date).getDay();
     this.saveExpense.emit(expense);
   }
 }

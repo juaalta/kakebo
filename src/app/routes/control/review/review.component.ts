@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { ControlService } from "@routes/control/control.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "kab-review",
@@ -14,22 +15,22 @@ import { ControlService } from "@routes/control/control.service";
   <main>
     <dd>
       <dt>Total Income</dt>
-      <dd><strong>{{month_balance.incomes}}</strong></dd>
+      <dd><strong>{{month_balance.incomes}} €</strong></dd>
     <dl>
       <dt>Regular Outgoings</dt>
-      <dd><strong>{{month_balance.outgoigns}}</strong></dd>
+      <dd><strong>{{month_balance.outgoigns}} €</strong></dd>
     </dl>
     <dl>
       <dt>Expenses</dt>
-      <dd><strong>{{month_balance.expenses}}</strong></dd>
+      <dd><strong>{{month_balance.expenses}} €</strong></dd>
     </dl>
     <dl>
       <dt>Savings</dt>
-      <dd><strong>{{month_balance.savings}}</strong></dd>
+      <dd><strong>{{month_balance.savings}} €</strong></dd>
     </dl>
     <dl>
       <dt>Available</dt>
-      <dd><strong>{{month_balance.available}}</strong></dd>
+      <dd><strong>{{month_balance.available}} €</strong></dd>
     </dl>
   </main>
   `,
@@ -37,18 +38,17 @@ import { ControlService } from "@routes/control/control.service";
 })
 export class ReviewComponent implements OnInit {
   public month_balance: MonthBalance;
-  private year = 2018;
-  private month = 3;
 
-  constructor(private controlService: ControlService) {}
+  constructor(private activatedRoute: ActivatedRoute,private controlService: ControlService) {}
 
   ngOnInit() {
     this.getData();
   }
   private getData() {
+    const params = this.activatedRoute.parent.parent.snapshot.params;
     this.month_balance = this.controlService.getMonthBalance(
-      this.year,
-      this.month
+      +params["y"],
+      +params["m"]
     );
   }
 }
