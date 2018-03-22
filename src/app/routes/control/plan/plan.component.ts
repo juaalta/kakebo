@@ -18,7 +18,8 @@ import { ActivatedRoute } from "@angular/router";
       <h2>
         Left to expend<span class="float-right">{{month_balance.available}}  €</span>
       </h2>
-      </header>
+      <kab-widget-header [target]="month_balance"></kab-widget-header>
+    </header>
     <main class="column">
       <kab-goal *ngIf="month_balance.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
       <section class="row">
@@ -43,8 +44,8 @@ export class PlanComponent implements OnInit {
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance;
-  private year :number;
-  private month :number;
+  public year :number;
+  public month :number;
 
   constructor(private activatedRoute: ActivatedRoute, private planService: PlanService) {}
 

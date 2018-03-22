@@ -11,6 +11,7 @@ import { ActivatedRoute } from "@angular/router";
       <h2>
         Track your expenses. Left to expend <span class="float-right">{{month_balance.available}} €</span>
       </h2>
+      <kab-widget-header [target]="month_balance"></kab-widget-header>
     </header>
     <main class="column">
       <section>
@@ -26,8 +27,8 @@ import { ActivatedRoute } from "@angular/router";
 export class TrackComponent implements OnInit {
   public expenses: JournalEntry[] = [];
   public month_balance: MonthBalance;
-  private year :number;
-  private month :number;
+  public year :number;
+  public month :number;
   constructor(private activatedRoute: ActivatedRoute,private controlService: ControlService) {}
 
   ngOnInit() {
