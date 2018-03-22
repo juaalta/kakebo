@@ -30,16 +30,7 @@ export class PlanService {
     this.getData(projectedEntry.year, projectedEntry.month);
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
-    this._month_balance = this.controlService.getMonthBalance(
-      savingsGoal.year,
-      savingsGoal.month
-    );
-    this._month_balance.goal = savingsGoal.goalToSave;
-    this.controlService.updateMonthGoal(this._month_balance);
-    this._month_balance = this.controlService.getMonthBalance(
-      savingsGoal.year,
-      savingsGoal.month
-    );
+    this._month_balance = this.controlService.updateMonthGoal(savingsGoal);
   }
 
   private getData(year: number, month: number) {

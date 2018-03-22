@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
+import { SavingsGoal } from "@routes/control/models/savings_goal.model";
 
 @Injectable()
 export class ControlService {
@@ -63,28 +64,37 @@ export class ControlService {
       m => m.year === year && m.month === month
     );
     if (!monthBalance) {
-      monthBalance = {
-        ...this._newMonthBalance,
-        year,
-        month
-      };
-      this.postMonthBalance(monthBalance);
+      monthBalance = this.createNewMonthBalance(year,month);
     }
     return monthBalance;
   }
-  public updateMonthGoal(monthBalance: MonthBalance) {
-    let monthBalanceTemp = this.getMonthBalance(
-      monthBalance.year,
-      monthBalance.month
-    );
-    monthBalanceTemp.goal = monthBalance.goal;
-    this.calculateMonthBalance(monthBalance.year, monthBalance.month);
+  public createNewMonthBalance(year: number, month: number):MonthBalance{
+    const monthBalance = {
+      ...this._newMonthBalance,
+      year,
+      month
+    };
+    this.postMonthBalance(monthBalance);
+    return monthBalance;
+  }
+  public updateMonthBalance(aMonthBalance: MonthBalance){
+    this.deleteFromArray(this._monthBalances, aMonthBalance);
+    this.postToArray(this._monthBalances,aMonthBalance);
   }
   public deleteMonthBalance(aMonthBalance: MonthBalance) {
     this._monthBalances = this.deleteFromArray(
       this._monthBalances,
       aMonthBalance
     );
+  }
+  public updateMonthGoal(savingsGoal: SavingsGoal ) :MonthBalance{
+    const year = savingsGoal.year;
+    const month = savingsGoal.month;
+    let monthBalanceTemp = this.getMonthBalance(year,month);
+    monthBalanceTemp.goal = savingsGoal.goalToSave;
+    this.updateMonthBalance(monthBalanceTemp);
+    this.calculateMonthBalance(year,month);
+    return this.getMonthBalance(year,month);
   }
 
   private calculateMonthBalance(year: number, month: number) {
