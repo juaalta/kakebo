@@ -3,6 +3,7 @@ export interface JournalEntry {
   year: number;
   month: number;
   day: number;
+  date: Date;
   kind: "I" | "O" | "E";
   expenseCategory?: "G" | "L" | "C" | "E";
   description?: string;

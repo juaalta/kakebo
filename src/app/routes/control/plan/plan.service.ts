@@ -3,6 +3,8 @@ import { ControlService } from "@routes/control/control.service";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
+import { tap } from "rxjs/operators";
+import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class PlanService {
@@ -21,29 +23,44 @@ export class PlanService {
   }
   constructor(private controlService: ControlService) {}
 
-  public postNewEntry(projectedEntry: JournalEntry) {
-    this.controlService.postJournalEntry(projectedEntry);
-    this.getData(projectedEntry.year, projectedEntry.month);
+  public postNewEntry$(projectedEntry: JournalEntry): Observable<any> {
+    return this.controlService.postJournalEntry$(projectedEntry);
   }
-  public deleteEntry(projectedEntry: JournalEntry) {
-    this.controlService.deleteJournalEntry(projectedEntry);
-    this.getData(projectedEntry.year, projectedEntry.month);
+  public deleteEntry$(projectedEntry: JournalEntry): Observable<any> {
+    return this.controlService.deleteJournalEntry$(projectedEntry);
   }
-  public setGoalForMonth(savingsGoal: SavingsGoal) {
-    this._month_balance = this.controlService.updateMonthGoal(savingsGoal);
+  public setGoalForMonth$(savingsGoal: SavingsGoal): Observable<any> {
+    return this.controlService.updateMonthGoal$(savingsGoal);
   }
 
-  private getData(year: number, month: number) {
-    this._projectedIncomes = this.controlService.filterJournalsByKind(
-      "I",
-      year,
-      month
+  public getData$(year: number, month: number): Observable<any> {
+    return this.controlService.getJournalEntries$().pipe(
+      tap(() => {
+        this._projectedIncomes = this.controlService.filterJournalsByKind(
+          "I",
+          year,
+          month
+        );
+        this._projectedOutgoings = this.controlService.filterJournalsByKind(
+          "O",
+          year,
+          month
+        );
+      })
     );
-    this._projectedOutgoings = this.controlService.filterJournalsByKind(
-      "O",
-      year,
-      month
-    );
-    this._month_balance = this.controlService.getMonthBalance(year, month);
+  }
+
+  public getMonthBalance$(year: number, month: number) {
+    return this.controlService
+      .getMonthBalances$()
+      .pipe(
+        tap(
+          () =>
+            (this._month_balance = this.controlService.getMonthBalance(
+              year,
+              month
+            ))
+        )
+      );
   }
 }

@@ -27,33 +27,47 @@ import { ActivatedRoute } from "@angular/router";
 export class TrackComponent implements OnInit {
   public expenses: JournalEntry[] = [];
   public month_balance: MonthBalance;
-  public year :number;
-  public month :number;
-  constructor(private activatedRoute: ActivatedRoute,private controlService: ControlService) {}
+  public year: number;
+  public month: number;
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private controlService: ControlService
+  ) {}
 
   ngOnInit() {
-    this.getData();
-  }
-  public saveNewExpense(expense: JournalEntry) {
-    this.controlService.postJournalEntry(expense);
-    this.getData();
-  }
-  public deleteExpense(expense: JournalEntry) {
-    this.controlService.deleteJournalEntry(expense);
-    this.getData();
-  }
-  private getData() {
     const params = this.activatedRoute.parent.parent.snapshot.params;
     this.year = +params["y"];
     this.month = +params["m"];
-    this.expenses = this.controlService.filterJournalsByKind(
-      "E",
-      this.year,
-      this.month
-    );
-    this.month_balance = this.controlService.getMonthBalance(
-      this.year,
-      this.month
-    );
+    this.getData();
+  }
+  public saveNewExpense(expense: JournalEntry) {
+    this.controlService
+      .postJournalEntry$(expense)
+      .subscribe(() => this.getData());
+  }
+  public deleteExpense(expense: JournalEntry) {
+    this.controlService
+      .deleteJournalEntry$(expense)
+      .subscribe(() => this.getData());
+  }
+  private getData() {
+    this.controlService.getJournalEntries$().subscribe(journalEntries => {
+      this.expenses = this.controlService.findJournalsByKind(
+        journalEntries,
+        "E",
+        this.year,
+        this.month
+      );
+    });
+    this.controlService
+      .getMonthBalances$()
+      .subscribe(
+        monthBalances =>
+          (this.month_balance = this.controlService.findMonthBalance(
+            monthBalances,
+            this.year,
+            this.month
+          ))
+      );
   }
 }

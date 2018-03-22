@@ -38,17 +38,30 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class ReviewComponent implements OnInit {
   public month_balance: MonthBalance;
+  public year: number;
+  public month: number;
 
-  constructor(private activatedRoute: ActivatedRoute,private controlService: ControlService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private controlService: ControlService
+  ) {}
 
   ngOnInit() {
+    const params = this.activatedRoute.parent.parent.snapshot.params;
+    this.year = +params["y"];
+    this.month = +params["m"];
     this.getData();
   }
   private getData() {
-    const params = this.activatedRoute.parent.parent.snapshot.params;
-    this.month_balance = this.controlService.getMonthBalance(
-      +params["y"],
-      +params["m"]
-    );
+    this.controlService
+      .getMonthBalances$()
+      .subscribe(
+        monthBalances =>
+          (this.month_balance = this.controlService.findMonthBalance(
+            monthBalances,
+            this.year,
+            this.month
+          ))
+      );
   }
 }

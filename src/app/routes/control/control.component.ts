@@ -24,6 +24,8 @@ import { ControlService } from "@routes/control/control.service";
 export class ControlComponent implements OnInit {
   public savings = 0;
   public month_balance: MonthBalance;
+  public year: number;
+  public month: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,10 +33,18 @@ export class ControlComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const params = this.activatedRoute.snapshot.params;
-    this.month_balance = this.controlService.getMonthBalance(
-      +params["y"],
-      +params["m"]
-    );
+    const params = this.activatedRoute.parent.parent.snapshot.params;
+    this.year = +params["y"];
+    this.month = +params["m"];
+    this.controlService
+      .getMonthBalances$()
+      .subscribe(
+        monthBalances =>
+          (this.month_balance = this.controlService.findMonthBalance(
+            monthBalances,
+            this.year,
+            this.month
+          ))
+      );
   }
 }

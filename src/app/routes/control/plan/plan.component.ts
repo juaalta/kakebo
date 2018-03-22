@@ -7,8 +7,8 @@ import {
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
-import { PlanService } from "@routes/control/plan/plan.service";
 import { ActivatedRoute } from "@angular/router";
+import { ControlService } from "@routes/control/control.service";
 
 @Component({
   selector: "kab-plan",
@@ -44,34 +44,61 @@ export class PlanComponent implements OnInit {
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance;
-  public year :number;
-  public month :number;
+  public year: number;
+  public month: number;
 
-  constructor(private activatedRoute: ActivatedRoute, private planService: PlanService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private controlService: ControlService
+  ) {}
 
   ngOnInit() {
+    const params = this.activatedRoute.parent.parent.snapshot.params;
+    this.year = +params["y"];
+    this.month = +params["m"];
     this.getData();
   }
 
   public saveNewEntry(projectedEntry: JournalEntry) {
-    this.planService.postNewEntry(projectedEntry);
-    this.getData();
+    this.controlService
+      .postJournalEntry$(projectedEntry)
+      .subscribe(() => this.getData());
   }
   public deleteAnEntry(projectedEntry: JournalEntry) {
-    this.planService.deleteEntry(projectedEntry);
-    this.getData();
+    this.controlService
+      .deleteJournalEntry$(projectedEntry)
+      .subscribe(() => this.getData());
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
-    this.planService.setGoalForMonth(savingsGoal);
-    this.getData();
+    this.controlService
+      .updateMonthGoal$(savingsGoal)
+      .subscribe(() => this.getData());
   }
 
   private getData() {
-    const params = this.activatedRoute.parent.parent.snapshot.params;
-    this.year = +params["y"];
-    this.month = +params["m"];
-    this.projectedIncomes = this.planService.projectedIncomes;
-    this.projectedOutgoings = this.planService.projectedOutgoins;
-    this.month_balance = this.planService.month_balance;
+    this.controlService.getJournalEntries$().subscribe(journalEntries => {
+      this.projectedIncomes = this.controlService.findJournalsByKind(
+        journalEntries,
+        "I",
+        this.year,
+        this.month
+      );
+      this.projectedOutgoings = this.controlService.findJournalsByKind(
+        journalEntries,
+        "O",
+        this.year,
+        this.month
+      );
+    });
+    this.controlService
+      .getMonthBalances$()
+      .subscribe(
+        monthBalances =>
+          (this.month_balance = this.controlService.findMonthBalance(
+            monthBalances,
+            this.year,
+            this.month
+          ))
+      );
   }
 }
