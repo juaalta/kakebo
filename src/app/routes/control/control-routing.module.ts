@@ -1,10 +1,12 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ControlComponent } from "@routes/control/control.component";
+import { ControlGuard } from "@routes/control/control.guard";
 
 const routes: Routes = [
   {
     path: "",
+    canActivate: [ControlGuard],
     component: ControlComponent,
     children: [
       {

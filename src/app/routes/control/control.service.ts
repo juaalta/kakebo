@@ -2,11 +2,12 @@ import { Injectable } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
-
+import { ControlApiService } from "@routes/control/control-api.service";
+import { tap } from "rxjs/operators";
 @Injectable()
 export class ControlService {
   private _journalEntries: JournalEntry[] = [];
-  private _monthBalances: MonthBalance[] = [];
+  private _monthBalances: MonthBalance[];
   private _newMonthBalance: MonthBalance = {
     year: 0,
     month: 0,
@@ -18,29 +19,48 @@ export class ControlService {
     available: 0
   };
   get journalEntries() {
-    return [...this._journalEntries];
+    if(this._journalEntries)
+      return [...this._journalEntries];
+    else return null;
   }
 
   get mothBalances() {
-    return this._monthBalances;
+    if(this._monthBalances)
+      return [...this._monthBalances];
+    else return null;
   }
 
-  constructor() {}
+  constructor(private controlApi: ControlApiService) {
+  
+  }
 
-  public postJournalEntry(newJournalEntry: JournalEntry) {
-    newJournalEntry._id = new Date().getTime().toString();
-    this._journalEntries = this.postToArray(
-      this._journalEntries,
-      newJournalEntry
-    );
-    this.calculateMonthBalance(newJournalEntry.year, newJournalEntry.month);
+  public getData(){
+    console.log('chain')
+    return this.controlApi.getMonthBalancesList$()
+    .pipe(tap(monthBalances=>{
+      this._monthBalances = monthBalances?monthBalances:[];
+      console.log(this._monthBalances);
+      this.controlApi.getJournalEntriesList$().subscribe(journalEntries=>this._journalEntries = journalEntries?journalEntries:[]);
+    }));
+  }
+
+  public postJournalEntry(aJournalEntry: JournalEntry) {
+    this.controlApi.postJournalEntry$(aJournalEntry).subscribe(res=>{
+      this._journalEntries = this.postToArray(
+        this._journalEntries,
+        aJournalEntry
+      );
+      this.calculateMonthBalance(aJournalEntry.year, aJournalEntry.month);
+    });
   }
   public deleteJournalEntry(aJournalEntry: JournalEntry) {
-    this._journalEntries = this.deleteFromArray(
-      this._journalEntries,
-      aJournalEntry
-    );
-    this.calculateMonthBalance(aJournalEntry.year, aJournalEntry.month);
+    this.controlApi.deleteJournalEntry$(aJournalEntry).subscribe(res=>{
+      this._journalEntries = this.deleteFromArray(
+        this._journalEntries,
+        aJournalEntry
+      );
+      this.calculateMonthBalance(aJournalEntry.year, aJournalEntry.month);
+    });
   }
   public filterJournalsByKind(
     kind: string,
@@ -52,12 +72,13 @@ export class ControlService {
     );
   }
 
-  public postMonthBalance(newMonthBalance: MonthBalance) {
-    newMonthBalance._id = new Date().getTime().toString();
-    this._monthBalances = this.postToArray(
-      this._monthBalances,
-      newMonthBalance
-    );
+  public postMonthBalance(aMonthBalance: MonthBalance) {
+    this.controlApi.postMonthBalance$(aMonthBalance).subscribe(res=>{
+      this._monthBalances = this.postToArray(
+        this._monthBalances,
+        aMonthBalance
+      );
+    });
   }
   public getMonthBalance(year: number, month: number): MonthBalance {
     let monthBalance = this._monthBalances.find(
@@ -78,13 +99,20 @@ export class ControlService {
     return monthBalance;
   }
   public updateMonthBalance(aMonthBalance: MonthBalance){
-    this.deleteFromArray(this._monthBalances, aMonthBalance);
-    this.postToArray(this._monthBalances,aMonthBalance);
+    this.controlApi.deleteMonthBalance$(aMonthBalance).subscribe(res=>{
+        this.deleteFromArray(this._monthBalances, aMonthBalance);
+        this.controlApi.postMonthBalance$(aMonthBalance).subscribe(res=>{
+          this.postToArray(this._monthBalances,aMonthBalance);
+        });
+    });
   }
   public deleteMonthBalance(aMonthBalance: MonthBalance) {
-    this._monthBalances = this.deleteFromArray(
-      this._monthBalances,
-      aMonthBalance
+    this.controlApi.deleteMonthBalance$(aMonthBalance).subscribe(res=>{
+      this._monthBalances = this.deleteFromArray(
+        this._monthBalances,
+        aMonthBalance
+      );
+    }
     );
   }
   public updateMonthGoal(savingsGoal: SavingsGoal ) :MonthBalance{
