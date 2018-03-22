@@ -9,7 +9,7 @@ import { ActivatedRoute } from "@angular/router";
   template: `
     <header>
       <h2>
-        Track your expenses. Left to expend <span class="float-right">{{month_balance.available}} €</span>
+        Track your expenses. Left to expend <span class="float-right">{{month_balance?.available}} €</span>
       </h2>
       <kab-widget-header [target]="month_balance"></kab-widget-header>
     </header>
@@ -60,14 +60,9 @@ export class TrackComponent implements OnInit {
       );
     });
     this.controlService
-      .getMonthBalances$()
-      .subscribe(
-        monthBalances =>
-          (this.month_balance = this.controlService.findMonthBalance(
-            monthBalances,
-            this.year,
-            this.month
-          ))
-      );
+      .getMonthBalance$(this.year, this.month)
+      .subscribe(monthBalance => {
+        this.month_balance = monthBalance;
+      });
   }
 }

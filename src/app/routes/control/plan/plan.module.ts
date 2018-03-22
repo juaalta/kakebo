@@ -8,7 +8,6 @@ import { IncomesComponent } from "./incomes/incomes.component";
 import { OutgoingsComponent } from "./outgoings/outgoings.component";
 import { PrevisionComponent } from "./prevision/prevision.component";
 import { GoalComponent } from "@routes/control/plan/goal/goal.component";
-import { PlanService } from "@routes/control/plan/plan.service";
 
 @NgModule({
   imports: [CommonModule, PlanRoutingModule, ComponentsModule],
@@ -19,6 +18,6 @@ import { PlanService } from "@routes/control/plan/plan.service";
     PrevisionComponent,
     GoalComponent
   ],
-  providers:[PlanService]
+  providers: []
 })
 export class PlanningModule {}

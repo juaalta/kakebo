@@ -6,7 +6,7 @@ import { ControlGuard } from "@routes/control/control.guard";
 const routes: Routes = [
   {
     path: "",
-    canActivate: [ControlGuard],
+    // canActivate: [ControlGuard],
     component: ControlComponent,
     children: [
       {

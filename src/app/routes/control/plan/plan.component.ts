@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectionStrategy
-} from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
@@ -12,16 +7,15 @@ import { ControlService } from "@routes/control/control.service";
 
 @Component({
   selector: "kab-plan",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <header>
       <h2>
-        Left to expend<span class="float-right">{{month_balance.available}}  €</span>
+        Left to expend<span class="float-right">{{month_balance?.available}}  €</span>
       </h2>
       <kab-widget-header [target]="month_balance"></kab-widget-header>
     </header>
     <main class="column">
-      <kab-goal *ngIf="month_balance.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
+      <kab-goal *ngIf="month_balance?.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
       <section class="row">
         <section class="column column-40">
           <kab-prevision class="container" [year]="year" [month]="month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
@@ -90,15 +84,11 @@ export class PlanComponent implements OnInit {
         this.month
       );
     });
+    this.month_balance = null;
     this.controlService
-      .getMonthBalances$()
-      .subscribe(
-        monthBalances =>
-          (this.month_balance = this.controlService.findMonthBalance(
-            monthBalances,
-            this.year,
-            this.month
-          ))
-      );
+      .getMonthBalance$(this.year, this.month)
+      .subscribe(monthBalance => {
+        this.month_balance = monthBalance;
+      });
   }
 }

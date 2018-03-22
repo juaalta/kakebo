@@ -1,11 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { ControlService } from "@routes/control/control.service";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "kab-review",
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
   <header>
     <h2>
@@ -15,22 +14,22 @@ import { ActivatedRoute } from "@angular/router";
   <main>
     <dd>
       <dt>Total Income</dt>
-      <dd><strong>{{month_balance.incomes}} €</strong></dd>
+      <dd><strong>{{month_balance?.incomes}} €</strong></dd>
     <dl>
       <dt>Regular Outgoings</dt>
-      <dd><strong>{{month_balance.outgoigns}} €</strong></dd>
+      <dd><strong>{{month_balance?.outgoigns}} €</strong></dd>
     </dl>
     <dl>
       <dt>Expenses</dt>
-      <dd><strong>{{month_balance.expenses}} €</strong></dd>
+      <dd><strong>{{month_balance?.expenses}} €</strong></dd>
     </dl>
     <dl>
       <dt>Savings</dt>
-      <dd><strong>{{month_balance.savings}} €</strong></dd>
+      <dd><strong>{{month_balance?.savings}} €</strong></dd>
     </dl>
     <dl>
       <dt>Available</dt>
-      <dd><strong>{{month_balance.available}} €</strong></dd>
+      <dd><strong>{{month_balance?.available}} €</strong></dd>
     </dl>
   </main>
   `,
@@ -54,14 +53,9 @@ export class ReviewComponent implements OnInit {
   }
   private getData() {
     this.controlService
-      .getMonthBalances$()
-      .subscribe(
-        monthBalances =>
-          (this.month_balance = this.controlService.findMonthBalance(
-            monthBalances,
-            this.year,
-            this.month
-          ))
-      );
+      .getMonthBalance$(this.year, this.month)
+      .subscribe(monthBalance => {
+        this.month_balance = monthBalance;
+      });
   }
 }

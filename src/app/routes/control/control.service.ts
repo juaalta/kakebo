@@ -3,7 +3,7 @@ import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
 import { ControlApiService } from "@routes/control/control-api.service";
-import { tap } from "rxjs/operators";
+import { tap, map } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
 @Injectable()
 export class ControlService {
@@ -26,6 +26,14 @@ export class ControlService {
   public getMonthBalances$(): Observable<MonthBalance[]> {
     return this.controlApi.getMonthBalancesList$();
   }
+  public getMonthBalance$(
+    year: number,
+    month: number
+  ): Observable<MonthBalance> {
+    return this.controlApi
+      .getMonthBalancesList$()
+      .pipe(map(list => this.findMonthBalance(list, year, month)));
+  }
   public postJournalEntry$(aJournalEntry: JournalEntry) {
     return this.controlApi.postJournalEntry$(aJournalEntry).pipe(
       tap(res => {
@@ -38,10 +46,13 @@ export class ControlService {
           switch (aJournalEntry.kind) {
             case "I":
               monthBalance.incomes += aJournalEntry.amount;
+              break;
             case "O":
               monthBalance.outgoigns += aJournalEntry.amount;
+              break;
             case "E":
               monthBalance.expenses += aJournalEntry.amount;
+              break;
           }
           monthBalance.savings =
             monthBalance.incomes -
@@ -65,10 +76,13 @@ export class ControlService {
           switch (aJournalEntry.kind) {
             case "I":
               monthBalance.incomes -= aJournalEntry.amount;
+              break;
             case "O":
               monthBalance.outgoigns -= aJournalEntry.amount;
+              break;
             case "E":
               monthBalance.expenses -= aJournalEntry.amount;
+              break;
           }
           monthBalance.savings =
             monthBalance.incomes -
@@ -124,7 +138,7 @@ export class ControlService {
       p => p.kind === kind && p.year === year && p.month === month
     );
   }
-  public findMonthBalance(
+  private findMonthBalance(
     monthBalances: MonthBalance[],
     year: number,
     month: number

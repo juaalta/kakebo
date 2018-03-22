@@ -23,7 +23,7 @@ import { SavingsGoal } from "@routes/control/models/savings_goal.model";
           <label for="goalToSave">Goal to save</label>
           <section class="column ">
             <input type="number" formControlName="goalToSave">
-            <p><small>Maximun {{month_balance.savings}}</small></p>
+            <p><small>Maximun {{month_balance?.savings}}</small></p>
           </section>
           <input class="button-primary" type="submit" value="Save Goal" [disabled]="form.invalid">
         </section>
