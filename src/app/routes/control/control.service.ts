@@ -1,10 +1,11 @@
-import { Injectable, ANALYZE_FOR_ENTRY_COMPONENTS } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
 import { ControlApiService } from "@routes/control/control-api.service";
 import { tap, map } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
+import { StoreService } from "@routes/control/store.service";
 @Injectable()
 export class ControlService {
   private _newMonthBalance: MonthBalance = {
@@ -18,85 +19,47 @@ export class ControlService {
     available: 0
   };
 
-  constructor(private controlApi: ControlApiService) {}
+  constructor(
+    private controlApi: ControlApiService,
+    private store: StoreService
+  ) {
+    this.store.getMonthMustBeRecalculated$.subscribe(
+      this.calculateMonthBalances
+    );
+  }
 
   public getJournalEntries$(): Observable<JournalEntry[]> {
-    return this.controlApi.getJournalEntriesList$();
-  }
-  public getMonthBalances$(): Observable<MonthBalance[]> {
-    return this.controlApi.getMonthBalancesList$();
-  }
-  public getMonthBalance$(
-    year: number,
-    month: number
-  ): Observable<MonthBalance> {
     return this.controlApi
-      .getMonthBalancesList$()
-      .pipe(map(list => this.findMonthBalance(list, year, month)));
+      .getJournalEntriesList$()
+      .pipe(tap(res => this.store.setJournalEntries(res)));
   }
   public postJournalEntry$(aJournalEntry: JournalEntry) {
-    return this.controlApi.postJournalEntry$(aJournalEntry).pipe(
-      tap(res => {
-        this.getMonthBalances$().subscribe(mothBalances => {
-          const monthBalance = this.findMonthBalance(
-            mothBalances,
-            aJournalEntry.year,
-            aJournalEntry.month
-          );
-          switch (aJournalEntry.kind) {
-            case "I":
-              monthBalance.incomes += aJournalEntry.amount;
-              break;
-            case "O":
-              monthBalance.outgoigns += aJournalEntry.amount;
-              break;
-            case "E":
-              monthBalance.expenses += aJournalEntry.amount;
-              break;
-          }
-          monthBalance.savings =
-            monthBalance.incomes -
-            monthBalance.outgoigns -
-            monthBalance.expenses;
-          monthBalance.available = monthBalance.savings - monthBalance.goal;
-          this.updateMonthBalance$(monthBalance).subscribe();
-        });
-      })
-    );
+    return this.controlApi
+      .postJournalEntry$(aJournalEntry)
+      .pipe(tap(res => this.store.postJournalEntry(res)));
   }
-  public deleteJournalEntry$(aJournalEntry: JournalEntry): Observable<any> {
-    return this.controlApi.deleteJournalEntry$(aJournalEntry).pipe(
-      tap(res => {
-        this.getMonthBalances$().subscribe(mothBalances => {
-          const monthBalance = this.findMonthBalance(
-            mothBalances,
-            aJournalEntry.year,
-            aJournalEntry.month
-          );
-          switch (aJournalEntry.kind) {
-            case "I":
-              monthBalance.incomes -= aJournalEntry.amount;
-              break;
-            case "O":
-              monthBalance.outgoigns -= aJournalEntry.amount;
-              break;
-            case "E":
-              monthBalance.expenses -= aJournalEntry.amount;
-              break;
-          }
-          monthBalance.savings =
-            monthBalance.incomes -
-            monthBalance.outgoigns -
-            monthBalance.expenses;
-          monthBalance.available = monthBalance.savings - monthBalance.goal;
-          this.updateMonthBalance$(monthBalance).subscribe();
-        });
-      })
-    );
+  public deleteJournalEntry$(aJournalEntry: JournalEntry) {
+    return this.controlApi
+      .postJournalEntry$(aJournalEntry)
+      .pipe(tap(res => this.store.deleteJournalEntry(res)));
+  }
+
+  public getMonthBalances$(): Observable<MonthBalance[]> {
+    return this.controlApi
+      .getMonthBalancesList$()
+      .pipe(tap(res => this.store.setMonthBalances(res)));
   }
   public postMonthBalance$(aMonthBalance: MonthBalance): Observable<any> {
-    return this.controlApi.postMonthBalance$(aMonthBalance);
+    return this.controlApi
+      .postMonthBalance$(aMonthBalance)
+      .pipe(tap(res => this.store.postMonthBalance(res)));
   }
+  public putMonthBalance$(aMonthBalance: MonthBalance): Observable<any> {
+    return this.controlApi
+      .putMonthBalance$(aMonthBalance)
+      .pipe(tap(res => this.store.putMonthBalance(res)));
+  }
+
   public createNewMonthBalance(year: number, month: number): MonthBalance {
     const monthBalance = {
       ...this._newMonthBalance,
@@ -105,44 +68,33 @@ export class ControlService {
     };
     return monthBalance;
   }
-  public updateMonthBalance$(aMonthBalance: MonthBalance): Observable<any> {
-    return this.controlApi.deleteMonthBalance$(aMonthBalance).pipe(
-      tap(res => {
-        this.controlApi.postMonthBalance$(aMonthBalance).subscribe();
-      })
-    );
-  }
-  public deleteMonthBalance$(aMonthBalance: MonthBalance): Observable<any> {
-    return this.controlApi.deleteMonthBalance$(aMonthBalance);
-  }
-  public updateMonthGoal$(savingsGoal: SavingsGoal): Observable<any> {
-    const year = savingsGoal.year;
-    const month = savingsGoal.month;
-    return this.controlApi.getMonthBalancesList$().pipe(
-      tap(monthBalances => {
-        const monthBalance = this.findMonthBalance(monthBalances, year, month);
-        monthBalance.goal = savingsGoal.goalToSave;
-        monthBalance.available = monthBalance.savings - monthBalance.goal;
-        this.updateMonthBalance$(monthBalance);
-      })
-    );
-  }
 
-  public findJournalsByKind(
-    journalEntries: JournalEntry[],
+  private calculateMonthBalances = (mb: MonthBalance): any => {
+    const entries = this.store.getStateSnapshot().journalEntries;
+    mb.incomes = this.sumAmount(
+      this.filterJournalsByKind(entries, "I", mb.year, mb.month)
+    );
+    mb.outgoigns = this.sumAmount(
+      this.filterJournalsByKind(entries, "O", mb.year, mb.month)
+    );
+    mb.expenses = this.sumAmount(
+      this.filterJournalsByKind(entries, "E", mb.year, mb.month)
+    );
+    mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
+    mb.available = mb.savings - mb.goal;
+    this.postMonthBalance$(mb).subscribe();
+  };
+
+  private filterJournalsByKind(
+    entries: JournalEntry[],
     kind: string,
     year: number,
     month: number
   ): JournalEntry[] {
-    return journalEntries.filter(
+    return entries.filter(
       p => p.kind === kind && p.year === year && p.month === month
     );
   }
-  private findMonthBalance(
-    monthBalances: MonthBalance[],
-    year: number,
-    month: number
-  ): MonthBalance {
-    return monthBalances.find(m => m.year === year && m.month === month);
-  }
+  private sumAmount = (entries: JournalEntry[]): number =>
+    entries.map(p => p.amount).reduce((state, current) => state + current, 0);
 }

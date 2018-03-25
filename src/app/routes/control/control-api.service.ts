@@ -16,23 +16,27 @@ export class ControlApiService {
     return this.http.get<JournalEntry[]>(this.urlJournalEntries);
   }
 
-  public postJournalEntry$(JournalEntry: JournalEntry): Observable<any> {
-    return this.http.post(this.urlJournalEntries, JournalEntry);
+  public postJournalEntry$(journalEntry: JournalEntry): Observable<any> {
+    return this.http.post(this.urlJournalEntries, journalEntry);
   }
 
-  public deleteJournalEntry$(JournalEntry: JournalEntry): Observable<any> {
-    return this.http.delete(this.urlJournalEntries + JournalEntry._id);
+  public deleteJournalEntry$(journalEntry: JournalEntry): Observable<any> {
+    return this.http.delete(this.urlJournalEntries + journalEntry._id);
   }
 
   public getMonthBalancesList$(): Observable<MonthBalance[]> {
     return this.http.get<MonthBalance[]>(this.urlMonthBalances);
   }
 
-  public postMonthBalance$(MonthBalance: MonthBalance): Observable<any> {
-    return this.http.post(this.urlMonthBalances, MonthBalance);
+  public postMonthBalance$(monthBalance: MonthBalance): Observable<any> {
+    return this.http.post(this.urlMonthBalances, monthBalance);
   }
 
-  public deleteMonthBalance$(MonthBalance: MonthBalance): Observable<any> {
-    return this.http.delete(this.urlMonthBalances + MonthBalance._id);
+  public putMonthBalance$(monthBalance: MonthBalance): Observable<any> {
+    return this.http.put(this.urlMonthBalances + monthBalance._id, monthBalance);
+  }
+
+  public deleteMonthBalance$(monthBalance: MonthBalance): Observable<any> {
+    return this.http.delete(this.urlMonthBalances + monthBalance._id);
   }
 }
