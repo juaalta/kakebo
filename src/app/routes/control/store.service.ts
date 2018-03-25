@@ -25,7 +25,7 @@ export class StoreService {
   constructor() {}
 
   public setMonthBalances(monthBalances: MonthBalance[]) {
-    this.state.monthBalances = [...monthBalances];
+    if (monthBalances) this.state.monthBalances = [...monthBalances];
     this.monthBalance$.next(this.state.monthBalances);
   }
   public postMonthBalance(monthBalance: MonthBalance) {
@@ -40,7 +40,7 @@ export class StoreService {
   }
 
   public setJournalEntries(journalEntries: JournalEntry[]) {
-    this.state.journalEntries = [...journalEntries];
+    if (journalEntries) this.state.journalEntries = [...journalEntries];
     this.journalEntries$.next(this.state.journalEntries);
   }
   public postJournalEntry(journalEntry: JournalEntry) {

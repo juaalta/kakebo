@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { ControlService } from "@routes/control/control.service";
+import { StoreService } from "@routes/control/store.service";
 
 @Component({
   selector: "kab-contol",
@@ -27,7 +28,8 @@ export class ControlComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private controlService: ControlService
+    private controlService: ControlService,
+    private store: StoreService
   ) {}
 
   ngOnInit() {
@@ -36,19 +38,22 @@ export class ControlComponent implements OnInit {
     this.month = +params["m"];
     this.month_balance = null;
     this.controlService
-      .getMonthBalance$(this.year, this.month)
-      .subscribe(monthBalance => {
-        if (monthBalance) {
-          this.month_balance = monthBalance;
-        } else {
-          this.month_balance = this.controlService.createNewMonthBalance(
-            this.year,
-            this.month
-          );
-          this.controlService
-            .postMonthBalance$(this.month_balance)
-            .subscribe(monthBalance => (this.month_balance = monthBalance));
-        }
-      });
+      .getMonthBalances$()
+      .subscribe(() =>
+        this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated)
+      );
   }
+
+  private onMonthBalancesUpdated = (monthBalances: MonthBalance[]) => {
+    this.month_balance = monthBalances.find(
+      m => m.year === this.year && m.month === this.month
+    );
+    if (!this.month_balance) {
+      this.month_balance = this.controlService.createNewMonthBalance(
+        this.year,
+        this.month
+      );
+      this.controlService.postMonthBalance$(this.month_balance);
+    }
+  };
 }
