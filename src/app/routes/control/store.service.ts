@@ -42,19 +42,16 @@ export class StoreService {
       this.state.monthBalances = [...monthBalances];
     }
     this.filterMonthBalance();
-    this.monthBalance$.next(this.state.monthBalance);
   }
   public postMonthBalance(monthBalance: MonthBalance) {
     this.state.monthBalances = [...this.state.monthBalances, monthBalance];
     this.filterMonthBalance();
-    this.monthBalance$.next(this.state.monthBalance);
   }
   public putMonthBalance(monthBalance: MonthBalance) {
     this.state.monthBalances = this.state.monthBalances.map(
       m => (m._id === monthBalance._id ? monthBalance : m)
     );
     this.filterMonthBalance();
-    this.monthBalance$.next(this.state.monthBalance);
   }
 
   public setJournalEntries(journalEntries: JournalEntry[]) {
@@ -121,5 +118,6 @@ export class StoreService {
     this.state.monthBalance = this.state.monthBalances.find(
       m => m.year === this.state.year && m.month === this.state.month
     );
+    this.monthBalance$.next(this.state.monthBalance);
   }
 }
