@@ -3,6 +3,7 @@ import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { ControlService } from "@routes/control/control.service";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { ActivatedRoute } from "@angular/router";
+import { StoreService } from "@routes/control/store.service";
 
 @Component({
   selector: "kab-track",
@@ -31,38 +32,35 @@ export class TrackComponent implements OnInit {
   public month: number;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private controlService: ControlService
+    private controlService: ControlService,
+    private store: StoreService
   ) {}
 
   ngOnInit() {
     const params = this.activatedRoute.parent.parent.snapshot.params;
     this.year = +params["y"];
     this.month = +params["m"];
-    this.getData();
+    this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
+    this.store.getJournalEntries$.subscribe(this.onJournalEntriesUpdated);
   }
   public saveNewExpense(expense: JournalEntry) {
-    this.controlService
-      .postJournalEntry$(expense)
-      .subscribe(() => this.getData());
+    this.controlService.postJournalEntry$(expense).subscribe();
   }
   public deleteExpense(expense: JournalEntry) {
-    this.controlService
-      .deleteJournalEntry$(expense)
-      .subscribe(() => this.getData());
+    this.controlService.deleteJournalEntry$(expense).subscribe();
   }
-  private getData() {
-    this.controlService.getJournalEntries$().subscribe(journalEntries => {
-      this.expenses = this.controlService.findJournalsByKind(
-        journalEntries,
-        "E",
-        this.year,
-        this.month
-      );
-    });
-    this.controlService
-      .getMonthBalance$(this.year, this.month)
-      .subscribe(monthBalance => {
-        this.month_balance = monthBalance;
-      });
-  }
+
+  private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
+    this.month_balance = monthBalances.find(
+      m => m.year === this.year && m.month === this.month
+    );
+  };
+  private onJournalEntriesUpdated = (journalEntries: JournalEntry[]): void => {
+    this.expenses = this.controlService.filterJournalsByKind(
+      journalEntries,
+      "E",
+      this.year,
+      this.month
+    );
+  };
 }

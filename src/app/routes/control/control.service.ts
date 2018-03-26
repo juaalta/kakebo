@@ -69,7 +69,7 @@ export class ControlService {
     return monthBalance;
   }
 
-  private calculateMonthBalances = (mb: MonthBalance): any => {
+  public calculateMonthBalances = (mb: MonthBalance): any => {
     const entries = this.store.getStateSnapshot().journalEntries;
     mb.incomes = this.sumAmount(
       this.filterJournalsByKind(entries, "I", mb.year, mb.month)
@@ -82,10 +82,10 @@ export class ControlService {
     );
     mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
     mb.available = mb.savings - mb.goal;
-    this.postMonthBalance$(mb).subscribe();
+    this.putMonthBalance$(mb).subscribe();
   };
 
-  private filterJournalsByKind(
+  public filterJournalsByKind(
     entries: JournalEntry[],
     kind: string,
     year: number,

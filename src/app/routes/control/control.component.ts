@@ -42,18 +42,23 @@ export class ControlComponent implements OnInit {
       .subscribe(() =>
         this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated)
       );
+    this.controlService.getJournalEntries$().subscribe();
   }
 
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]) => {
-    this.month_balance = monthBalances.find(
-      m => m.year === this.year && m.month === this.month
-    );
+    if (monthBalances) {
+      this.month_balance = monthBalances.find(
+        m => m.year === this.year && m.month === this.month
+      );
+    }
     if (!this.month_balance) {
       this.month_balance = this.controlService.createNewMonthBalance(
         this.year,
         this.month
       );
-      this.controlService.postMonthBalance$(this.month_balance);
+      this.controlService
+        .postMonthBalance$(this.month_balance)
+        .subscribe(res => console.log("postMonthBalance got", res));
     }
   };
 }

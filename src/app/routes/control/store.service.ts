@@ -59,6 +59,7 @@ export class StoreService {
     const month = this.state.monthBalances.find(
       m => m.year === journalEntry.year && m.month === journalEntry.month
     );
-    this.monthMustBeRecalculated$.next(month);
+    if (month) this.monthMustBeRecalculated$.next(month);
+    else console.warn("No month, state: ", this.state);
   }
 }
