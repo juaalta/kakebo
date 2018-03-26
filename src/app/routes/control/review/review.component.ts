@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
-import { ControlService } from "@routes/control/control.service";
-import { ActivatedRoute } from "@angular/router";
 import { StoreService } from "@routes/control/store.service";
 
 @Component({
@@ -39,16 +37,9 @@ import { StoreService } from "@routes/control/store.service";
 export class ReviewComponent implements OnInit {
   public month_balance: MonthBalance;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private controlService: ControlService,
-    private store: StoreService
-  ) {}
+  constructor(private store: StoreService) {}
 
   ngOnInit() {
-    const params = this.activatedRoute.parent.parent.snapshot.params;
-    this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
+    this.store.getMonthBalance$.subscribe(res => (this.month_balance = res));
   }
-  private onMonthBalancesUpdated = (monthBalance: MonthBalance) =>
-    (this.month_balance = monthBalance);
 }

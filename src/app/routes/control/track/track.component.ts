@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { ControlService } from "@routes/control/control.service";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
-import { ActivatedRoute } from "@angular/router";
 import { StoreService } from "@routes/control/store.service";
 
 @Component({
@@ -29,14 +28,12 @@ export class TrackComponent implements OnInit {
   public expenses: JournalEntry[] = [];
   public month_balance: MonthBalance;
   constructor(
-    private activatedRoute: ActivatedRoute,
     private controlService: ControlService,
     private store: StoreService
   ) {}
 
   ngOnInit() {
-    const params = this.activatedRoute.parent.parent.snapshot.params;
-    this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
+    this.store.getMonthBalance$.subscribe(res => (this.month_balance = res));
     this.store.getExpenses$.subscribe(res => (this.expenses = res));
   }
   public saveNewExpense(expense: JournalEntry) {
@@ -45,7 +42,4 @@ export class TrackComponent implements OnInit {
   public deleteExpense(expense: JournalEntry) {
     this.controlService.deleteJournalEntry(expense);
   }
-
-  private onMonthBalancesUpdated = (monthBalance: MonthBalance) =>
-    (this.month_balance = monthBalance);
 }

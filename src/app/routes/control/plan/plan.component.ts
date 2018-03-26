@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
-import { ActivatedRoute } from "@angular/router";
 import { ControlService } from "@routes/control/control.service";
 import { StoreService } from "@routes/control/store.service";
 
@@ -41,14 +40,12 @@ export class PlanComponent implements OnInit {
   public month_balance: MonthBalance;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private controlService: ControlService,
     private store: StoreService
   ) {}
 
   ngOnInit() {
-    const params = this.activatedRoute.parent.parent.snapshot.params;
-    this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
+    this.store.getMonthBalance$.subscribe(res => (this.month_balance = res));
     this.store.getProjectedIncomes$.subscribe(
       res => (this.projectedIncomes = res)
     );
@@ -67,7 +64,4 @@ export class PlanComponent implements OnInit {
     this.month_balance.goal = savingsGoal.goalToSave;
     this.controlService.putMonthBalance(this.month_balance);
   }
-
-  private onMonthBalancesUpdated = (monthBalance: MonthBalance) =>
-    (this.month_balance = monthBalance);
 }
