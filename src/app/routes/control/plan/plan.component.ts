@@ -57,19 +57,21 @@ export class PlanComponent implements OnInit {
   }
 
   public saveNewEntry(projectedEntry: JournalEntry) {
-    this.controlService.postJournalEntry$(projectedEntry).subscribe();
+    this.controlService.postJournalEntry(projectedEntry);
   }
   public deleteAnEntry(projectedEntry: JournalEntry) {
-    this.controlService.deleteJournalEntry$(projectedEntry).subscribe();
+    this.controlService.deleteJournalEntry(projectedEntry);
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
     this.month_balance.goal = savingsGoal.goalToSave;
-    this.controlService.calculateMonthBalances(this.month_balance);
+    this.controlService.putMonthBalance(this.month_balance);
   }
 
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
-    this.month_balance = monthBalances.find(
-      m => m.year === this.year && m.month === this.month
+    this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
+      monthBalances,
+      this.year,
+      this.month
     );
   };
   private onJournalEntriesUpdated = (journalEntries: JournalEntry[]): void => {

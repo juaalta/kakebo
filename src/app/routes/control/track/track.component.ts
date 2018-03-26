@@ -44,15 +44,17 @@ export class TrackComponent implements OnInit {
     this.store.getJournalEntries$.subscribe(this.onJournalEntriesUpdated);
   }
   public saveNewExpense(expense: JournalEntry) {
-    this.controlService.postJournalEntry$(expense).subscribe();
+    this.controlService.postJournalEntry(expense);
   }
   public deleteExpense(expense: JournalEntry) {
-    this.controlService.deleteJournalEntry$(expense).subscribe();
+    this.controlService.deleteJournalEntry(expense);
   }
 
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
-    this.month_balance = monthBalances.find(
-      m => m.year === this.year && m.month === this.month
+    this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
+      monthBalances,
+      this.year,
+      this.month
     );
   };
   private onJournalEntriesUpdated = (journalEntries: JournalEntry[]): void => {

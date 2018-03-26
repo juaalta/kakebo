@@ -54,8 +54,10 @@ export class ReviewComponent implements OnInit {
     this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
   }
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
-    this.month_balance = monthBalances.find(
-      m => m.year === this.year && m.month === this.month
+    this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
+      monthBalances,
+      this.year,
+      this.month
     );
   };
 }

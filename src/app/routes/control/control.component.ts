@@ -37,28 +37,16 @@ export class ControlComponent implements OnInit {
     this.year = +params["y"];
     this.month = +params["m"];
     this.month_balance = null;
-    this.controlService
-      .getMonthBalances$()
-      .subscribe(() =>
-        this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated)
-      );
-    this.controlService.getJournalEntries$().subscribe();
+    this.controlService.getMonthBalances(this.year, this.month);
+    this.controlService.getJournalEntries();
+    this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
   }
 
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]) => {
-    if (monthBalances) {
-      this.month_balance = monthBalances.find(
-        m => m.year === this.year && m.month === this.month
-      );
-    }
-    if (!this.month_balance) {
-      this.month_balance = this.controlService.createNewMonthBalance(
-        this.year,
-        this.month
-      );
-      this.controlService
-        .postMonthBalance$(this.month_balance)
-        .subscribe(res => console.log("postMonthBalance got", res));
-    }
+    this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
+      monthBalances,
+      this.year,
+      this.month
+    );
   };
 }
