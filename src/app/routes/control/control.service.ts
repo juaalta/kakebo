@@ -40,8 +40,8 @@ export class ControlService {
   }
   public deleteJournalEntry$(aJournalEntry: JournalEntry) {
     return this.controlApi
-      .postJournalEntry$(aJournalEntry)
-      .pipe(tap(res => this.store.deleteJournalEntry(res)));
+      .deleteJournalEntry$(aJournalEntry)
+      .pipe(tap(res => this.store.deleteJournalEntry(aJournalEntry)));
   }
 
   public getMonthBalances$(): Observable<MonthBalance[]> {

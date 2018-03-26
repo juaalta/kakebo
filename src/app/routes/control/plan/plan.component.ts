@@ -65,7 +65,6 @@ export class PlanComponent implements OnInit {
   public setGoalForMonth(savingsGoal: SavingsGoal) {
     this.month_balance.goal = savingsGoal.goalToSave;
     this.controlService.calculateMonthBalances(this.month_balance);
-    //this.controlService.putMonthBalance$(this.month_balance).subscribe();
   }
 
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
