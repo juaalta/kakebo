@@ -19,7 +19,7 @@ import { StoreService } from "@routes/control/store.service";
       <kab-goal *ngIf="month_balance?.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
       <section class="row">
         <section class="column column-40">
-          <kab-prevision class="container" [year]="year" [month]="month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
+          <kab-prevision class="container" [year]="month_balance?.year" [month]="month_balance?.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
         </section>
         <section class="column column-50 column-offset-10">
           <kab-incomes class="container" 
@@ -39,8 +39,6 @@ export class PlanComponent implements OnInit {
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance;
-  public year: number;
-  public month: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -50,8 +48,6 @@ export class PlanComponent implements OnInit {
 
   ngOnInit() {
     const params = this.activatedRoute.parent.parent.snapshot.params;
-    this.year = +params["y"];
-    this.month = +params["m"];
     this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
     this.store.getProjectedIncomes$.subscribe(
       res => (this.projectedIncomes = res)
@@ -72,11 +68,6 @@ export class PlanComponent implements OnInit {
     this.controlService.putMonthBalance(this.month_balance);
   }
 
-  private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
-    this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
-      monthBalances,
-      this.year,
-      this.month
-    );
-  };
+  private onMonthBalancesUpdated = (monthBalance: MonthBalance) =>
+    (this.month_balance = monthBalance);
 }

@@ -24,7 +24,7 @@ export class ControlService {
     private store: StoreService
   ) {
     this.store.getMonthMustBeRecalculated$.subscribe(
-      this.calculateMonthBalances
+      this.putMonthBalance.bind(this)
     );
   }
 
@@ -46,11 +46,8 @@ export class ControlService {
   public getMonthBalances(year: number, month: number): void {
     this.controlApi.getMonthBalancesList$().subscribe(res => {
       this.store.setMonthBalances(res);
-      const month_balance = this.filterMonthBalanceByYearMonth(
-        res,
-        year,
-        month
-      );
+
+      const month_balance = this.store.getStateSnapshot().monthBalance;
       if (!month_balance) {
         this.postMonthBalance(year, month);
       }
@@ -86,17 +83,6 @@ export class ControlService {
     mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
     mb.available = mb.savings - mb.goal;
   };
-
-  public filterMonthBalanceByYearMonth(
-    monthBalances: MonthBalance[],
-    year: number,
-    month: number
-  ) {
-    if (monthBalances) {
-      return monthBalances.find(m => m.year === year && m.month === month);
-    }
-    return null;
-  }
   private sumAmount = (entries: JournalEntry[]): number =>
     entries.map(p => p.amount).reduce((state, current) => state + current, 0);
 }

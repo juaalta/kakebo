@@ -9,17 +9,17 @@ import { JournalEntry } from "@routes/control/models/journal_entry.model";
 export class StoreService {
   private state = {
     monthBalances: [],
-    journalEntries: []
+    journalEntries: [],
+    year: 0,
+    month: 0,
+    monthBalance: null
   };
   public getStateSnapshot = () => {
     return { ...this.state };
   };
 
-  private monthBalance$ = new BehaviorSubject<MonthBalance[]>([]);
+  private monthBalance$ = new BehaviorSubject<MonthBalance>(null);
   public getMonthBalance$ = this.monthBalance$.asObservable();
-
-  private journalEntries$ = new BehaviorSubject<JournalEntry[]>([]);
-  // public getJournalEntries$ = this.journalEntries$.asObservable();
 
   private projectedIncomes$ = new BehaviorSubject<JournalEntry[]>([]);
   public getProjectedIncomes$ = this.projectedIncomes$.asObservable();
@@ -33,28 +33,40 @@ export class StoreService {
 
   constructor() {}
 
+  public setYearMonth(year: number, month: number) {
+    this.state = { ...this.state, year, month };
+  }
+
   public setMonthBalances(monthBalances: MonthBalance[]) {
-    if (monthBalances) this.state.monthBalances = [...monthBalances];
-    this.monthBalance$.next(this.state.monthBalances);
+    if (monthBalances) {
+      this.state.monthBalances = [...monthBalances];
+    }
+    this.filterMonthBalance();
+    this.monthBalance$.next(this.state.monthBalance);
   }
   public postMonthBalance(monthBalance: MonthBalance) {
     this.state.monthBalances = [...this.state.monthBalances, monthBalance];
-    this.monthBalance$.next(this.state.monthBalances);
+    this.filterMonthBalance();
+    this.monthBalance$.next(this.state.monthBalance);
   }
   public putMonthBalance(monthBalance: MonthBalance) {
     this.state.monthBalances = this.state.monthBalances.map(
       m => (m._id === monthBalance._id ? monthBalance : m)
     );
-    this.monthBalance$.next(this.state.monthBalances);
+    this.filterMonthBalance();
+    this.monthBalance$.next(this.state.monthBalance);
   }
 
   public setJournalEntries(journalEntries: JournalEntry[]) {
-    if (journalEntries) this.state.journalEntries = [...journalEntries];
-    this.journalEntries$.next(this.state.journalEntries);
+    if (journalEntries) {
+      this.state.journalEntries = [...journalEntries];
+      this.updateIncomes(this.state.year, this.state.month);
+      this.updateOutgoins(this.state.year, this.state.month);
+      this.updateExpenses(this.state.year, this.state.month);
+    }
   }
   public postJournalEntry(journalEntry: JournalEntry) {
     this.state.journalEntries = [...this.state.journalEntries, journalEntry];
-    this.journalEntries$.next(this.state.journalEntries);
     this.mustUpdateEntries(journalEntry);
     this.monthMustRecalculate(journalEntry);
   }
@@ -62,7 +74,6 @@ export class StoreService {
     this.state.journalEntries = this.state.journalEntries.filter(
       j => j._id !== journalEntry._id
     );
-    this.journalEntries$.next(this.state.journalEntries);
     this.mustUpdateEntries(journalEntry);
     this.monthMustRecalculate(journalEntry);
   }
@@ -103,10 +114,12 @@ export class StoreService {
     );
   }
   private monthMustRecalculate(journalEntry: JournalEntry) {
-    const month = this.state.monthBalances.find(
-      m => m.year === journalEntry.year && m.month === journalEntry.month
+    this.filterMonthBalance();
+    this.monthMustBeRecalculated$.next(this.state.monthBalance);
+  }
+  private filterMonthBalance(): void {
+    this.state.monthBalance = this.state.monthBalances.find(
+      m => m.year === this.state.year && m.month === this.state.month
     );
-    if (month) this.monthMustBeRecalculated$.next(month);
-    else console.warn("No month, state: ", this.state);
   }
 }

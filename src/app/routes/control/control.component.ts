@@ -37,16 +37,12 @@ export class ControlComponent implements OnInit {
     this.year = +params["y"];
     this.month = +params["m"];
     this.month_balance = null;
+    this.store.setYearMonth(this.year, this.month);
     this.controlService.getMonthBalances(this.year, this.month);
     this.controlService.getJournalEntries();
     this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
   }
 
-  private onMonthBalancesUpdated = (monthBalances: MonthBalance[]) => {
-    this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
-      monthBalances,
-      this.year,
-      this.month
-    );
-  };
+  private onMonthBalancesUpdated = (monthBalance: MonthBalance) =>
+    (this.month_balance = monthBalance);
 }

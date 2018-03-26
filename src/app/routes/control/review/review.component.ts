@@ -38,8 +38,6 @@ import { StoreService } from "@routes/control/store.service";
 })
 export class ReviewComponent implements OnInit {
   public month_balance: MonthBalance;
-  public year: number;
-  public month: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,15 +47,8 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit() {
     const params = this.activatedRoute.parent.parent.snapshot.params;
-    this.year = +params["y"];
-    this.month = +params["m"];
     this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
   }
-  private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
-    this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
-      monthBalances,
-      this.year,
-      this.month
-    );
-  };
+  private onMonthBalancesUpdated = (monthBalance: MonthBalance) =>
+    (this.month_balance = monthBalance);
 }
