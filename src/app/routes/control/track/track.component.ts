@@ -41,7 +41,7 @@ export class TrackComponent implements OnInit {
     this.year = +params["y"];
     this.month = +params["m"];
     this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
-    this.store.getJournalEntries$.subscribe(this.onJournalEntriesUpdated);
+    this.store.getExpenses$.subscribe(res => (this.expenses = res));
   }
   public saveNewExpense(expense: JournalEntry) {
     this.controlService.postJournalEntry(expense);
@@ -53,14 +53,6 @@ export class TrackComponent implements OnInit {
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
     this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
       monthBalances,
-      this.year,
-      this.month
-    );
-  };
-  private onJournalEntriesUpdated = (journalEntries: JournalEntry[]): void => {
-    this.expenses = this.controlService.filterJournalsByKind(
-      journalEntries,
-      "E",
       this.year,
       this.month
     );

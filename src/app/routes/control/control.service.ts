@@ -75,28 +75,18 @@ export class ControlService {
   private calculateMonthBalances = (mb: MonthBalance): any => {
     const entries = this.store.getStateSnapshot().journalEntries;
     mb.incomes = this.sumAmount(
-      this.filterJournalsByKind(entries, "I", mb.year, mb.month)
+      this.store.filterJournalsByKind("I", mb.year, mb.month)
     );
     mb.outgoigns = this.sumAmount(
-      this.filterJournalsByKind(entries, "O", mb.year, mb.month)
+      this.store.filterJournalsByKind("O", mb.year, mb.month)
     );
     mb.expenses = this.sumAmount(
-      this.filterJournalsByKind(entries, "E", mb.year, mb.month)
+      this.store.filterJournalsByKind("E", mb.year, mb.month)
     );
     mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
     mb.available = mb.savings - mb.goal;
   };
 
-  public filterJournalsByKind(
-    entries: JournalEntry[],
-    kind: string,
-    year: number,
-    month: number
-  ): JournalEntry[] {
-    return entries.filter(
-      p => p.kind === kind && p.year === year && p.month === month
-    );
-  }
   public filterMonthBalanceByYearMonth(
     monthBalances: MonthBalance[],
     year: number,

@@ -17,16 +17,24 @@ export class StoreService {
 
   private monthBalance$ = new BehaviorSubject<MonthBalance[]>([]);
   public getMonthBalance$ = this.monthBalance$.asObservable();
+
   private journalEntries$ = new BehaviorSubject<JournalEntry[]>([]);
-  public getJournalEntries$ = this.journalEntries$.asObservable();
+  // public getJournalEntries$ = this.journalEntries$.asObservable();
+
+  private projectedIncomes$ = new BehaviorSubject<JournalEntry[]>([]);
+  public getProjectedIncomes$ = this.projectedIncomes$.asObservable();
+  private projectedOutgoings$ = new BehaviorSubject<JournalEntry[]>([]);
+  public getProjectedOutgoings$ = this.projectedOutgoings$.asObservable();
+  private expenses$ = new BehaviorSubject<JournalEntry[]>([]);
+  public getExpenses$ = this.expenses$.asObservable();
+
   private monthMustBeRecalculated$ = new Subject<MonthBalance>();
   public getMonthMustBeRecalculated$ = this.monthMustBeRecalculated$.asObservable();
 
   constructor() {}
 
   public setMonthBalances(monthBalances: MonthBalance[]) {
-    if (monthBalances)
-      this.state.monthBalances = [...monthBalances];
+    if (monthBalances) this.state.monthBalances = [...monthBalances];
     this.monthBalance$.next(this.state.monthBalances);
   }
   public postMonthBalance(monthBalance: MonthBalance) {
@@ -47,6 +55,7 @@ export class StoreService {
   public postJournalEntry(journalEntry: JournalEntry) {
     this.state.journalEntries = [...this.state.journalEntries, journalEntry];
     this.journalEntries$.next(this.state.journalEntries);
+    this.mustUpdateEntries(journalEntry);
     this.monthMustRecalculate(journalEntry);
   }
   public deleteJournalEntry(journalEntry: JournalEntry) {
@@ -54,7 +63,44 @@ export class StoreService {
       j => j._id !== journalEntry._id
     );
     this.journalEntries$.next(this.state.journalEntries);
+    this.mustUpdateEntries(journalEntry);
     this.monthMustRecalculate(journalEntry);
+  }
+  private mustUpdateEntries(journalEntry: JournalEntry) {
+    switch (journalEntry.kind) {
+      case "I":
+        this.updateIncomes(journalEntry.year, journalEntry.month);
+        break;
+      case "O":
+        this.updateOutgoins(journalEntry.year, journalEntry.month);
+        break;
+      case "E":
+        this.updateExpenses(journalEntry.year, journalEntry.month);
+        break;
+      default:
+        break;
+    }
+  }
+  private updateIncomes(year: number, month: number) {
+    const incomes = this.filterJournalsByKind("I", year, month);
+    this.projectedIncomes$.next(incomes);
+  }
+  private updateOutgoins(year: number, month: number) {
+    const incomes = this.filterJournalsByKind("O", year, month);
+    this.projectedOutgoings$.next(incomes);
+  }
+  private updateExpenses(year: number, month: number) {
+    const incomes = this.filterJournalsByKind("E", year, month);
+    this.expenses$.next(incomes);
+  }
+  public filterJournalsByKind(
+    kind: string,
+    year: number,
+    month: number
+  ): JournalEntry[] {
+    return this.state.journalEntries.filter(
+      p => p.kind === kind && p.year === year && p.month === month
+    );
   }
   private monthMustRecalculate(journalEntry: JournalEntry) {
     const month = this.state.monthBalances.find(

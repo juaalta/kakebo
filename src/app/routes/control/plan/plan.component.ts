@@ -53,7 +53,12 @@ export class PlanComponent implements OnInit {
     this.year = +params["y"];
     this.month = +params["m"];
     this.store.getMonthBalance$.subscribe(this.onMonthBalancesUpdated);
-    this.store.getJournalEntries$.subscribe(this.onJournalEntriesUpdated);
+    this.store.getProjectedIncomes$.subscribe(
+      res => (this.projectedIncomes = res)
+    );
+    this.store.getProjectedOutgoings$.subscribe(
+      res => (this.projectedOutgoings = res)
+    );
   }
 
   public saveNewEntry(projectedEntry: JournalEntry) {
@@ -70,20 +75,6 @@ export class PlanComponent implements OnInit {
   private onMonthBalancesUpdated = (monthBalances: MonthBalance[]): void => {
     this.month_balance = this.controlService.filterMonthBalanceByYearMonth(
       monthBalances,
-      this.year,
-      this.month
-    );
-  };
-  private onJournalEntriesUpdated = (journalEntries: JournalEntry[]): void => {
-    this.projectedIncomes = this.controlService.filterJournalsByKind(
-      journalEntries,
-      "I",
-      this.year,
-      this.month
-    );
-    this.projectedOutgoings = this.controlService.filterJournalsByKind(
-      journalEntries,
-      "O",
       this.year,
       this.month
     );
