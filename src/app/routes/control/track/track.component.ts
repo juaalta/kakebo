@@ -33,8 +33,8 @@ export class TrackComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.getMonthBalance$.subscribe(res => (this.month_balance = res));
-    this.store.getExpenses$.subscribe(res => (this.expenses = res));
+    this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
+    this.store.selectExpenses$.subscribe(res => (this.expenses = res));
   }
   public saveNewExpense(expense: JournalEntry) {
     this.controlService.postJournalEntry(expense);

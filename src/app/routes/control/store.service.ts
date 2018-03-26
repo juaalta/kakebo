@@ -19,17 +19,17 @@ export class StoreService {
   };
 
   private monthBalance$ = new BehaviorSubject<MonthBalance>(null);
-  public getMonthBalance$ = this.monthBalance$.asObservable();
+  public selectMonthBalance$ = this.monthBalance$.asObservable();
 
   private projectedIncomes$ = new BehaviorSubject<JournalEntry[]>([]);
-  public getProjectedIncomes$ = this.projectedIncomes$.asObservable();
+  public selectProjectedIncomes$ = this.projectedIncomes$.asObservable();
   private projectedOutgoings$ = new BehaviorSubject<JournalEntry[]>([]);
-  public getProjectedOutgoings$ = this.projectedOutgoings$.asObservable();
+  public selectProjectedOutgoings$ = this.projectedOutgoings$.asObservable();
   private expenses$ = new BehaviorSubject<JournalEntry[]>([]);
-  public getExpenses$ = this.expenses$.asObservable();
+  public selectExpenses$ = this.expenses$.asObservable();
 
   private monthMustBeRecalculated$ = new Subject<MonthBalance>();
-  public getMonthMustBeRecalculated$ = this.monthMustBeRecalculated$.asObservable();
+  public selectMonthMustBeRecalculated$ = this.monthMustBeRecalculated$.asObservable();
 
   constructor() {}
 

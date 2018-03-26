@@ -45,11 +45,11 @@ export class PlanComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.getMonthBalance$.subscribe(res => (this.month_balance = res));
-    this.store.getProjectedIncomes$.subscribe(
+    this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
+    this.store.selectProjectedIncomes$.subscribe(
       res => (this.projectedIncomes = res)
     );
-    this.store.getProjectedOutgoings$.subscribe(
+    this.store.selectProjectedOutgoings$.subscribe(
       res => (this.projectedOutgoings = res)
     );
   }

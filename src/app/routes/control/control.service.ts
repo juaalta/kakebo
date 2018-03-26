@@ -23,7 +23,7 @@ export class ControlService {
     private controlApi: ControlApiService,
     private store: StoreService
   ) {
-    this.store.getMonthMustBeRecalculated$.subscribe(
+    this.store.selectMonthMustBeRecalculated$.subscribe(
       this.putMonthBalance.bind(this)
     );
   }
@@ -46,7 +46,6 @@ export class ControlService {
   public getMonthBalances(year: number, month: number): void {
     this.controlApi.getMonthBalancesList$().subscribe(res => {
       this.store.setMonthBalances(res);
-
       const month_balance = this.store.getStateSnapshot().monthBalance;
       if (!month_balance) {
         this.postMonthBalance(year, month);

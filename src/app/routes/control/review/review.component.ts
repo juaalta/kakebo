@@ -40,6 +40,6 @@ export class ReviewComponent implements OnInit {
   constructor(private store: StoreService) {}
 
   ngOnInit() {
-    this.store.getMonthBalance$.subscribe(res => (this.month_balance = res));
+    this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
   }
 }
