@@ -108,7 +108,6 @@ export class StoreService {
   private postJournalEntry(journalEntry: JournalEntry) {
     this.state.journalEntries = [...this.state.journalEntries, journalEntry];
     this.updateEntriesByKind(journalEntry);
-    this.calculateMonthBalance();
   }
 
   public dispatchDeleteJournalEntry(aJournalEntry: JournalEntry) {
@@ -121,7 +120,6 @@ export class StoreService {
       j => j._id !== journalEntry._id
     );
     this.updateEntriesByKind(journalEntry);
-    this.calculateMonthBalance();
   }
 
   private updateEntriesByKind(journalEntry: JournalEntry) {
@@ -138,6 +136,7 @@ export class StoreService {
       default:
         break;
     }
+    this.calculateMonthBalance();
   }
   private updateIncomes() {
     const incomes = this.filterJournalsByKind("I");
@@ -176,7 +175,7 @@ export class StoreService {
         mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
         mb.available = mb.savings - mb.goal;
       }
-      this.monthBalance$.next(this.state.monthBalance);
+      this.monthBalance$.next({ ...this.state.monthBalance });
     }
   };
   private sumAmount = (entries: JournalEntry[]): number =>
