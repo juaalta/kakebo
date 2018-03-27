@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { SavingsGoal } from "@routes/control/models/savings_goal.model";
-import { ControlService } from "@routes/control/control.service";
 import { StoreService } from "@routes/control/store.service";
 
 @Component({
@@ -58,7 +57,6 @@ export class PlanComponent implements OnInit {
     this.store.dispatchDeleteJournalEntry(projectedEntry);
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
-    this.month_balance.goal = savingsGoal.goalToSave;
-    this.store.dispatchPutMonthBalance(this.month_balance);
+    this.store.dispatchSetGoalMonth(savingsGoal.goalToSave);
   }
 }

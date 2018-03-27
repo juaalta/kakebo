@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { JournalEntry } from "@routes/control/models/journal_entry.model";
-import { ControlService } from "@routes/control/control.service";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
 import { StoreService } from "@routes/control/store.service";
 

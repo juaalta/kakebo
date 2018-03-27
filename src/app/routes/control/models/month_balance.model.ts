@@ -3,7 +3,7 @@ export interface MonthBalance {
   year: number;
   month: number;
   incomes: number;
-  outgoigns: number;
+  outgoings: number;
   expenses: number;
   savings: number;
   goal: number;

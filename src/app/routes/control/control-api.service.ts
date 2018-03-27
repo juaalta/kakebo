@@ -13,7 +13,7 @@ export class ControlApiService {
     year: 0,
     month: 0,
     incomes: 0,
-    outgoigns: 0,
+    outgoings: 0,
     expenses: 0,
     savings: 0,
     goal: 0,

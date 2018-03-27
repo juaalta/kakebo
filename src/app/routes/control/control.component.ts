@@ -1,15 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MonthBalance } from "@routes/control/models/month_balance.model";
-import { ControlService } from "@routes/control/control.service";
 import { StoreService } from "@routes/control/store.service";
 
 @Component({
   selector: "kab-contol",
   template: `
   <section *ngIf="month_balance">
-    <h1>Balance on {{month | monthName }} of {{ year }} <span class="float-right">{{month_balance?.savings}} €</span></h1>
-    <p>Have spent {{month_balance?.outgoigns + month_balance?.expenses}} € and want to save {{month_balance?.goal}} € </p>
+    <h1>Balance on {{month | monthName }} of {{ year }} <span class="float-right">{{month_balance.savings}} €</span></h1>
+    <p>Have spent {{month_balance.outgoings + month_balance?.expenses}} € and want to save {{month_balance.goal}} € </p>
     <kab-widget-header [target]="month_balance"></kab-widget-header>
     <section class="row">
       <aside class="column column-20">

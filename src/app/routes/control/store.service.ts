@@ -57,10 +57,14 @@ export class StoreService {
     this.reduceSetCurrentMonthBalance();
   }
 
-  public dispatchPutMonthBalance(aMonthBalance: MonthBalance): void {
+  public dispatchSetGoalMonth(goal: number): void {
+    this.state.monthBalance = { ...this.state.monthBalance, goal };
+    this.dispatchPutMonthBalance();
+  }
+  private dispatchPutMonthBalance(): void {
     this.calculateMonthBalance();
     this.controlApi
-      .putMonthBalance$(aMonthBalance)
+      .putMonthBalance$(this.state.monthBalance)
       .subscribe(res => this.reducePutMonthBalance(res));
   }
   private reducePutMonthBalance(monthBalance: MonthBalance) {
@@ -78,9 +82,9 @@ export class StoreService {
   private reduceJournalEntries(journalEntries: JournalEntry[]) {
     if (journalEntries) {
       this.state.journalEntries = [...journalEntries];
-      this.updateIncomes();
-      this.updateOutgoins();
-      this.updateExpenses();
+      this.projectedIncomes$.next(this.filterJournalsByKind("I"));
+      this.projectedOutgoings$.next(this.filterJournalsByKind("O"));
+      this.expenses$.next(this.filterJournalsByKind("E"));
       this.reduceSetCurrentMonthBalance();
     }
   }
@@ -116,30 +120,18 @@ export class StoreService {
   private updateEntriesByKind(journalEntry: JournalEntry) {
     switch (journalEntry.kind) {
       case "I":
-        this.updateIncomes();
+        this.projectedIncomes$.next(this.filterJournalsByKind("I"));
         break;
       case "O":
-        this.updateOutgoins();
+        this.projectedOutgoings$.next(this.filterJournalsByKind("O"));
         break;
       case "E":
-        this.updateExpenses();
+        this.expenses$.next(this.filterJournalsByKind("E"));
         break;
       default:
         break;
     }
-    this.calculateMonthBalance();
-  }
-  private updateIncomes() {
-    const incomes = this.filterJournalsByKind("I");
-    this.projectedIncomes$.next(incomes);
-  }
-  private updateOutgoins() {
-    const incomes = this.filterJournalsByKind("O");
-    this.projectedOutgoings$.next(incomes);
-  }
-  private updateExpenses() {
-    const incomes = this.filterJournalsByKind("E");
-    this.expenses$.next(incomes);
+    this.dispatchPutMonthBalance();
   }
   private filterJournalsByKind(kind: string): JournalEntry[] {
     return this.state.journalEntries.filter(
@@ -154,9 +146,9 @@ export class StoreService {
     if (mb) {
       if (this.state.journalEntries) {
         mb.incomes = this.sumAmount(this.filterJournalsByKind("I"));
-        mb.outgoigns = this.sumAmount(this.filterJournalsByKind("O"));
+        mb.outgoings = this.sumAmount(this.filterJournalsByKind("O"));
         mb.expenses = this.sumAmount(this.filterJournalsByKind("E"));
-        mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
+        mb.savings = mb.incomes - mb.outgoings - mb.expenses;
         mb.available = mb.savings - mb.goal;
       }
       this.monthBalance$.next({ ...this.state.monthBalance });

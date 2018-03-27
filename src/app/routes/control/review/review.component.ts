@@ -17,7 +17,7 @@ import { StoreService } from "@routes/control/store.service";
       <dd><strong>{{month_balance.incomes}} €</strong></dd>
     <dl>
       <dt>Regular Outgoings</dt>
-      <dd><strong>{{month_balance.outgoigns}} €</strong></dd>
+      <dd><strong>{{month_balance.outgoings}} €</strong></dd>
     </dl>
     <dl>
       <dt>Expenses</dt>
