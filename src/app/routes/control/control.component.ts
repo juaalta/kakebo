@@ -28,7 +28,6 @@ export class ControlComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private controlService: ControlService,
     private store: StoreService
   ) {}
 
@@ -37,9 +36,9 @@ export class ControlComponent implements OnInit {
     this.year = +params["y"];
     this.month = +params["m"];
     this.month_balance = null;
-    this.store.setYearMonth(this.year, this.month);
-    this.controlService.getMonthBalances(this.year, this.month);
-    this.controlService.getJournalEntries();
+    this.store.dispatchYearMonth(this.year, this.month);
+    this.store.dispatchGetMonthBalances(this.year, this.month);
+    this.store.dispatchGetJournalEntries();
     this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
   }
 }

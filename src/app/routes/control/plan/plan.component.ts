@@ -39,10 +39,7 @@ export class PlanComponent implements OnInit {
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance;
 
-  constructor(
-    private controlService: ControlService,
-    private store: StoreService
-  ) {}
+  constructor(private store: StoreService) {}
 
   ngOnInit() {
     this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
@@ -55,13 +52,13 @@ export class PlanComponent implements OnInit {
   }
 
   public saveNewEntry(projectedEntry: JournalEntry) {
-    this.controlService.postJournalEntry(projectedEntry);
+    this.store.dispatchPostJournalEntry(projectedEntry);
   }
   public deleteAnEntry(projectedEntry: JournalEntry) {
-    this.controlService.deleteJournalEntry(projectedEntry);
+    this.store.dispatchDeleteJournalEntry(projectedEntry);
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
     this.month_balance.goal = savingsGoal.goalToSave;
-    this.controlService.putMonthBalance(this.month_balance);
+    this.store.dispatchPutMonthBalance(this.month_balance);
   }
 }

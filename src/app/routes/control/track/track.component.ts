@@ -27,19 +27,16 @@ import { StoreService } from "@routes/control/store.service";
 export class TrackComponent implements OnInit {
   public expenses: JournalEntry[] = [];
   public month_balance: MonthBalance;
-  constructor(
-    private controlService: ControlService,
-    private store: StoreService
-  ) {}
+  constructor(private store: StoreService) {}
 
   ngOnInit() {
     this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
     this.store.selectExpenses$.subscribe(res => (this.expenses = res));
   }
   public saveNewExpense(expense: JournalEntry) {
-    this.controlService.postJournalEntry(expense);
+    this.store.dispatchPostJournalEntry(expense);
   }
   public deleteExpense(expense: JournalEntry) {
-    this.controlService.deleteJournalEntry(expense);
+    this.store.dispatchDeleteJournalEntry(expense);
   }
 }
