@@ -9,6 +9,7 @@ import { StoreService } from "@routes/control/store.service";
     <h2>
       Review your balance
     </h2>
+    <kab-widget-header [target]="month_balance"></kab-widget-header>
   </header>
   <main>
     <dd>
@@ -25,6 +26,10 @@ import { StoreService } from "@routes/control/store.service";
     <dl>
       <dt>Savings</dt>
       <dd><strong>{{month_balance?.savings}} €</strong></dd>
+    </dl>
+    <dl>
+      <dt>Goal</dt>
+      <dd><strong>{{month_balance?.goal}} €</strong></dd>
     </dl>
     <dl>
       <dt>Available</dt>

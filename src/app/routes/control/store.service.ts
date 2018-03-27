@@ -39,47 +39,41 @@ export class StoreService {
   private expenses$ = new BehaviorSubject<JournalEntry[]>([]);
   public selectExpenses$ = this.expenses$.asObservable();
 
-  private monthMustBeRecalculated$ = new Subject<MonthBalance>();
-  public selectMonthMustBeRecalculated$ = this.monthMustBeRecalculated$.asObservable();
-
   constructor(private controlApi: ControlApiService) {}
 
   public dispatchYearMonth(year: number, month: number) {
     this.state = { ...this.state, year, month };
+    this.setCurrentMonthBalance();
   }
 
-  public dispatchGetMonthBalances(year: number, month: number): void {
+  public dispatchGetMonthBalances(): void {
     this.controlApi.getMonthBalancesList$().subscribe(res => {
-      this.setMonthBalances(res);
-      const month_balance = this.getStateSnapshot().monthBalance;
-      if (!month_balance) {
-        this.postMonthBalance(year, month);
+      this.getMonthBalances(res);
+      if (!this.state.monthBalance) {
+        const monthBalance = {
+          ...this._newMonthBalance,
+          year: this.state.year,
+          month: this.state.month
+        };
+        this.controlApi
+          .postMonthBalance$(monthBalance)
+          .subscribe(res => this.postMonthBalance(res));
       }
     });
   }
-  private setMonthBalances(monthBalances: MonthBalance[]) {
+  private getMonthBalances(monthBalances: MonthBalance[]) {
     if (monthBalances) {
-      this.state.monthBalances = [...monthBalances];
+      this.state.monthBalances = monthBalances;
+      this.setCurrentMonthBalance();
     }
-    this.filterMonthBalance();
   }
-  private postMonthBalance(year: number, month: number) {
-    const monthBalance = {
-      ...this._newMonthBalance,
-      year,
-      month
-    };
-    this.controlApi
-      .postMonthBalance$(monthBalance)
-      .subscribe(res => this.setMonthBalance(res));
-  }
-  private setMonthBalance(monthBalance: MonthBalance) {
+  private postMonthBalance(monthBalance: MonthBalance) {
     this.state.monthBalances = [...this.state.monthBalances, monthBalance];
-    this.filterMonthBalance();
+    this.setCurrentMonthBalance();
   }
 
   public dispatchPutMonthBalance(aMonthBalance: MonthBalance): void {
-    this.calculateMonthBalances(aMonthBalance);
+    this.calculateMonthBalance();
     this.controlApi
       .putMonthBalance$(aMonthBalance)
       .subscribe(res => this.putMonthBalance(res));
@@ -88,36 +82,21 @@ export class StoreService {
     this.state.monthBalances = this.state.monthBalances.map(
       m => (m._id === monthBalance._id ? monthBalance : m)
     );
-    this.filterMonthBalance();
+    this.setCurrentMonthBalance();
   }
-  private calculateMonthBalances = (mb: MonthBalance): any => {
-    const entries = this.getStateSnapshot().journalEntries;
-    mb.incomes = this.sumAmount(
-      this.filterJournalsByKind("I", mb.year, mb.month)
-    );
-    mb.outgoigns = this.sumAmount(
-      this.filterJournalsByKind("O", mb.year, mb.month)
-    );
-    mb.expenses = this.sumAmount(
-      this.filterJournalsByKind("E", mb.year, mb.month)
-    );
-    mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
-    mb.available = mb.savings - mb.goal;
-  };
-  private sumAmount = (entries: JournalEntry[]): number =>
-    entries.map(p => p.amount).reduce((state, current) => state + current, 0);
 
   public dispatchGetJournalEntries() {
     this.controlApi
       .getJournalEntriesList$()
-      .subscribe(res => this.setJournalEntries(res));
+      .subscribe(res => this.getJournalEntries(res));
   }
-  private setJournalEntries(journalEntries: JournalEntry[]) {
+  private getJournalEntries(journalEntries: JournalEntry[]) {
     if (journalEntries) {
       this.state.journalEntries = [...journalEntries];
-      this.updateIncomes(this.state.year, this.state.month);
-      this.updateOutgoins(this.state.year, this.state.month);
-      this.updateExpenses(this.state.year, this.state.month);
+      this.updateIncomes();
+      this.updateOutgoins();
+      this.updateExpenses();
+      this.setCurrentMonthBalance();
     }
   }
 
@@ -128,8 +107,8 @@ export class StoreService {
   }
   private postJournalEntry(journalEntry: JournalEntry) {
     this.state.journalEntries = [...this.state.journalEntries, journalEntry];
-    this.mustUpdateEntries(journalEntry);
-    this.monthMustRecalculate(journalEntry);
+    this.updateEntriesByKind(journalEntry);
+    this.calculateMonthBalance();
   }
 
   public dispatchDeleteJournalEntry(aJournalEntry: JournalEntry) {
@@ -141,53 +120,65 @@ export class StoreService {
     this.state.journalEntries = this.state.journalEntries.filter(
       j => j._id !== journalEntry._id
     );
-    this.mustUpdateEntries(journalEntry);
-    this.monthMustRecalculate(journalEntry);
+    this.updateEntriesByKind(journalEntry);
+    this.calculateMonthBalance();
   }
-  private mustUpdateEntries(journalEntry: JournalEntry) {
+
+  private updateEntriesByKind(journalEntry: JournalEntry) {
     switch (journalEntry.kind) {
       case "I":
-        this.updateIncomes(journalEntry.year, journalEntry.month);
+        this.updateIncomes();
         break;
       case "O":
-        this.updateOutgoins(journalEntry.year, journalEntry.month);
+        this.updateOutgoins();
         break;
       case "E":
-        this.updateExpenses(journalEntry.year, journalEntry.month);
+        this.updateExpenses();
         break;
       default:
         break;
     }
   }
-  private updateIncomes(year: number, month: number) {
-    const incomes = this.filterJournalsByKind("I", year, month);
+  private updateIncomes() {
+    const incomes = this.filterJournalsByKind("I");
     this.projectedIncomes$.next(incomes);
   }
-  private updateOutgoins(year: number, month: number) {
-    const incomes = this.filterJournalsByKind("O", year, month);
+  private updateOutgoins() {
+    const incomes = this.filterJournalsByKind("O");
     this.projectedOutgoings$.next(incomes);
   }
-  private updateExpenses(year: number, month: number) {
-    const incomes = this.filterJournalsByKind("E", year, month);
+  private updateExpenses() {
+    const incomes = this.filterJournalsByKind("E");
     this.expenses$.next(incomes);
   }
-  public filterJournalsByKind(
-    kind: string,
-    year: number,
-    month: number
-  ): JournalEntry[] {
+  private filterJournalsByKind(kind: string): JournalEntry[] {
     return this.state.journalEntries.filter(
-      p => p.kind === kind && p.year === year && p.month === month
+      p =>
+        p.kind === kind &&
+        p.year === this.state.year &&
+        p.month === this.state.month
     );
   }
-  private monthMustRecalculate(journalEntry: JournalEntry) {
-    this.filterMonthBalance();
-    this.monthMustBeRecalculated$.next(this.state.monthBalance);
-  }
-  private filterMonthBalance(): void {
+  private setCurrentMonthBalance(): void {
     this.state.monthBalance = this.state.monthBalances.find(
       m => m.year === this.state.year && m.month === this.state.month
     );
-    this.monthBalance$.next(this.state.monthBalance);
+    this.calculateMonthBalance();
   }
+  private calculateMonthBalance = (): any => {
+    const mb = this.state.monthBalance;
+    if (mb) {
+      const entries = this.state.journalEntries;
+      if (entries) {
+        mb.incomes = this.sumAmount(this.filterJournalsByKind("I"));
+        mb.outgoigns = this.sumAmount(this.filterJournalsByKind("O"));
+        mb.expenses = this.sumAmount(this.filterJournalsByKind("E"));
+        mb.savings = mb.incomes - mb.outgoigns - mb.expenses;
+        mb.available = mb.savings - mb.goal;
+      }
+      this.monthBalance$.next(this.state.monthBalance);
+    }
+  };
+  private sumAmount = (entries: JournalEntry[]): number =>
+    entries.map(p => p.amount).reduce((state, current) => state + current, 0);
 }

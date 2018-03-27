@@ -37,7 +37,7 @@ export class ControlComponent implements OnInit {
     this.month = +params["m"];
     this.month_balance = null;
     this.store.dispatchYearMonth(this.year, this.month);
-    this.store.dispatchGetMonthBalances(this.year, this.month);
+    this.store.dispatchGetMonthBalances();
     this.store.dispatchGetJournalEntries();
     this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
   }
