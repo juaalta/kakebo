@@ -8,25 +8,12 @@ import { ControlApiService } from "@routes/control/control-api.service";
 
 @Injectable()
 export class StoreService {
-  private _newMonthBalance: MonthBalance = {
-    year: 0,
-    month: 0,
-    incomes: 0,
-    outgoigns: 0,
-    expenses: 0,
-    savings: 0,
-    goal: 0,
-    available: 0
-  };
   private state = {
     monthBalances: [],
     journalEntries: [],
     year: 0,
     month: 0,
     monthBalance: null
-  };
-  public getStateSnapshot = () => {
-    return { ...this.state };
   };
 
   private monthBalance$ = new BehaviorSubject<MonthBalance>(null);
@@ -43,69 +30,67 @@ export class StoreService {
 
   public dispatchYearMonth(year: number, month: number) {
     this.state = { ...this.state, year, month };
-    this.setCurrentMonthBalance();
+    this.reduceSetCurrentMonthBalance();
   }
 
   public dispatchGetMonthBalances(): void {
     this.controlApi.getMonthBalancesList$().subscribe(res => {
-      this.getMonthBalances(res);
-      if (!this.state.monthBalance) {
-        const monthBalance = {
-          ...this._newMonthBalance,
-          year: this.state.year,
-          month: this.state.month
-        };
-        this.controlApi
-          .postMonthBalance$(monthBalance)
-          .subscribe(res => this.postMonthBalance(res));
-      }
+      this.reduceGetMonthBalances(res);
     });
   }
-  private getMonthBalances(monthBalances: MonthBalance[]) {
+  private reduceGetMonthBalances(monthBalances: MonthBalance[]) {
     if (monthBalances) {
       this.state.monthBalances = monthBalances;
-      this.setCurrentMonthBalance();
+      this.reduceSetCurrentMonthBalance();
+    }
+    if (!this.state.monthBalance) {
+      this.dispatchPostMonthBalance();
     }
   }
-  private postMonthBalance(monthBalance: MonthBalance) {
+  private dispatchPostMonthBalance() {
+    this.controlApi
+      .postMonthBalance$(this.state.year, this.state.month)
+      .subscribe(res => this.reducePostMonthBalance(res));
+  }
+  private reducePostMonthBalance(monthBalance: MonthBalance) {
     this.state.monthBalances = [...this.state.monthBalances, monthBalance];
-    this.setCurrentMonthBalance();
+    this.reduceSetCurrentMonthBalance();
   }
 
   public dispatchPutMonthBalance(aMonthBalance: MonthBalance): void {
     this.calculateMonthBalance();
     this.controlApi
       .putMonthBalance$(aMonthBalance)
-      .subscribe(res => this.putMonthBalance(res));
+      .subscribe(res => this.reducePutMonthBalance(res));
   }
-  private putMonthBalance(monthBalance: MonthBalance) {
+  private reducePutMonthBalance(monthBalance: MonthBalance) {
     this.state.monthBalances = this.state.monthBalances.map(
       m => (m._id === monthBalance._id ? monthBalance : m)
     );
-    this.setCurrentMonthBalance();
+    this.reduceSetCurrentMonthBalance();
   }
 
   public dispatchGetJournalEntries() {
     this.controlApi
       .getJournalEntriesList$()
-      .subscribe(res => this.getJournalEntries(res));
+      .subscribe(res => this.reduceJournalEntries(res));
   }
-  private getJournalEntries(journalEntries: JournalEntry[]) {
+  private reduceJournalEntries(journalEntries: JournalEntry[]) {
     if (journalEntries) {
       this.state.journalEntries = [...journalEntries];
       this.updateIncomes();
       this.updateOutgoins();
       this.updateExpenses();
-      this.setCurrentMonthBalance();
+      this.reduceSetCurrentMonthBalance();
     }
   }
 
   public dispatchPostJournalEntry(aJournalEntry: JournalEntry): void {
     this.controlApi
       .postJournalEntry$(aJournalEntry)
-      .subscribe(res => this.postJournalEntry(res));
+      .subscribe(res => this.reducePostJournalEntry(res));
   }
-  private postJournalEntry(journalEntry: JournalEntry) {
+  private reducePostJournalEntry(journalEntry: JournalEntry) {
     this.state.journalEntries = [...this.state.journalEntries, journalEntry];
     this.updateEntriesByKind(journalEntry);
   }
@@ -113,15 +98,21 @@ export class StoreService {
   public dispatchDeleteJournalEntry(aJournalEntry: JournalEntry) {
     this.controlApi
       .deleteJournalEntry$(aJournalEntry)
-      .subscribe(res => this.deleteJournalEntry(aJournalEntry));
+      .subscribe(res => this.reduceDeleteJournalEntry(aJournalEntry));
   }
-  private deleteJournalEntry(journalEntry: JournalEntry) {
+  private reduceDeleteJournalEntry(journalEntry: JournalEntry) {
     this.state.journalEntries = this.state.journalEntries.filter(
       j => j._id !== journalEntry._id
     );
     this.updateEntriesByKind(journalEntry);
   }
 
+  private reduceSetCurrentMonthBalance(): void {
+    this.state.monthBalance = this.state.monthBalances.find(
+      m => m.year === this.state.year && m.month === this.state.month
+    );
+    this.calculateMonthBalance();
+  }
   private updateEntriesByKind(journalEntry: JournalEntry) {
     switch (journalEntry.kind) {
       case "I":
@@ -158,17 +149,10 @@ export class StoreService {
         p.month === this.state.month
     );
   }
-  private setCurrentMonthBalance(): void {
-    this.state.monthBalance = this.state.monthBalances.find(
-      m => m.year === this.state.year && m.month === this.state.month
-    );
-    this.calculateMonthBalance();
-  }
-  private calculateMonthBalance = (): any => {
+  private calculateMonthBalance = (): void => {
     const mb = this.state.monthBalance;
     if (mb) {
-      const entries = this.state.journalEntries;
-      if (entries) {
+      if (this.state.journalEntries) {
         mb.incomes = this.sumAmount(this.filterJournalsByKind("I"));
         mb.outgoigns = this.sumAmount(this.filterJournalsByKind("O"));
         mb.expenses = this.sumAmount(this.filterJournalsByKind("E"));

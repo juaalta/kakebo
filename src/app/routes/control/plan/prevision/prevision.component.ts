@@ -58,7 +58,7 @@ export class PrevisionComponent implements OnInit {
     this.saveProjection.emit(newProjection);
     this.form.reset({
       amount: 0,
-      date: new Date(this.year, this.month, 1, 12, 0, 0)
+      date: new Date(this.year, this.month - 1, 1, 12, 0, 0)
         .toISOString()
         .substring(0, 10)
     });
