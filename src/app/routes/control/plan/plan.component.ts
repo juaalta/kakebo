@@ -10,15 +10,15 @@ import { StoreService } from "@routes/control/store.service";
   template: `
     <header>
       <h2>
-        Left to expend<span class="float-right">{{month_balance?.available}}  €</span>
+        Left to expend<span class="float-right">{{month_balance.available}}  €</span>
       </h2>
       <kab-widget-header [target]="month_balance"></kab-widget-header>
     </header>
     <main class="column">
-      <kab-goal *ngIf="month_balance?.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
+      <kab-goal *ngIf="month_balance.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
       <section class="row">
         <section class="column column-40">
-          <kab-prevision class="container" [year]="month_balance?.year" [month]="month_balance?.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
+          <kab-prevision class="container" [year]="month_balance.year" [month]="month_balance.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
         </section>
         <section class="column column-50 column-offset-10">
           <kab-incomes class="container" 

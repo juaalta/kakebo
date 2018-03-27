@@ -33,8 +33,8 @@ import { expenseCategories } from "@routes/control/models/expenseCategories.mode
   styles: []
 })
 export class NewExpenseComponent implements OnInit {
-  @Input() public year:number;
-  @Input() public month:number;
+  @Input() public year: number;
+  @Input() public month: number;
   @Output() saveExpense = new EventEmitter<JournalEntry>();
   public expenseCategories = expenseCategories;
   public form: FormGroup;
@@ -43,7 +43,9 @@ export class NewExpenseComponent implements OnInit {
   ngOnInit() {
     this.form = this.formbuilder.group({
       expenseCategory: [null, Validators.required],
-      date: new Date(this.year, this.month,1,12,0,0).toISOString().substring(0, 10),
+      date: new Date(this.year, this.month - 1, 1, 12, 0, 0)
+        .toISOString()
+        .substring(0, 10),
       description: "",
       amount: [0, Validators.required]
     });

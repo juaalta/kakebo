@@ -14,26 +14,26 @@ import { StoreService } from "@routes/control/store.service";
   <main>
     <dd>
       <dt>Total Income</dt>
-      <dd><strong>{{month_balance?.incomes}} €</strong></dd>
+      <dd><strong>{{month_balance.incomes}} €</strong></dd>
     <dl>
       <dt>Regular Outgoings</dt>
-      <dd><strong>{{month_balance?.outgoigns}} €</strong></dd>
+      <dd><strong>{{month_balance.outgoigns}} €</strong></dd>
     </dl>
     <dl>
       <dt>Expenses</dt>
-      <dd><strong>{{month_balance?.expenses}} €</strong></dd>
+      <dd><strong>{{month_balance.expenses}} €</strong></dd>
     </dl>
     <dl>
       <dt>Savings</dt>
-      <dd><strong>{{month_balance?.savings}} €</strong></dd>
+      <dd><strong>{{month_balance.savings}} €</strong></dd>
     </dl>
     <dl>
       <dt>Goal</dt>
-      <dd><strong>{{month_balance?.goal}} €</strong></dd>
+      <dd><strong>{{month_balance.goal}} €</strong></dd>
     </dl>
     <dl>
       <dt>Available</dt>
-      <dd><strong>{{month_balance?.available}} €</strong></dd>
+      <dd><strong>{{month_balance.available}} €</strong></dd>
     </dl>
   </main>
   `,

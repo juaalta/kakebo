@@ -32,8 +32,8 @@ import { JournalEntry } from "@routes/control/models/journal_entry.model";
   styles: []
 })
 export class PrevisionComponent implements OnInit {
-  @Input() public year:number;
-  @Input() public month:number;
+  @Input() public year: number;
+  @Input() public month: number;
   @Output() public saveProjection = new EventEmitter<JournalEntry>();
   public form: FormGroup;
   constructor(private formbuilder: FormBuilder) {}
@@ -41,7 +41,11 @@ export class PrevisionComponent implements OnInit {
   ngOnInit() {
     this.form = this.formbuilder.group({
       kind: [null, Validators.required],
-      date: [new Date(this.year, this.month,1,12,0,0).toISOString().substring(0, 10)],
+      date: [
+        new Date(this.year, this.month - 1, 1, 12, 0, 0)
+          .toISOString()
+          .substring(0, 10)
+      ],
       description: "",
       amount: [0, Validators.required]
     });
@@ -54,7 +58,9 @@ export class PrevisionComponent implements OnInit {
     this.saveProjection.emit(newProjection);
     this.form.reset({
       amount: 0,
-      date:new Date(this.year, this.month,1,12,0,0).toISOString().substring(0, 10)
+      date: new Date(this.year, this.month, 1, 12, 0, 0)
+        .toISOString()
+        .substring(0, 10)
     });
   }
 }
