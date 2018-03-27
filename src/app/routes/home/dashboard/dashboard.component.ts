@@ -7,8 +7,8 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
   selector: "kab-dashboard",
   template: `
   <header>
-    <h3>Monthly balances <span class="float-right">495 €</span></h3>
-    <p>General, Leisure, Culture, Extras...</p>
+    <h3>Monthly balances</h3>
+    <p>Incoming, Regular Outgoings, Expenses : General, Leisure, Culture, Extras...</p>
   </header>
   <a [routerLink]="['control', year , month]"> Balance controller for current month </a>
   <table>
@@ -41,7 +41,7 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
   styles: []
 })
 export class DashboardComponent implements OnInit {
-  private urlMonthBalances = environment.apiUrl + "pub/monthbalances/";
+  private urlMonthBalances = environment.apiUrl + "priv/monthbalances/";
   public balances$;
   public year = new Date().getFullYear();
   public month = new Date().getMonth() + 1;

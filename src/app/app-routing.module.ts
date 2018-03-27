@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: "@routes/control/control.module#ControlModule"
   },
   {
+    path: "credentials",
+    loadChildren: "@routes/credentials/credentials.module#CredentialsModule"
+  },
+  {
     path: "not-found",
     loadChildren: "@routes/not-found/not-found.module#NotFoundModule"
   },

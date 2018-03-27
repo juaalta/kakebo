@@ -7,8 +7,8 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
 
 @Injectable()
 export class ControlApiService {
-  private urlJournalEntries = environment.apiUrl + "pub/journalentries/";
-  private urlMonthBalances = environment.apiUrl + "pub/monthbalances/";
+  private urlJournalEntries = environment.apiUrl + "priv/journalentries/";
+  private urlMonthBalances = environment.apiUrl + "priv/monthbalances/";
   private _newMonthBalance: MonthBalance = {
     year: 0,
     month: 0,
