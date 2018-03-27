@@ -10,6 +10,7 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
     <h3>Monthly balances <span class="float-right">495 €</span></h3>
     <p>General, Leisure, Culture, Extras...</p>
   </header>
+  <a [routerLink]="['control', year , month]"> Balance controller for current month </a>
   <table>
     <thead>
       <tr>
@@ -42,6 +43,8 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
 export class DashboardComponent implements OnInit {
   private urlMonthBalances = environment.apiUrl + "pub/monthbalances/";
   public balances$;
+  public year = new Date().getFullYear();
+  public month = new Date().getMonth() + 1;
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
