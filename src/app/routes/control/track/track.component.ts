@@ -10,7 +10,6 @@ import { StoreService } from "@routes/control/store.service";
       <h2>
         Track your expenses. Left to expend <span class="float-right">{{month_balance.available}} €</span>
       </h2>
-      <kab-widget-header [target]="month_balance"></kab-widget-header>
     </header>
     <main class="column">
       <section>

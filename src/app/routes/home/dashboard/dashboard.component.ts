@@ -10,7 +10,7 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
     <h3>Monthly balances</h3>
     <p>Incoming, Regular Outgoings, Expenses : General, Leisure, Culture, Extras...</p>
   </header>
-  <a [routerLink]="['control', year , month]"> Balance controller for current month </a>
+  <a [routerLink]="['control', year , month]"> Create or view a balance controller for the current month </a>
   <table>
     <thead>
       <tr>
@@ -19,8 +19,8 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
         <th>Incoming</th>
         <th>Outgoing</th>
         <th>Expenses</th>
-        <th>Savings</th>
-        <th>Goal</th>
+        <th><em>Goal</em></th>
+        <th><strong>Savings</strong></th>
         <th>Available</th>
       </tr>
     </thead>
@@ -31,8 +31,8 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
         <td>{{ balance.incomes }}</td>
         <td>{{ balance.outgoings }}</td>
         <td>{{ balance.expenses }}</td>
-        <td>{{ balance.savings }}</td>
-        <td>{{ balance.goal }}</td>
+        <td><em>{{ balance.goal }}</em></td>
+        <td><strong>{{ balance.savings }}</strong></td>
         <td>{{ balance.available }}</td>
       </tr>
     </tbody>

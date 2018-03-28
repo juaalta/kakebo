@@ -7,9 +7,8 @@ import { StoreService } from "@routes/control/store.service";
   template: `
   <header>
     <h2>
-      Review your balance
+    Review what you do with your incomes of <span class="float-right">{{month_balance.incomes}} €</span>
     </h2>
-    <kab-widget-header [target]="month_balance"></kab-widget-header>
   </header>
   <main>
     <dd>

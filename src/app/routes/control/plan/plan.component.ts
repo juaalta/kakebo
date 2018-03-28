@@ -9,9 +9,8 @@ import { StoreService } from "@routes/control/store.service";
   template: `
     <header>
       <h2>
-        Left to expend<span class="float-right">{{month_balance.available}}  €</span>
+        Plan your goal to save<span class="float-right">{{month_balance.goal}}  €</span>
       </h2>
-      <kab-widget-header [target]="month_balance"></kab-widget-header>
     </header>
     <main class="column">
       <kab-goal *ngIf="month_balance.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
