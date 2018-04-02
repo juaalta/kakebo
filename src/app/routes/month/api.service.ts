@@ -2,11 +2,11 @@ import { Injectable } from "@angular/core";
 import { environment } from "@environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
-import { JournalEntry } from "@routes/control/models/journal_entry.model";
-import { MonthBalance } from "@routes/control/models/month_balance.model";
+import { JournalEntry } from "@routes/month/models/journal_entry.model";
+import { MonthBalance } from "@routes/month/models/month_balance.model";
 
 @Injectable()
-export class ControlApiService {
+export class ApiService {
   private urlJournalEntries = environment.apiUrl + "priv/journalentries/";
   private urlMonthBalances = environment.apiUrl + "priv/monthbalances/";
   private _newMonthBalance: MonthBalance = {

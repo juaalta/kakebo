@@ -7,8 +7,8 @@ import {
   Input
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { JournalEntry } from "@routes/control/models/journal_entry.model";
-import { expenseCategories } from "@routes/control/models/expenseCategories.model";
+import { JournalEntry } from "@routes/month/models/journal_entry.model";
+import { expenseCategories } from "@routes/month/models/expenseCategories.model";
 @Component({
   selector: "kab-new-expense",
   changeDetection: ChangeDetectionStrategy.OnPush,

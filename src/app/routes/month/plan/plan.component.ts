@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { JournalEntry } from "@routes/control/models/journal_entry.model";
-import { MonthBalance } from "@routes/control/models/month_balance.model";
-import { SavingsGoal } from "@routes/control/models/savings_goal.model";
-import { StoreService } from "@routes/control/store.service";
+import { JournalEntry } from "@routes/month/models/journal_entry.model";
+import { MonthBalance } from "@routes/month/models/month_balance.model";
+import { SavingsGoal } from "@routes/month/models/savings_goal.model";
+import { StoreService } from "@routes/month/store.service";
 
 @Component({
   selector: "kab-plan",

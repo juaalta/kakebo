@@ -9,8 +9,8 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MonthBalance } from "@routes/control/models/month_balance.model";
-import { SavingsGoal } from "@routes/control/models/savings_goal.model";
+import { MonthBalance } from "@routes/month/models/month_balance.model";
+import { SavingsGoal } from "@routes/month/models/savings_goal.model";
 
 @Component({
   selector: "kab-goal",

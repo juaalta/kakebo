@@ -5,7 +5,7 @@ import { Component, OnInit } from "@angular/core";
   template: `
     <h1>Kakebo</h1>
     <h2>
-      The japanese art of saving money
+    Ledger for household economy
     </h2>
     <h3>Sample Angular Application</h3>
     <h4>Projected Incomings, Regular Outgoings</h4>

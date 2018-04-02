@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
-import { MonthBalance } from "@routes/control/models/month_balance.model";
+import { MonthBalance } from "@routes/month/models/month_balance.model";
 
 @Component({
   selector: "kab-dashboard",
@@ -10,7 +10,7 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
     <h3>Monthly balances</h3>
     <p>Incoming, Regular Outgoings, Expenses : General, Leisure, Culture, Extras...</p>
   </header>
-  <a [routerLink]="['control', year , month]"> Create or view a balance controller for the current month </a>
+  <a [routerLink]="['month', year , month]"> Create or view a balance controller for the current month </a>
   <table>
     <thead>
       <tr>
@@ -26,8 +26,8 @@ import { MonthBalance } from "@routes/control/models/month_balance.model";
     </thead>
     <tbody>
       <tr *ngFor="let balance of balances$ | async" >
-        <td><a [routerLink]="['control',balance.year,balance.month]"> {{ balance.year }} </a></td>
-        <td><a [routerLink]="['control',balance.year,balance.month]"> {{ balance.month | monthName }}</a></td>
+        <td><a [routerLink]="['month',balance.year,balance.month]"> {{ balance.year }} </a></td>
+        <td><a [routerLink]="['month',balance.year,balance.month]"> {{ balance.month | monthName }}</a></td>
         <td>{{ balance.incomes }}</td>
         <td>{{ balance.outgoings }}</td>
         <td>{{ balance.expenses }}</td>

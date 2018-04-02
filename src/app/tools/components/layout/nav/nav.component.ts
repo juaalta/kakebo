@@ -1,17 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
+import { NavLink } from "@tools/models/nav-link.model";
 
 @Component({
   selector: "kab-nav",
   template: `
   <nav>
-    <a class="button button-clear" routerLink="plan">Plan</a>
-    <a class="button button-clear" routerLink="track">Track</a>
-    <a class="button button-clear" routerLink="review">Review</a>
+    <a class="button button-clear" *ngFor="let link of navLinks" routerLink="{{link.routerLink}}">{{link.caption}}</a>
   </nav>
   `,
   styles: []
 })
 export class NavComponent implements OnInit {
+  @Input() navLinks: NavLink[];
   constructor() {}
 
   ngOnInit() {}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { JournalEntry } from "@routes/control/models/journal_entry.model";
-import { MonthBalance } from "@routes/control/models/month_balance.model";
-import { StoreService } from "@routes/control/store.service";
+import { JournalEntry } from "@routes/month/models/journal_entry.model";
+import { MonthBalance } from "@routes/month/models/month_balance.model";
+import { StoreService } from "@routes/month/store.service";
 
 @Component({
   selector: "kab-track",

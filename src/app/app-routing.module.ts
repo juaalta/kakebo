@@ -11,8 +11,8 @@ const routes: Routes = [
     loadChildren: "@routes/about/about.module#AboutModule"
   },
   {
-    path: "control/:y/:m",
-    loadChildren: "@routes/control/control.module#ControlModule"
+    path: "month/:y/:m",
+    loadChildren: "@routes/month/month.module#MonthModule"
   },
   {
     path: "credentials",

@@ -1,17 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { MonthBalance } from "@routes/control/models/month_balance.model";
-import { StoreService } from "@routes/control/store.service";
+import { MonthBalance } from "@routes/month/models/month_balance.model";
+import { StoreService } from "@routes/month/store.service";
+import { NavLink } from "@tools/models/nav-link.model";
 
 @Component({
-  selector: "kab-contol",
+  selector: "kab-month",
   template: `
   <section *ngIf="month_balance">
     <h1>Balance on {{month | monthName }} of {{ year }} <span class="float-right">{{month_balance.savings}} €</span></h1>
     <kab-widget-header [target]="month_balance"></kab-widget-header>
     <section class="row">
       <aside class="column column-20">
-        <kab-nav></kab-nav>
+        <kab-nav [navLinks]="navLinks"></kab-nav>
       </aside>  
       <main class="column float-left">
         <router-outlet></router-outlet>
@@ -25,11 +26,24 @@ import { StoreService } from "@routes/control/store.service";
   `,
   styles: []
 })
-export class ControlComponent implements OnInit {
+export class MonthComponent implements OnInit {
   public month_balance: MonthBalance;
   public year: number;
   public month: number;
-
+  public navLinks: NavLink[] = [
+    {
+      caption: "Plan",
+      routerLink: "plan"
+    },
+    {
+      caption: "Track",
+      routerLink: "track"
+    },
+    {
+      caption: "Review",
+      routerLink: "review"
+    }
+  ];
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: StoreService

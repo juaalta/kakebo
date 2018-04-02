@@ -7,7 +7,7 @@ import { PlanComponent } from "./plan.component";
 import { IncomesComponent } from "./incomes/incomes.component";
 import { OutgoingsComponent } from "./outgoings/outgoings.component";
 import { PrevisionComponent } from "./prevision/prevision.component";
-import { GoalComponent } from "@routes/control/plan/goal/goal.component";
+import { GoalComponent } from "@routes/month/plan/goal/goal.component";
 
 @NgModule({
   imports: [CommonModule, PlanRoutingModule, ComponentsModule],

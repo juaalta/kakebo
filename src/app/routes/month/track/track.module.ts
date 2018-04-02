@@ -6,7 +6,7 @@ import { ComponentsModule } from "@tools/components/components.module";
 import { TrackComponent } from "./track.component";
 import { NewExpenseComponent } from "./new-expense/new-expense.component";
 import { ExpensesListComponent } from "./expenses-list/expenses-list.component";
-import { CategoryNamePipe } from "@routes/control/track/category-name.pipe";
+import { CategoryNamePipe } from "@routes/month/track/category-name.pipe";
 
 @NgModule({
   imports: [CommonModule, SpendingRoutingModule, ComponentsModule],

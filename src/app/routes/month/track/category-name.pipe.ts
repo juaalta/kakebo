@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { expenseCategories } from "@routes/control/models/expenseCategories.model";
+import { expenseCategories } from "@routes/month/models/expenseCategories.model";
 
 @Pipe({
   name: "categoryName"
