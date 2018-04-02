@@ -21,8 +21,7 @@ import { map } from "rxjs/operators";
     </section>
   </section>
   <ng-template #noMonthBalance>
-    <h2>No Balance for {{month | monthName }} of {{ year }}</h2>
-    <p>Creating a new one...</p>
+    <kab-widget-header mode="h3" caption="No Balance for {{month | monthName }} of {{ year }}" value="Creating a new one..."></kab-widget-header>
   </ng-template>
   `,
   styles: []

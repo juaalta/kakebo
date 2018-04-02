@@ -5,7 +5,12 @@ import { Component, OnInit } from "@angular/core";
   template: `
   <footer>
     <blockquote>
-      <p><em>The japanese art of saving money</em> Coded by <a href="https://twitter.com/albertobasalo">Alberto Basalo</a></p>
+      <div class="clearfix">
+        <div class="float-left">
+          <em>The japanese art of saving money.</em> 
+        </div> 
+        <div class="float-right"> - Coded by <a href="https://twitter.com/albertobasalo">Alberto Basalo</a></div>
+      </div>
     </blockquote>
   </footer>
   `,

@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 @Component({
   selector: "kab-login",
   template: `
-  <h2>{{pageData.title}}</h2>
+  <kab-widget-header mode="h1" caption="{{pageData.title}}" value="Wellcome"></kab-widget-header>
   <form [formGroup]="form" (submit)="submit(form.value)">
     <label for="email">Email</label>
     <input name="email"
@@ -18,7 +18,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
       formControlName="password"
       type="password"/>
     <input class="button-primary" type="submit" [value]="pageData.title" [disabled]="form.invalid">
-    <a [routerLink]="['..',pageData.alternate | lowercase]">{{ pageData.alternate }}</a>
+    <a class="button button-clear" [routerLink]="['..',pageData.alternate | lowercase]">{{ pageData.alternate }}</a>
   </form>
   <i>{{ errorMessage }}</i>
   `,

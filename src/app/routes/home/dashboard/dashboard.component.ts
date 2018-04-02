@@ -6,10 +6,7 @@ import { MonthBalance } from "@routes/month/models/month_balance.model";
 @Component({
   selector: "kab-dashboard",
   template: `
-  <header>
-    <h3>Monthly balances</h3>
-    <p>Incoming, Regular Outgoings, Expenses : General, Leisure, Culture, Extras...</p>
-  </header>
+  <kab-widget-header mode="h1" caption="Kakebo" value="Monthly balances" ></kab-widget-header>
   <a [routerLink]="['month', year , month]"> Create or view a balance controller for the current month </a>
   <table>
     <thead>

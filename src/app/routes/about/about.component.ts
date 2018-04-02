@@ -3,14 +3,11 @@ import { Component, OnInit } from "@angular/core";
 @Component({
   selector: "kab-about",
   template: `
-    <h1>Kakebo</h1>
-    <h2>
-    Ledger for household economy
-    </h2>
-    <h3>Sample Angular Application</h3>
-    <h4>Projected Incomings, Regular Outgoings</h4>
-    <h4>Expenses : General, Leisure, Culture, Extras...</h4>
-    <h4>Goals, savings, available...</h4>
+    <kab-widget-header mode="h1" caption="Kakebo" value="Ledger for household economy."></kab-widget-header>
+    <h3>Projected Incomings and Regular Outgoings</h3>
+    <h3>Expenses : General, Leisure, Culture, Extras...</h3>
+    <h3>Goals, savings, available money...</h3>
+    <h4>This is a Sample Application made with Angular</h4>
     <h5>By <a href="https://twitter.com/albertobasalo">Alberto Basalo</a></h5>
   `,
   styles: []
