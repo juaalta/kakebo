@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MonthBalance } from "@routes/month/models/month_balance.model";
 import { StoreService } from "@routes/month/store.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: "kab-review",
@@ -34,12 +35,19 @@ import { StoreService } from "@routes/month/store.service";
   `,
   styles: []
 })
-export class ReviewComponent implements OnInit {
+export class ReviewComponent implements OnInit, OnDestroy {
+  public monthBalanceSubscription: Subscription;
   public month_balance: MonthBalance;
 
   constructor(private store: StoreService) {}
 
   ngOnInit() {
-    this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
+    this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
+      res => (this.month_balance = res)
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.monthBalanceSubscription.unsubscribe();
   }
 }

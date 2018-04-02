@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { JournalEntry } from "@routes/month/models/journal_entry.model";
 import { MonthBalance } from "@routes/month/models/month_balance.model";
 import { StoreService } from "@routes/month/store.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: "kab-track",
@@ -19,18 +20,29 @@ import { StoreService } from "@routes/month/store.service";
   styles: []
 })
 export class TrackComponent implements OnInit {
+  public monthBalanceSubscription: Subscription;
+  public expensesSubscription: Subscription;
   public expenses: JournalEntry[] = [];
   public month_balance: MonthBalance;
   constructor(private store: StoreService) {}
 
   ngOnInit() {
-    this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
-    this.store.selectExpenses$.subscribe(res => (this.expenses = res));
+    this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
+      res => (this.month_balance = res)
+    );
+    this.expensesSubscription = this.store.selectExpenses$.subscribe(
+      res => (this.expenses = res)
+    );
   }
   public saveNewExpense(expense: JournalEntry) {
     this.store.dispatchPostJournalEntry(expense);
   }
   public deleteExpense(expense: JournalEntry) {
     this.store.dispatchDeleteJournalEntry(expense);
+  }
+
+  ngOnDestroy(): void {
+    this.monthBalanceSubscription.unsubscribe();
+    this.expensesSubscription.unsubscribe();
   }
 }

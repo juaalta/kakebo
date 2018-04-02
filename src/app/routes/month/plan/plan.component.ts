@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { JournalEntry } from "@routes/month/models/journal_entry.model";
 import { MonthBalance } from "@routes/month/models/month_balance.model";
 import { SavingsGoal } from "@routes/month/models/savings_goal.model";
 import { StoreService } from "@routes/month/store.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: "kab-plan",
@@ -28,7 +29,10 @@ import { StoreService } from "@routes/month/store.service";
   `,
   styles: []
 })
-export class PlanComponent implements OnInit {
+export class PlanComponent implements OnInit, OnDestroy {
+  public monthBalanceSubscription: Subscription;
+  public projectedIncomesSubscription: Subscription;
+  public projectedOutgoingsSubscription: Subscription;
   public projectedIncomes: JournalEntry[];
   public projectedOutgoings: JournalEntry[];
   public month_balance: MonthBalance;
@@ -36,11 +40,13 @@ export class PlanComponent implements OnInit {
   constructor(private store: StoreService) {}
 
   ngOnInit() {
-    this.store.selectMonthBalance$.subscribe(res => (this.month_balance = res));
-    this.store.selectProjectedIncomes$.subscribe(
+    this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
+      res => (this.month_balance = res)
+    );
+    this.projectedIncomesSubscription = this.store.selectProjectedIncomes$.subscribe(
       res => (this.projectedIncomes = res)
     );
-    this.store.selectProjectedOutgoings$.subscribe(
+    this.projectedOutgoingsSubscription = this.store.selectProjectedOutgoings$.subscribe(
       res => (this.projectedOutgoings = res)
     );
   }
@@ -53,5 +59,11 @@ export class PlanComponent implements OnInit {
   }
   public setGoalForMonth(savingsGoal: SavingsGoal) {
     this.store.dispatchSetGoalMonth(savingsGoal.goalToSave);
+  }
+
+  ngOnDestroy(): void {
+    this.monthBalanceSubscription.unsubscribe();
+    this.projectedIncomesSubscription.unsubscribe();
+    this.projectedOutgoingsSubscription.unsubscribe();
   }
 }
