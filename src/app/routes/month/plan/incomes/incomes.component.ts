@@ -14,9 +14,7 @@ import { JournalEntry } from "@routes/month/models/journal_entry.model";
   selector: "kab-incomes",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <header>
-    <h3>Projected Incomes <span class="float-right">{{totalAmount}} €</span></h3>
-  </header>
+  <kab-widget-header mode="h3" caption="Projected Incomes" value="{{ totalAmount }} €"></kab-widget-header>
   <table>
     <thead>
       <tr>

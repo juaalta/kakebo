@@ -6,11 +6,7 @@ import { StoreService } from "@routes/month/store.service";
 @Component({
   selector: "kab-track",
   template: `
-    <header>
-      <h2>
-        Track your expenses. Left to expend <span class="float-right">{{month_balance.available}} €</span>
-      </h2>
-    </header>
+    <kab-widget-header mode="h2" caption="Track your expenses. Left to expend" value="{{month_balance.available}} €"></kab-widget-header>
     <main class="column">
       <section>
         <kab-new-expense [year]="month_balance.year" [month]="month_balance.month" (saveExpense)="saveNewExpense($event)"></kab-new-expense>

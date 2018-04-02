@@ -7,11 +7,7 @@ import { StoreService } from "@routes/month/store.service";
 @Component({
   selector: "kab-plan",
   template: `
-    <header>
-      <h2>
-        Plan your goal to save<span class="float-right">{{month_balance.goal}}  €</span>
-      </h2>
-    </header>
+    <kab-widget-header mode="h2" caption="Plan your goal to save" value="{{month_balance.goal}} €"></kab-widget-header>
     <main class="column">
       <kab-goal *ngIf="month_balance.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
       <section class="row">

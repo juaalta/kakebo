@@ -5,11 +5,7 @@ import { StoreService } from "@routes/month/store.service";
 @Component({
   selector: "kab-review",
   template: `
-  <header>
-    <h2>
-    Review what you do with your incomes of <span class="float-right">{{month_balance.incomes}} €</span>
-    </h2>
-  </header>
+  <kab-widget-header mode="h2" caption="Review what you do with your incomes of" value="{{month_balance.incomes}} €"></kab-widget-header>
   <main>
     <dd>
       <dt>Total Income</dt>

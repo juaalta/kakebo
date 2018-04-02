@@ -13,7 +13,7 @@ import { expenseCategories } from "@routes/month/models/expenseCategories.model"
   selector: "kab-new-expense",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <h3>Record a new Expense</h3>
+  <kab-widget-header mode="h3" caption="Record a new Expense"></kab-widget-header>
   <form [formGroup]="form" (submit)="submit(form.value)">
     <fieldset>
       <label for="expenseCategory">Category</label>

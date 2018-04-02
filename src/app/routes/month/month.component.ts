@@ -8,8 +8,7 @@ import { NavLink } from "@tools/models/nav-link.model";
   selector: "kab-month",
   template: `
   <section *ngIf="month_balance">
-    <h1>Balance on {{month | monthName }} of {{ year }} <span class="float-right">{{month_balance.savings}} €</span></h1>
-    <kab-widget-header [target]="month_balance"></kab-widget-header>
+    <kab-widget-header mode="h1" caption="Balance on {{month | monthName }} of {{ year }}" value="{{month_balance.savings}} €"></kab-widget-header>
     <section class="row">
       <aside class="column column-20">
         <kab-nav [navLinks]="navLinks"></kab-nav>

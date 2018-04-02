@@ -13,7 +13,7 @@ import { JournalEntry } from "@routes/month/models/journal_entry.model";
   selector: "kab-prevision",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <h3>Set your Previsions</h3>
+  <kab-widget-header mode="h3" caption="Set your Previsions" value=""></kab-widget-header>
   <form [formGroup]="form" (submit)="submit(form.value)">
     <fieldset>
       <label for="kind">Kind of prevision</label>
