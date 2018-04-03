@@ -5,10 +5,13 @@ import { GlobalStoreService } from "@tools/global/global-store.service";
 import { TokenInterceptorService } from "@tools/global/token-interceptor.service";
 import { CatchInterceptorService } from "@tools/global/catch-interceptor.service";
 import { StoreModule } from '@ngrx/store';
-import * as fromState from './reducers';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule, StoreModule.forFeature('state', fromState.reducers, { metaReducers: fromState.metaReducers })],
+  imports: [
+    CommonModule, 
+    HttpClientModule
+  ],
   providers: [
     GlobalStoreService,
     {
