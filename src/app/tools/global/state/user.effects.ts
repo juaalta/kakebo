@@ -11,25 +11,21 @@ import {
 import { switchMap, map, tap, catchError } from "rxjs/operators";
 import { environment } from "@environments/environment";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { User } from "@tools/global/state/user.model";
 import { UserApi } from "@tools/global/state/user-api.service";
 import { Router } from "@angular/router";
 import { of } from "rxjs/observable/of";
-import { CredentialResponse } from "@tools/global/state/credentials.model";
+import { CredentialResponse } from "@tools/global/state/models/credentials.model";
 
 @Injectable()
 export class UserEffects {
-  private onValidateUser = action =>
+  private onValidateUser$ = (action: ValidateUser): Observable<Action> =>
     this.api
       .sendCredential(action.payload, action.payload.service)
       .pipe(
         tap(() => this.router.navigateByUrl("/")),
-        map(this.onValidateUserCompleted),
-        catchError(this.onValidateUserFailed)
+        map((res: CredentialResponse) => new ValidateUserCompleted(res)),
+        catchError(() => of(new ValidateUserFailed()))
       );
-  private onValidateUserCompleted = (res: CredentialResponse) =>
-    new ValidateUserCompleted(res);
-  private onValidateUserFailed = err => of(new ValidateUserFailed());
 
   constructor(
     private actions$: Actions,
@@ -40,6 +36,6 @@ export class UserEffects {
   @Effect()
   public validateUser$: Observable<Action> = this.actions$.pipe(
     ofType<ValidateUser>(UserActionTypes.ValidateUser),
-    switchMap(this.onValidateUser)
+    switchMap(this.onValidateUser$)
   );
 }

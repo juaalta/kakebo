@@ -5,7 +5,7 @@ export interface User {
   email: string;
 }
 
-export const initialState: User = {
+export const userInitialState: User = {
   token: "",
   userIsAnonymous: true,
   userMessage: "",

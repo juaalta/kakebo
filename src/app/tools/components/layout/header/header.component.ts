@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { State } from "@tools/global/state";
 import { Observable } from "rxjs/Observable";
-import { User } from "@tools/global/state/user.model";
+import { User } from "@tools/global/state/models/user.model";
 
 @Component({
   selector: "kab-header",

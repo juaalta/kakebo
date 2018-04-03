@@ -1,9 +1,8 @@
 import { Action } from "@ngrx/store";
-import { User } from "@tools/global/state/user.model";
 import {
   Credential,
   CredentialResponse
-} from "@tools/global/state/credentials.model";
+} from "@tools/global/state/models/credentials.model";
 
 export enum UserActionTypes {
   ValidateUser = "[User] ValidateUser",
