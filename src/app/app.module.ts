@@ -9,6 +9,8 @@ import { AppComponent } from "./app.component";
 import { environment } from "../environments/environment";
 import { GlobalModule } from "@tools/global/global.module";
 import { ComponentsModule } from "@tools/components/components.module";
+import { StoreModule } from '@ngrx/store';
+import * as fromState from './reducers';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +21,8 @@ import { ComponentsModule } from "@tools/components/components.module";
       enabled: environment.production
     }),
     GlobalModule,
-    ComponentsModule
+    ComponentsModule,
+    StoreModule.forFeature('state', fromState.reducers, { metaReducers: fromState.metaReducers })
   ],
   providers: [],
   bootstrap: [AppComponent]
