@@ -1,4 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { Store, select } from "@ngrx/store";
+import { State } from "@tools/global/state";
+import { ValidateUser } from "@tools/global/state/user.actions";
+import { Observable } from "rxjs/Observable";
+import { User } from "@tools/global/state/user.model";
 
 @Component({
   selector: "kab-root",
@@ -12,9 +17,17 @@ import { Component } from "@angular/core";
     <hr>
     <kab-footer class="row"></kab-footer>
   </section>
+  {{ user$ | async | json }}
   `,
   styles: []
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  user$ : Observable<User>;
   title = "kab";
+  constructor(private store: Store<State>) { }
+
+  ngOnInit(): void {
+    this.store.dispatch(new ValidateUser());
+    this.user$ = this.store.pipe(select('user'));
+  }
 }

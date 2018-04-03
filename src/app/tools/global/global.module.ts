@@ -12,7 +12,11 @@ import { environment } from '../../../environments/environment';
 @NgModule({
   imports: [
     CommonModule, 
-    HttpClientModule, StoreModule.forRoot(reducers, { metaReducers }), !environment.production ? StoreDevtoolsModule.instrument() : []
+    HttpClientModule, 
+    StoreModule.forRoot(
+      reducers,
+       { metaReducers }), 
+       !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     GlobalStoreService,
