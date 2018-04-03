@@ -7,15 +7,20 @@ import {
   UserActionTypes,
   ValidateUserCompleted
 } from "@tools/global/state/user.actions";
-import { switchMap, map } from "rxjs/operators";
+import { switchMap, map, tap } from "rxjs/operators";
 import { environment } from "@environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { User } from "@tools/global/state/user.model";
 import { UserApi } from "@tools/global/state/user-api.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class UserEffects {
-  constructor(private actions$: Actions, private api: UserApi) {}
+  constructor(
+    private actions$: Actions,
+    private api: UserApi,
+    private router: Router
+  ) {}
 
   @Effect()
   validateUser$: Observable<Action> = this.actions$.pipe(
@@ -24,6 +29,7 @@ export class UserEffects {
       const user: User = action.payload;
       const service = user.isNew ? "registration" : "login";
       return this.api.sendCredential(user, service).pipe(
+        tap(() => this.router.navigateByUrl("/")),
         map(
           (res: any) =>
             new ValidateUserCompleted({

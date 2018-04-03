@@ -17,16 +17,9 @@ import { User } from "@tools/global/state/user.model";
     <hr>
     <kab-footer class="row"></kab-footer>
   </section>
-  {{ user$ | async | json }}
   `,
   styles: []
 })
-export class AppComponent implements OnInit {
-  user$: Observable<User>;
+export class AppComponent {
   title = "kab";
-  constructor(private store: Store<State>) {}
-
-  ngOnInit(): void {
-    this.user$ = this.store.pipe(select("user"));
-  }
 }

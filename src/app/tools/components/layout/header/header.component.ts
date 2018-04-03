@@ -1,5 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { GlobalStoreService } from "@tools/global/global-store.service";
+import { Store, select } from "@ngrx/store";
+import { State } from "@tools/global/state";
+import { Observable } from "rxjs/Observable";
+import { User } from "@tools/global/state/user.model";
 
 @Component({
   selector: "kab-header",
@@ -7,20 +11,21 @@ import { GlobalStoreService } from "@tools/global/global-store.service";
     <header>
       <a class="button button-clear" routerLink="">Kakebo</a>
       <a class="button button-clear" routerLink="about">About</a>
-      <a *ngIf="userIsAnonymous;else wellcome" class="button button-clear" routerLink="credentials/login">Login</a>
-      <ng-template #wellcome>Hello !</ng-template>
+      <a *ngIf="user?.userIsAnonymous ;else wellcome" class="button button-clear" routerLink="credentials/login">Login</a>
+      <ng-template #wellcome>Hello {{ user.email }}</ng-template>
     </header>
     
   `,
   styles: []
 })
 export class HeaderComponent implements OnInit {
-  public userIsAnonymous;
-  constructor(private globalStore: GlobalStoreService) {}
+  public user: User;
 
-  ngOnInit() {
-    this.globalStore
-      .selectUserIsAnonymous$()
-      .subscribe(res => (this.userIsAnonymous = res));
+  constructor(private store: Store<State>) {}
+
+  ngOnInit(): void {
+    this.store
+      .pipe(select("user"))
+      .subscribe((user: User) => (this.user = user));
   }
 }

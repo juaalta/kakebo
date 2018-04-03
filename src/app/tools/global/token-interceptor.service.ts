@@ -6,21 +6,22 @@ import {
   HttpRequest
 } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
-import { GlobalStoreService } from "@tools/global/global-store.service";
+import { Store, select } from "@ngrx/store";
+import { State } from "@tools/global/state";
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
   private token: string = "";
 
-  constructor(private store: GlobalStoreService) {
+  constructor(private store: Store<State>) {
     this.subscribeToTokenChanges();
   }
 
   private subscribeToTokenChanges() {
-    this.store.selectUserToken$().subscribe(this.setToken);
+    this.store.pipe(select("user")).subscribe(this.setToken);
   }
 
-  private setToken = token => (this.token = token);
+  private setToken = user => (this.token = user.token);
 
   public intercept(
     req: HttpRequest<any>,
