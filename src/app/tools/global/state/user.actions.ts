@@ -8,12 +8,11 @@ export enum UserActionTypes {
 
 export class ValidateUser implements Action {
   readonly type = UserActionTypes.ValidateUser;
+  constructor(public payload:User){  }
 }
 export class ValidateUserCompleted implements Action {
   readonly type = UserActionTypes.ValidateUserCompleted;
-  constructor(public payload:User){
-
-  }
+  constructor(public payload:User){  }
 }
 
 export type UserActions = ValidateUser | ValidateUserCompleted;

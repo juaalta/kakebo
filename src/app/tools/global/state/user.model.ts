@@ -1,17 +1,19 @@
 export interface User {
-  loading: boolean;
+  comunicating: boolean;
   token: string;
-  userIsAnonymous: boolean,
-  userMessage: string,
-  email: string,
-  password: string
+  userIsAnonymous: boolean;
+  userMessage: string;
+  email: string;
+  password: string;
+  isNew: boolean;
 }
 
 export const initialState: User = {
-  loading:false,
+  comunicating: false,
   token: "",
   userIsAnonymous: true,
   userMessage: "",
   email: "",
-  password: ""
+  password: "",
+  isNew: false
 };

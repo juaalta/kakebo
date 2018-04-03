@@ -4,22 +4,20 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { GlobalStoreService } from "@tools/global/global-store.service";
 import { TokenInterceptorService } from "@tools/global/token-interceptor.service";
 import { CatchInterceptorService } from "@tools/global/catch-interceptor.service";
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "@environments/environment";
 import { reducers, metaReducers } from "@tools/global/state";
-import { EffectsModule } from '@ngrx/effects';
+import { EffectsModule } from "@ngrx/effects";
 import { UserEffects } from "@tools/global/state/user.effects";
+import { UserApi } from "@tools/global/state/user-api.service";
 
 @NgModule({
   imports: [
-    CommonModule, 
-    HttpClientModule, 
-    StoreModule.forRoot(
-      reducers,
-      { metaReducers }
-      ), 
-    !environment.production ? StoreDevtoolsModule.instrument() : [], 
+    CommonModule,
+    HttpClientModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([UserEffects])
   ],
   providers: [
@@ -33,7 +31,8 @@ import { UserEffects } from "@tools/global/state/user.effects";
       provide: HTTP_INTERCEPTORS,
       useClass: CatchInterceptorService,
       multi: true
-    }
+    },
+    UserApi
   ]
 })
 /**

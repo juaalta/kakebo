@@ -22,12 +22,11 @@ import { User } from "@tools/global/state/user.model";
   styles: []
 })
 export class AppComponent implements OnInit {
-  user$ : Observable<User>;
+  user$: Observable<User>;
   title = "kab";
-  constructor(private store: Store<State>) { }
+  constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new ValidateUser());
-    this.user$ = this.store.pipe(select('user'));
+    this.user$ = this.store.pipe(select("user"));
   }
 }

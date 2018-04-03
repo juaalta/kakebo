@@ -3,6 +3,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { GlobalStoreService } from "@tools/global/global-store.service";
 import { CredentialsService } from "@routes/credentials/credentials.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { State } from "@tools/global/state";
+import { ValidateUser } from "@tools/global/state/user.actions";
 
 @Component({
   selector: "kab-login",
@@ -33,8 +36,9 @@ export class CredentialsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private credentialsService: CredentialsService,
     private router: Router,
-    private store: GlobalStoreService,
-    private formbuilder: FormBuilder
+    private oldStore: GlobalStoreService,
+    private formbuilder: FormBuilder,
+    private store: Store<State>
   ) {}
 
   public ngOnInit() {
@@ -54,22 +58,33 @@ export class CredentialsComponent implements OnInit {
     });
   }
   public submit(credentials) {
-    this.errorMessage = "";
-    const service = this.pageData.title;
-    this.credentialsService
-      .sendCredential(credentials, service)
-      .subscribe(this.acceptedCredentials, this.invalidCredentials);
+    this.store.dispatch(
+      new ValidateUser({
+        comunicating: true,
+        email: credentials.email,
+        password: credentials.password,
+        isNew: this.pageData.title == "Registration" ? true : false,
+        token: "",
+        userIsAnonymous: true,
+        userMessage: "Validating user"
+      })
+    );
+    // this.errorMessage = "";
+    // const service = this.pageData.title;
+    // this.credentialsService
+    //   .sendCredential(credentials, service)
+    //   .subscribe(this.acceptedCredentials, this.invalidCredentials);
   }
   private acceptedCredentials = responseData => {
     if (responseData && responseData.token) {
-      this.store.dispatchUserToken(responseData.token);
+      this.oldStore.dispatchUserToken(responseData.token);
       this.router.navigateByUrl("/");
     } else {
       this.invalidCredentials();
     }
   };
   private invalidCredentials = () => {
-    this.store.dispatchUserToken(null);
+    this.oldStore.dispatchUserToken(null);
     this.errorMessage = "Invalid Credentials";
   };
 }
