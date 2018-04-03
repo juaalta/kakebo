@@ -5,9 +5,11 @@ import { GlobalStoreService } from "@tools/global/global-store.service";
 import { TokenInterceptorService } from "@tools/global/token-interceptor.service";
 import { CatchInterceptorService } from "@tools/global/catch-interceptor.service";
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../../../environments/environment';
+import { environment } from "@environments/environment";
+import { reducers, metaReducers } from "@tools/global/state";
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from "@tools/global/state/user.effects";
 
 @NgModule({
   imports: [
@@ -15,8 +17,10 @@ import { environment } from '../../../environments/environment';
     HttpClientModule, 
     StoreModule.forRoot(
       reducers,
-       { metaReducers }), 
-       !environment.production ? StoreDevtoolsModule.instrument() : []
+      { metaReducers }
+      ), 
+    !environment.production ? StoreDevtoolsModule.instrument() : [], 
+    EffectsModule.forRoot([UserEffects])
   ],
   providers: [
     GlobalStoreService,
