@@ -5,17 +5,32 @@ import { Action } from "@ngrx/store";
 import {
   ValidateUser,
   UserActionTypes,
-  ValidateUserCompleted
+  ValidateUserCompleted,
+  ValidateUserFailed
 } from "@tools/global/state/user.actions";
-import { switchMap, map, tap } from "rxjs/operators";
+import { switchMap, map, tap, catchError } from "rxjs/operators";
 import { environment } from "@environments/environment";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { User } from "@tools/global/state/user.model";
 import { UserApi } from "@tools/global/state/user-api.service";
 import { Router } from "@angular/router";
+import { of } from "rxjs/observable/of";
+import { CredentialResponse } from "@tools/global/state/credentials.model";
 
 @Injectable()
 export class UserEffects {
+  private onValidateUser = action =>
+    this.api
+      .sendCredential(action.payload, action.payload.service)
+      .pipe(
+        tap(() => this.router.navigateByUrl("/")),
+        map(this.onValidateUserCompleted),
+        catchError(this.onValidateUserFailed)
+      );
+  private onValidateUserCompleted = (res: CredentialResponse) =>
+    new ValidateUserCompleted(res);
+  private onValidateUserFailed = err => of(new ValidateUserFailed());
+
   constructor(
     private actions$: Actions,
     private api: UserApi,
@@ -23,23 +38,8 @@ export class UserEffects {
   ) {}
 
   @Effect()
-  validateUser$: Observable<Action> = this.actions$.pipe(
+  public validateUser$: Observable<Action> = this.actions$.pipe(
     ofType<ValidateUser>(UserActionTypes.ValidateUser),
-    switchMap(action => {
-      const user: User = action.payload;
-      const service = user.isNew ? "registration" : "login";
-      return this.api.sendCredential(user, service).pipe(
-        tap(() => this.router.navigateByUrl("/")),
-        map(
-          (res: any) =>
-            new ValidateUserCompleted({
-              ...user,
-              token: res.token,
-              userIsAnonymous: false,
-              comunicating: false
-            })
-        )
-      );
-    })
+    switchMap(this.onValidateUser)
   );
 }

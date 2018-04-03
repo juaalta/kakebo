@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { GlobalStoreService } from "@tools/global/global-store.service";
-import { CredentialsService } from "@routes/credentials/credentials.service";
+import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { State } from "@tools/global/state";
@@ -25,7 +23,6 @@ import { ValidateUser } from "@tools/global/state/user.actions";
   </form>
   <i>{{ errorMessage }}</i>
   `,
-  providers: [CredentialsService],
   styles: []
 })
 export class CredentialsComponent implements OnInit {
@@ -34,9 +31,6 @@ export class CredentialsComponent implements OnInit {
   public form: FormGroup;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private credentialsService: CredentialsService,
-    private router: Router,
-    private oldStore: GlobalStoreService,
     private formbuilder: FormBuilder,
     private store: Store<State>
   ) {}
@@ -60,31 +54,10 @@ export class CredentialsComponent implements OnInit {
   public submit(credentials) {
     this.store.dispatch(
       new ValidateUser({
-        comunicating: true,
         email: credentials.email,
         password: credentials.password,
-        isNew: this.pageData.title == "Registration" ? true : false,
-        token: "",
-        userIsAnonymous: true,
-        userMessage: "Validating user"
+        service: this.pageData.title.toLowerCase()
       })
     );
-    // this.errorMessage = "";
-    // const service = this.pageData.title;
-    // this.credentialsService
-    //   .sendCredential(credentials, service)
-    //   .subscribe(this.acceptedCredentials, this.invalidCredentials);
   }
-  private acceptedCredentials = responseData => {
-    if (responseData && responseData.token) {
-      this.oldStore.dispatchUserToken(responseData.token);
-      this.router.navigateByUrl("/");
-    } else {
-      this.invalidCredentials();
-    }
-  };
-  private invalidCredentials = () => {
-    this.oldStore.dispatchUserToken(null);
-    this.errorMessage = "Invalid Credentials";
-  };
 }

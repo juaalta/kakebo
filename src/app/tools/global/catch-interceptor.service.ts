@@ -11,12 +11,14 @@ import { Observable } from "rxjs/Observable";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { GlobalStoreService } from "@tools/global/global-store.service";
+import { Store } from "@ngrx/store";
+import { State } from "@tools/global/state";
 
 @Injectable()
 export class CatchInterceptorService implements HttpInterceptor {
   private started;
 
-  constructor(private router: Router, private store: GlobalStoreService) {}
+  constructor(private router: Router, private store: Store<State>) {}
 
   public intercept(
     req: HttpRequest<any>,
@@ -27,7 +29,7 @@ export class CatchInterceptorService implements HttpInterceptor {
       this.catchError
     );
     this.started = Date.now();
-    this.store.dispatchUserMessage("");
+    //this.store.dispatchUserMessage("");
     const handledRequest = next.handle(req);
     return handledRequest.pipe(interceptionOperator);
   }
@@ -44,7 +46,7 @@ export class CatchInterceptorService implements HttpInterceptor {
       this.catchHttpError(err);
     } else {
       console.error(err.message);
-      this.store.dispatchUserMessage(err.message);
+      //this.store.dispatchUserMessage(err.message);
     }
   };
 
@@ -53,13 +55,13 @@ export class CatchInterceptorService implements HttpInterceptor {
       this.catchUnauthorized();
     } else {
       console.warn(err.statusText);
-      this.store.dispatchUserMessage(err.statusText);
+      //this.store.dispatchUserMessage(err.statusText);
     }
   }
 
   private catchUnauthorized() {
     console.log("Not authorized");
-    this.store.dispatchUserMessage("Not authorized");
+    //this.store.dispatchUserMessage("Not authorized");
     this.navigateToLogin();
   }
   private navigateToLogin() {

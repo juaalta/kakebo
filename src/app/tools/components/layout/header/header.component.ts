@@ -8,11 +8,12 @@ import { User } from "@tools/global/state/user.model";
 @Component({
   selector: "kab-header",
   template: `
-    <header>
+    <header class="container">
       <a class="button button-clear" routerLink="">Kakebo</a>
       <a class="button button-clear" routerLink="about">About</a>
       <a *ngIf="user?.userIsAnonymous ;else wellcome" class="button button-clear" routerLink="credentials/login">Login</a>
       <ng-template #wellcome>Hello {{ user.email }}</ng-template>
+      <span class="float-right">{{ user.userMessage }}</span>
     </header>
     
   `,
