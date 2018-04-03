@@ -8,7 +8,8 @@ import {
 export enum UserActionTypes {
   ValidateUser = "[User] ValidateUser",
   ValidateUserCompleted = "[User] ValidateUserCompleted",
-  ValidateUserFailed = "[User] ValidateUserFailed"
+  ValidateUserFailed = "[User] ValidateUserFailed",
+  ShowMessage = "[User] ShowMessage"
 }
 
 export class ValidateUser implements Action {
@@ -24,7 +25,13 @@ export class ValidateUserFailed implements Action {
   constructor() {}
 }
 
+export class ShowMessage implements Action {
+  readonly type = UserActionTypes.ShowMessage;
+  constructor(public payload: string) {}
+}
+
 export type UserActions =
   | ValidateUser
   | ValidateUserCompleted
-  | ValidateUserFailed;
+  | ValidateUserFailed
+  | ShowMessage;

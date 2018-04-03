@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { GlobalStoreService } from "@tools/global/global-store.service";
 import { Store, select } from "@ngrx/store";
 import { State } from "@tools/global/state";
 import { Observable } from "rxjs/Observable";
@@ -15,7 +14,6 @@ import { User } from "@tools/global/state/user.model";
       <ng-template #wellcome>Hello {{ user.email }}</ng-template>
       <span class="float-right">{{ user.userMessage }}</span>
     </header>
-    
   `,
   styles: []
 })

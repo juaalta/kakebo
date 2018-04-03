@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { GlobalStoreService } from "@tools/global/global-store.service";
 import { TokenInterceptorService } from "@tools/global/token-interceptor.service";
 import { CatchInterceptorService } from "@tools/global/catch-interceptor.service";
 import { StoreModule } from "@ngrx/store";
@@ -21,7 +20,6 @@ import { UserApi } from "@tools/global/state/user-api.service";
     EffectsModule.forRoot([UserEffects])
   ],
   providers: [
-    GlobalStoreService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
