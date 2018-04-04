@@ -11,9 +11,9 @@ import { Message } from "@tools/global/state/message/models/message.model";
     <header class="container">
       <a class="button button-clear" routerLink="">Kakebo</a>
       <a class="button button-clear" routerLink="about">About</a>
-      <a *ngIf="user?.userIsAnonymous ;else wellcome" class="button button-clear" routerLink="credentials/login">Login</a>
-      <ng-template #wellcome>Hello {{ user.email }}</ng-template>
-      <span class="float-right">{{ message.caption }}</span>
+      <a *ngIf="user?.userIsAnonymous ;else welcome" class="button button-clear" routerLink="credentials/login">Login</a>
+      <ng-template #welcome>Hello {{ user.email }}</ng-template>
+      <span [ngClass]="['float-right',getMessageClass(message)]">{{ message.caption }}</span>
     </header>
   `,
   styles: []
@@ -31,5 +31,18 @@ export class HeaderComponent implements OnInit {
     this.store
       .pipe(select("message"))
       .subscribe((message: Message) => (this.message = message));
+  }
+
+  public getMessageClass(message: Message): string {
+    switch (message.type) {
+      case "info":
+        return "accent";
+      case "warn":
+        return "warn";
+      case "error":
+        return "error";
+      default:
+        break;
+    }
   }
 }

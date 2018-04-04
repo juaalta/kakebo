@@ -1,6 +1,6 @@
 export interface Message {
   caption: string;
-  type: "info" | "warning" | "error";
+  type: "info" | "warn" | "error";
 }
 
 export const messageInitialState: Message = {

@@ -66,7 +66,7 @@ export class CatchInterceptorService implements HttpInterceptor {
   private catchUnauthorized() {
     console.log("Not authorized");
     this.store.dispatch(
-      new ShowMessage({ caption: "Not authorized", type: "warning" })
+      new ShowMessage({ caption: "Not authorized", type: "warn" })
     );
     this.navigateToLogin();
   }

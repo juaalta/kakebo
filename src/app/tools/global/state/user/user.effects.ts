@@ -32,7 +32,7 @@ export class UserEffects {
       }),
       catchError(() => {
         this.store.dispatch(
-          new ShowMessage({ caption: "Invalid Credentials", type: "warning" })
+          new ShowMessage({ caption: "Invalid Credentials", type: "warn" })
         );
         return of(new ValidateUserFailed());
       })
