@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
-import { Action } from "@ngrx/store";
+import { Action, Store } from "@ngrx/store";
 import { switchMap, map, tap, catchError } from "rxjs/operators";
 import { environment } from "@environments/environment";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
@@ -15,22 +15,35 @@ import {
   UserActionTypes
 } from "@tools/global/state/user/user.actions";
 import { UserApi } from "@tools/global/state/user/user-api.service";
+import { State } from "@tools/global/state";
+import { ShowMessage } from "@tools/global/state/message/message.actions";
 
 @Injectable()
 export class UserEffects {
-  private onValidateUser$ = (action: ValidateUser): Observable<Action> =>
-    this.api
-      .sendCredential(action.payload, action.payload.service)
-      .pipe(
-        tap(() => this.router.navigateByUrl("/")),
-        map((res: CredentialResponse) => new ValidateUserCompleted(res)),
-        catchError(() => of(new ValidateUserFailed()))
-      );
+  private onValidateUser$ = (action: ValidateUser): Observable<Action> => {
+    this.store.dispatch(
+      new ShowMessage({ caption: "validating", type: "info" })
+    );
+    return this.api.sendCredential(action.payload, action.payload.service).pipe(
+      tap(() => this.router.navigateByUrl("/")),
+      map((res: CredentialResponse) => {
+        this.store.dispatch(new ShowMessage({ caption: "", type: "info" }));
+        return new ValidateUserCompleted(res);
+      }),
+      catchError(() => {
+        this.store.dispatch(
+          new ShowMessage({ caption: "Invalid Credentials", type: "warning" })
+        );
+        return of(new ValidateUserFailed());
+      })
+    );
+  };
 
   constructor(
     private actions$: Actions,
     private api: UserApi,
-    private router: Router
+    private router: Router,
+    private store: Store<State>
   ) {}
 
   @Effect()

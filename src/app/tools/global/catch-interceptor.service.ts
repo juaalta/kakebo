@@ -12,7 +12,7 @@ import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { State } from "@tools/global/state";
-import { ShowMessage } from "@tools/global/state/user/user.actions";
+import { ShowMessage } from "@tools/global/state/message/message.actions";
 
 @Injectable()
 export class CatchInterceptorService implements HttpInterceptor {
@@ -46,7 +46,9 @@ export class CatchInterceptorService implements HttpInterceptor {
       this.catchHttpError(err);
     } else {
       console.error(err.message);
-      this.store.dispatch(new ShowMessage(err.message));
+      this.store.dispatch(
+        new ShowMessage({ caption: err.message, type: "error" })
+      );
     }
   };
 
@@ -55,13 +57,17 @@ export class CatchInterceptorService implements HttpInterceptor {
       this.catchUnauthorized();
     } else {
       console.warn(err.statusText);
-      this.store.dispatch(new ShowMessage(err.statusText));
+      this.store.dispatch(
+        new ShowMessage({ caption: err.statusText, type: "error" })
+      );
     }
   }
 
   private catchUnauthorized() {
     console.log("Not authorized");
-    this.store.dispatch(new ShowMessage("Not authorized"));
+    this.store.dispatch(
+      new ShowMessage({ caption: "Not authorized", type: "warning" })
+    );
     this.navigateToLogin();
   }
   private navigateToLogin() {

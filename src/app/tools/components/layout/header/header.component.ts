@@ -3,6 +3,7 @@ import { Store, select } from "@ngrx/store";
 import { State } from "@tools/global/state";
 import { Observable } from "rxjs/Observable";
 import { User } from "@tools/global/state/user/models/user.model";
+import { Message } from "@tools/global/state/message/models/message.model";
 
 @Component({
   selector: "kab-header",
@@ -12,13 +13,14 @@ import { User } from "@tools/global/state/user/models/user.model";
       <a class="button button-clear" routerLink="about">About</a>
       <a *ngIf="user?.userIsAnonymous ;else wellcome" class="button button-clear" routerLink="credentials/login">Login</a>
       <ng-template #wellcome>Hello {{ user.email }}</ng-template>
-      <span class="float-right">{{ user.userMessage }}</span>
+      <span class="float-right">{{ message.caption }}</span>
     </header>
   `,
   styles: []
 })
 export class HeaderComponent implements OnInit {
   public user: User;
+  public message: Message;
 
   constructor(private store: Store<State>) {}
 
@@ -26,5 +28,8 @@ export class HeaderComponent implements OnInit {
     this.store
       .pipe(select("user"))
       .subscribe((user: User) => (this.user = user));
+    this.store
+      .pipe(select("message"))
+      .subscribe((message: Message) => (this.message = message));
   }
 }

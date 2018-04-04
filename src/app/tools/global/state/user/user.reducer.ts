@@ -16,27 +16,19 @@ export function userReducer(
     case UserActionTypes.ValidateUser:
       return {
         ...state,
-        email: action.payload.email,
-        userMessage: "Validating..."
+        email: action.payload.email
       };
     case UserActionTypes.ValidateUserCompleted:
       return {
         ...state,
         token: action.payload.token,
-        userIsAnonymous: false,
-        userMessage: ""
+        userIsAnonymous: false
       };
     case UserActionTypes.ValidateUserFailed:
       return {
         ...state,
         token: "",
-        userIsAnonymous: true,
-        userMessage: "Invalid Credentials"
-      };
-    case UserActionTypes.ShowMessage:
-      return {
-        ...state,
-        userMessage: action.payload
+        userIsAnonymous: true
       };
     default:
       return state;
