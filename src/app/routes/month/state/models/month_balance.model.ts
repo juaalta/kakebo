@@ -20,3 +20,8 @@ export const monthBalanceInitialState: MonthBalance = {
   goal: 0,
   available: 0
 };
+
+export interface YearMonth {
+  year: number;
+  month: number;
+}
