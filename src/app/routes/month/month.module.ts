@@ -7,11 +7,18 @@ import { ComponentsModule } from "@tools/components/components.module";
 import { ApiService } from "@routes/month/api.service";
 import { StoreService } from "@routes/month/store.service";
 import { Reducers } from "@routes/month/reducers.service";
-import { StoreModule } from '@ngrx/store';
-import * as fromMonth from '../../state';
+import { StoreModule } from "@ngrx/store";
+import * as fromMonth from "@routes/month/state";
 
 @NgModule({
-  imports: [CommonModule, ControlRoutingModule, ComponentsModule, StoreModule.forFeature('month', fromMonth.reducers, { metaReducers: fromMonth.metaReducers })],
+  imports: [
+    CommonModule,
+    ControlRoutingModule,
+    ComponentsModule,
+    StoreModule.forFeature("month", fromMonth.reducers, {
+      metaReducers: fromMonth.metaReducers
+    })
+  ],
   declarations: [MonthComponent],
   providers: [ApiService, StoreService, Reducers]
 })
