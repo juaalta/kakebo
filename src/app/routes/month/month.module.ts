@@ -8,18 +8,14 @@ import { ApiService } from "@routes/month/api.service";
 import { StoreService } from "@routes/month/store.service";
 import { Reducers } from "@routes/month/reducers.service";
 import { StoreModule } from "@ngrx/store";
-import * as fromMonth from "@routes/month/state";
-import * as fromMonthBalance from '../../month-balance.reducer';
+import { reducers, metaReducers } from "@routes/month/state";
 
 @NgModule({
   imports: [
     CommonModule,
     ControlRoutingModule,
     ComponentsModule,
-    StoreModule.forFeature("month", fromMonth.reducers, {
-      metaReducers: fromMonth.metaReducers
-    }),
-    StoreModule.forFeature('monthBalance', fromMonthBalance.reducer)
+    StoreModule.forFeature("month", reducers, { metaReducers })
   ],
   declarations: [MonthComponent],
   providers: [ApiService, StoreService, Reducers]
