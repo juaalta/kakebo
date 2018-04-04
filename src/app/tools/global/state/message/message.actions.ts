@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { Message } from "@tools/global/state/models/message.model";
+import { Message } from "@tools/global/state/message/models/message.model";
 
 export enum MessageActionTypes {
   ShowMessage = "[Message] ShowMessage"

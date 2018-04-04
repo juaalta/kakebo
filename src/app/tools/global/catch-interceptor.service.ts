@@ -12,7 +12,7 @@ import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { State } from "@tools/global/state";
-import { ShowMessage } from "@tools/global/state/user.actions";
+import { ShowMessage } from "@tools/global/state/user/user.actions";
 
 @Injectable()
 export class CatchInterceptorService implements HttpInterceptor {

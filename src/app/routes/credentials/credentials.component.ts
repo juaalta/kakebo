@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { State } from "@tools/global/state";
-import { ValidateUser } from "@tools/global/state/user.actions";
+import { ValidateUser } from "@tools/global/state/user/user.actions";
 
 @Component({
   selector: "kab-login",
@@ -31,7 +31,7 @@ export class CredentialsComponent implements OnInit {
   public form: FormGroup;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formbuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private store: Store<State>
   ) {}
 
@@ -40,7 +40,7 @@ export class CredentialsComponent implements OnInit {
   }
   private obtainPageDataFromRoute() {
     this.pageData = this.activatedRoute.snapshot.data;
-    this.form = this.formbuilder.group({
+    this.form = this.formBuilder.group({
       email: [
         this.pageData.credential.email,
         [Validators.required, Validators.email]

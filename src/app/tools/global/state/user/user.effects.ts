@@ -2,19 +2,19 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
 import { Action } from "@ngrx/store";
-import {
-  ValidateUser,
-  UserActionTypes,
-  ValidateUserCompleted,
-  ValidateUserFailed
-} from "@tools/global/state/user.actions";
 import { switchMap, map, tap, catchError } from "rxjs/operators";
 import { environment } from "@environments/environment";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { UserApi } from "@tools/global/state/user-api.service";
 import { Router } from "@angular/router";
 import { of } from "rxjs/observable/of";
-import { CredentialResponse } from "@tools/global/state/models/credentials.model";
+import { CredentialResponse } from "@tools/global/state/user/models/credentials.model";
+import {
+  ValidateUser,
+  ValidateUserCompleted,
+  ValidateUserFailed,
+  UserActionTypes
+} from "@tools/global/state/user/user.actions";
+import { UserApi } from "@tools/global/state/user/user-api.service";
 
 @Injectable()
 export class UserEffects {

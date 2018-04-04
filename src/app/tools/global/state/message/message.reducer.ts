@@ -1,12 +1,12 @@
 import { Action } from "@ngrx/store";
 import {
-  Message,
-  messageInitialState
-} from "@tools/global/state/models/message.model";
+  messageInitialState,
+  Message
+} from "@tools/global/state/message/models/message.model";
 import {
   MessageActions,
   MessageActionTypes
-} from "@tools/global/state/message.actions";
+} from "@tools/global/state/message/message.actions";
 
 export function messageReducer(
   state = messageInitialState,

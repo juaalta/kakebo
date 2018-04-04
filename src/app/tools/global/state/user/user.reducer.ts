@@ -1,6 +1,12 @@
 import { Action } from "@ngrx/store";
-import { UserActions, UserActionTypes } from "@tools/global/state/user.actions";
-import { User, userInitialState } from "@tools/global/state/models/user.model";
+import {
+  userInitialState,
+  User
+} from "@tools/global/state/user/models/user.model";
+import {
+  UserActions,
+  UserActionTypes
+} from "@tools/global/state/user/user.actions";
 
 export function userReducer(
   state = userInitialState,

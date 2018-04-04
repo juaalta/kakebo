@@ -1,15 +1,9 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer
-} from "@ngrx/store";
 import { environment } from "@environments/environment";
-import { userReducer } from "@tools/global/state/user.reducer";
-import { User } from "@tools/global/state/models/user.model";
-import { Message } from "@tools/global/state/models/message.model";
-import { messageReducer } from "@tools/global/state/message.reducer";
+import { User } from "@tools/global/state/user/models/user.model";
+import { userReducer } from "@tools/global/state/user/user.reducer";
+import { Message } from "@tools/global/state/message/models/message.model";
+import { messageReducer } from "@tools/global/state/message/message.reducer";
+import { ActionReducerMap, MetaReducer } from "@ngrx/store";
 
 export interface State {
   user: User;

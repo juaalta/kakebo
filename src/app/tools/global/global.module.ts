@@ -8,8 +8,8 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "@environments/environment";
 import { reducers, metaReducers } from "@tools/global/state";
 import { EffectsModule } from "@ngrx/effects";
-import { UserEffects } from "@tools/global/state/user.effects";
-import { UserApi } from "@tools/global/state/user-api.service";
+import { UserEffects } from "@tools/global/state/user/user.effects";
+import { UserApi } from "@tools/global/state/user/user-api.service";
 
 @NgModule({
   imports: [
