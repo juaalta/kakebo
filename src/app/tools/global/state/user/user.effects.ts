@@ -1,22 +1,20 @@
-import { Injectable } from "@angular/core";
-import { Actions, Effect, ofType } from "@ngrx/effects";
-import { Observable } from "rxjs/Observable";
 import { Action, Store } from "@ngrx/store";
-import { switchMap, map, tap, catchError } from "rxjs/operators";
-import { environment } from "@environments/environment";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { of } from "rxjs/observable/of";
+import { Actions, Effect, ofType } from "@ngrx/effects";
 import { CredentialResponse } from "@tools/global/state/user/models/credentials.model";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { of } from "rxjs/observable/of";
+import { Router } from "@angular/router";
+import { ShowMessage } from "@tools/global/state/message/message.actions";
+import { State } from "@tools/global/state";
+import { switchMap, map, catchError } from "rxjs/operators";
 import {
+  UserActionTypes,
   ValidateUser,
   ValidateUserCompleted,
-  ValidateUserFailed,
-  UserActionTypes
+  ValidateUserFailed
 } from "@tools/global/state/user/user.actions";
 import { UserApi } from "@tools/global/state/user/user-api.service";
-import { State } from "@tools/global/state";
-import { ShowMessage } from "@tools/global/state/message/message.actions";
 
 @Injectable()
 export class UserEffects {
@@ -24,10 +22,10 @@ export class UserEffects {
     this.store.dispatch(
       new ShowMessage({ caption: "validating", type: "info" })
     );
-    return this.api.sendCredential(action.payload, action.payload.service).pipe(
-      tap(() => this.router.navigateByUrl("/")),
+    return this.api.sendCredential(action.payload).pipe(
       map((res: CredentialResponse) => {
         this.store.dispatch(new ShowMessage({ caption: "", type: "info" }));
+        this.router.navigateByUrl("/");
         return new ValidateUserCompleted(res);
       }),
       catchError(() => {
