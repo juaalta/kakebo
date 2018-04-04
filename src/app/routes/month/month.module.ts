@@ -9,8 +9,8 @@ import { StoreService } from "@routes/month/store.service";
 import { Reducers } from "@routes/month/reducers.service";
 import { StoreModule } from "@ngrx/store";
 import { reducers, metaReducers } from "@routes/month/state";
-import { EffectsModule } from '@ngrx/effects';
-import { MonthBalanceEffects } from '../../month-balance.effects';
+import { EffectsModule } from "@ngrx/effects";
+import { MonthBalanceEffects } from "@routes/month/state/month-balance/month-balance.effects";
 
 @NgModule({
   imports: [
