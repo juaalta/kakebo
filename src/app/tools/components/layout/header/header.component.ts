@@ -26,10 +26,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.store
-      .pipe(select("user"))
+      .select(state => state.user)
       .subscribe((user: User) => (this.user = user));
     this.store
-      .pipe(select("message"))
+      .select(state => state.message)
       .subscribe((message: Message) => (this.message = message));
   }
 

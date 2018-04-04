@@ -18,7 +18,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   }
 
   private subscribeToTokenChanges() {
-    this.store.pipe(select("user")).subscribe(this.setToken);
+    this.store.select(state => state.user).subscribe(this.setToken);
   }
 
   private setToken = user => (this.token = user.token);
