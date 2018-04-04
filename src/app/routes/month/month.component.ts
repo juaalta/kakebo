@@ -5,6 +5,9 @@ import { StoreService } from "@routes/month/store.service";
 import { NavLink } from "@tools/models/nav-link.model";
 import { Observable } from "rxjs/Observable";
 import { map } from "rxjs/operators";
+import { Store } from "@ngrx/store";
+import { MonthState } from "@routes/month/state";
+import { GetMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
 
 @Component({
   selector: "kab-month",
@@ -47,17 +50,22 @@ export class MonthComponent implements OnInit {
   ];
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: StoreService
+    private oldStore: StoreService,
+    private store: Store<MonthState>
   ) {}
 
   ngOnInit() {
     const params = this.activatedRoute.snapshot.params;
     this.year = +params["y"];
     this.month = +params["m"];
-    this.month_balance$ = this.store.selectMonthBalance$;
+    this.month_balance$ = this.oldStore.selectMonthBalance$;
     this.savings$ = this.month_balance$.pipe(map(m => m.savings));
-    this.store.dispatchYearMonth(this.year, this.month);
-    this.store.dispatchGetMonthBalances();
-    this.store.dispatchGetJournalEntries();
+    this.oldStore.dispatchYearMonth(this.year, this.month);
+    this.oldStore.dispatchGetMonthBalances();
+    this.oldStore.dispatchGetJournalEntries();
+
+    this.store.dispatch(
+      new GetMonthBalance({ year: this.year, month: this.month })
+    );
   }
 }
