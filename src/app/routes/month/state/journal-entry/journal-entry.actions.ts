@@ -1,6 +1,7 @@
 import { Action } from "@ngrx/store";
 import { YearMonth } from "@routes/month/state/month-balance/models/month_balance.model";
-import { JournalEntry } from "@routes/month/models/journal_entry.model";
+import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
+
 
 export enum JournalEntryActionTypes {
   GetJournalEntries = "[JournalEntry] GetJournalEntries",

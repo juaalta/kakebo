@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
-import { MonthBalance, YearMonth } from "@routes/month/state/models/month_balance.model";
 import { environment } from "@environments/environment";
+import { MonthBalance,YearMonth } from "@routes/month/state/month-balance/models/month_balance.model";
 
 @Injectable()
 export class MonthBalanceApi {
@@ -13,7 +13,7 @@ export class MonthBalanceApi {
         const url = `${this.url}${yearMonth.year}/${yearMonth.month}`;
         return this.http.get<MonthBalance>(url);
     }
-    public postMonthBalance$(monthBalance:MonthBalance): Observable<any> {
-        return this.http.post(this.url, monthBalance);
+    public postMonthBalance$(monthBalance:MonthBalance): Observable<MonthBalance> {
+        return this.http.post<MonthBalance>(this.url, monthBalance);
     }
 }
