@@ -2,7 +2,7 @@ import { Action } from "@ngrx/store";
 import {
   YearMonth,
   MonthBalance
-} from "@routes/month/state/models/month_balance.model";
+} from "@routes/month/state/month-balance/models/month_balance.model";
 
 export enum MonthBalanceActionTypes {
   GetMonthBalance = "[MonthBalance] GetMonthBalance",

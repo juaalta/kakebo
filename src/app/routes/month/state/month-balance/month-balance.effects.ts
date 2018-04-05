@@ -13,7 +13,7 @@ import {
   PostMonthBalanceCompleted,
   PostMonthBalanceFailed
 } from "@routes/month/state/month-balance/month-balance.actions";
-import { MonthBalance, monthBalanceInitialState } from "@routes/month/state/models/month_balance.model";
+import { MonthBalance, monthBalanceInitialState } from "@routes/month/state/month-balance/models/month_balance.model";
 import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
 import { MonthState } from "@routes/month/state";
 import { HttpErrorResponse } from "@angular/common/http";
