@@ -3,16 +3,32 @@ import {
   YearMonth,
   MonthBalance
 } from "@routes/month/state/month-balance/models/month_balance.model";
+import { MonthState } from "@routes/month/state";
+import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
 
 export enum MonthBalanceActionTypes {
+  CalculateMonthBalance = "[MonthBalance] CalculateMonthBalance",
   GetMonthBalance = "[MonthBalance] GetMonthBalance",
   GetMonthBalanceCompleted = "[MonthBalance] GetMonthBalanceCompleted",
   GetMonthBalanceFailed = "[MonthBalance] GetMonthBalanceFailed",
   PostMonthBalance = "[MonthBalance] PostMonthBalance",
   PostMonthBalanceCompleted = "[MonthBalance] PostMonthBalanceCompleted",
-  PostMonthBalanceFailed = "[MonthBalance] PostMonthBalanceFailed"
+  PostMonthBalanceFailed = "[MonthBalance] PostMonthBalanceFailed",
+  PutMonthBalance = "[MonthBalance] PutMonthBalance",
+  PutMonthBalanceCompleted = "[MonthBalance] PutMonthBalanceCompleted",
+  PutMonthBalanceFailed = "[MonthBalance] PutMonthBalanceFailed"
 }
 
+export class CalculateMonthBalance implements Action {
+  readonly type = MonthBalanceActionTypes.CalculateMonthBalance;
+  constructor(
+    public payload: {
+      monthBalance: MonthBalance;
+      journalEntry: JournalEntry;
+      amountSing: -1 | 1;
+    }
+  ) {}
+}
 export class GetMonthBalance implements Action {
   readonly type = MonthBalanceActionTypes.GetMonthBalance;
   constructor(public payload: YearMonth) {}
@@ -43,11 +59,29 @@ export class PostMonthBalanceFailed implements Action {
   constructor(public payload: MonthBalance) {}
 }
 
+export class PutMonthBalance implements Action {
+  readonly type = MonthBalanceActionTypes.PutMonthBalance;
+  constructor(public payload: MonthBalance) {}
+}
+
+export class PutMonthBalanceCompleted implements Action {
+  readonly type = MonthBalanceActionTypes.PutMonthBalanceCompleted;
+  constructor(public payload: MonthBalance) {}
+}
+
+export class PutMonthBalanceFailed implements Action {
+  readonly type = MonthBalanceActionTypes.PutMonthBalanceFailed;
+  constructor(public payload: MonthBalance) {}
+}
 
 export type MonthBalanceActions =
+  | CalculateMonthBalance
   | GetMonthBalance
   | GetMonthBalanceCompleted
   | GetMonthBalanceFailed
   | PostMonthBalance
   | PostMonthBalanceCompleted
-  | PostMonthBalanceFailed;
+  | PostMonthBalanceFailed
+  | PutMonthBalance
+  | PutMonthBalanceCompleted
+  | PutMonthBalanceFailed;

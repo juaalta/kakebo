@@ -11,7 +11,11 @@ import {
   GetMonthBalanceFailed,
   PostMonthBalance,
   PostMonthBalanceCompleted,
-  PostMonthBalanceFailed
+  PostMonthBalanceFailed,
+  CalculateMonthBalance,
+  PutMonthBalance,
+  PutMonthBalanceCompleted,
+  PutMonthBalanceFailed
 } from "@routes/month/state/month-balance/month-balance.actions";
 import {
   MonthBalance,
@@ -20,9 +24,32 @@ import {
 import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
 import { MonthState } from "@routes/month/state";
 import { HttpErrorResponse } from "@angular/common/http";
+import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
 
 @Injectable()
 export class MonthBalanceEffects {
+  private onCalculateMonthBalance$ = (action: CalculateMonthBalance) => {
+    const payload = action.payload;
+    const mB = payload.monthBalance;
+    const amount = payload.journalEntry.amount * payload.amountSing;
+    switch (payload.journalEntry.kind) {
+      case "I":
+        mB.incomes += amount;
+        break;
+      case "O":
+        mB.outgoings += amount;
+        break;
+      case "E":
+        mB.expenses += amount;
+        break;
+    }
+    mB.savings = mB.incomes - mB.outgoings - mB.expenses;
+    mB.available = mB.savings - mB.goal;
+    return of(new PutMonthBalanceCompleted(mB));
+  };
+  private sumAmount = (entries: JournalEntry[]): number =>
+    entries.map(p => p.amount).reduce((state, current) => state + current, 0);
+
   private onGetMonthBalance$ = (action: GetMonthBalance) => {
     return this.monthBalanceApi
       .getMonthBalancesByYearMonth$(action.payload)
@@ -54,11 +81,31 @@ export class MonthBalanceEffects {
       })
     );
   };
+
+  private onPutMonthBalance$ = (action: PostMonthBalance) => {
+    return this.monthBalanceApi.putMonthBalance$(action.payload).pipe(
+      map((res: MonthBalance) => {
+        return new PutMonthBalanceCompleted(res);
+      }),
+      catchError((err, caught) => {
+        return of(new PutMonthBalanceFailed(err));
+      })
+    );
+  };
+
   constructor(
     private actions$: Actions,
     private monthBalanceApi: MonthBalanceApi,
     private store: Store<MonthState>
   ) {}
+
+  @Effect()
+  public calculateMonthBalance$: Observable<Action> = this.actions$.pipe(
+    ofType<CalculateMonthBalance>(
+      MonthBalanceActionTypes.CalculateMonthBalance
+    ),
+    switchMap(this.onCalculateMonthBalance$)
+  );
 
   @Effect()
   public getMonthBalance$: Observable<Action> = this.actions$.pipe(
@@ -70,5 +117,11 @@ export class MonthBalanceEffects {
   public postMonthBalance$: Observable<Action> = this.actions$.pipe(
     ofType<PostMonthBalance>(MonthBalanceActionTypes.PostMonthBalance),
     switchMap(this.onPostMonthBalance$)
+  );
+
+  @Effect()
+  public putMonthBalance$: Observable<Action> = this.actions$.pipe(
+    ofType<PutMonthBalance>(MonthBalanceActionTypes.PutMonthBalance),
+    switchMap(this.onPutMonthBalance$)
   );
 }

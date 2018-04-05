@@ -54,10 +54,20 @@ export class TrackComponent implements OnInit {
       .subscribe((expenses: JournalEntry[]) => (this.expenses = expenses));
   }
   public saveNewExpense(expense: JournalEntry) {
-    this.store.dispatch(new PostJournalEntry(expense));
+    this.store.dispatch(
+      new PostJournalEntry({
+        monthBalanace: this.monthBalance,
+        journalEntry: expense
+      })
+    );
   }
   public deleteExpense(expense: JournalEntry) {
-    this.store.dispatch(new DeleteJournalEntry(expense));
+    this.store.dispatch(
+      new DeleteJournalEntry({
+        monthBalanace: this.monthBalance,
+        journalEntry: expense
+      })
+    );
   }
 
   ngOnDestroy(): void {

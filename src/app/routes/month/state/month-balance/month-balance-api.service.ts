@@ -23,4 +23,11 @@ export class MonthBalanceApi {
   ): Observable<MonthBalance> {
     return this.http.post<MonthBalance>(this.url, monthBalance);
   }
+
+  public putMonthBalance$(
+    monthBalance: MonthBalance
+  ): Observable<MonthBalance> {
+    const url = `${this.url}${monthBalance._id}`;
+    return this.http.put<MonthBalance>(url, monthBalance);
+  }
 }

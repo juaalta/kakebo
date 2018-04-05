@@ -12,6 +12,8 @@ export function monthBalanceReducer(
 ): MonthBalance {
   console.log(action.type, action.payload);
   switch (action.type) {
+    case MonthBalanceActionTypes.CalculateMonthBalance:
+      return state;
     case MonthBalanceActionTypes.GetMonthBalance:
       return state;
     case MonthBalanceActionTypes.GetMonthBalanceCompleted:
@@ -23,6 +25,12 @@ export function monthBalanceReducer(
     case MonthBalanceActionTypes.PostMonthBalanceCompleted:
       return action.payload;
     case MonthBalanceActionTypes.PostMonthBalanceFailed:
+      return state;
+    case MonthBalanceActionTypes.PutMonthBalance:
+      return state;
+    case MonthBalanceActionTypes.PutMonthBalanceCompleted:
+      return action.payload;
+    case MonthBalanceActionTypes.PutMonthBalanceFailed:
       return state;
     default:
       return state;

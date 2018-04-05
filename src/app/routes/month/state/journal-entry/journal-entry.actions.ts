@@ -1,7 +1,9 @@
 import { Action } from "@ngrx/store";
-import { YearMonth } from "@routes/month/state/month-balance/models/month_balance.model";
+import {
+  YearMonth,
+  MonthBalance
+} from "@routes/month/state/month-balance/models/month_balance.model";
 import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
-
 
 export enum JournalEntryActionTypes {
   GetJournalEntries = "[JournalEntry] GetJournalEntries",
@@ -32,7 +34,12 @@ export class GetJournalEntriesFailed implements Action {
 
 export class PostJournalEntry implements Action {
   readonly type = JournalEntryActionTypes.PostJournalEntry;
-  constructor(public payload: JournalEntry) {}
+  constructor(
+    public payload: {
+      monthBalanace: MonthBalance;
+      journalEntry: JournalEntry;
+    }
+  ) {}
 }
 
 export class PostJournalEntryCompleted implements Action {
@@ -47,7 +54,12 @@ export class PostJournalEntryFailed implements Action {
 
 export class DeleteJournalEntry implements Action {
   readonly type = JournalEntryActionTypes.DeleteJournalEntry;
-  constructor(public payload: JournalEntry) {}
+  constructor(
+    public payload: {
+      monthBalanace: MonthBalance;
+      journalEntry: JournalEntry;
+    }
+  ) {}
 }
 
 export class DeleteJournalEntryCompleted implements Action {
@@ -59,7 +71,6 @@ export class DeleteJournalEntryFailed implements Action {
   readonly type = JournalEntryActionTypes.DeleteJournalEntryFailed;
   constructor(public payload: JournalEntry) {}
 }
-
 
 export type JournalEntryActions =
   | GetJournalEntries

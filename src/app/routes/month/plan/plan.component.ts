@@ -77,10 +77,20 @@ export class PlanComponent implements OnInit, OnDestroy {
   }
 
   public saveNewEntry(projectedEntry: JournalEntry) {
-    this.store.dispatch(new PostJournalEntry(projectedEntry));
+    this.store.dispatch(
+      new PostJournalEntry({
+        monthBalanace: this.monthBalance,
+        journalEntry: projectedEntry
+      })
+    );
   }
   public deleteAnEntry(projectedEntry: JournalEntry) {
-    this.store.dispatch(new DeleteJournalEntry(projectedEntry));
+    this.store.dispatch(
+      new DeleteJournalEntry({
+        monthBalanace: this.monthBalance,
+        journalEntry: projectedEntry
+      })
+    );
   }
   // SavingsGoal
   public setGoalForMonth(savingsGoal: any) {
