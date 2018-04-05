@@ -72,7 +72,7 @@ export class JournalEntryEffects {
             amountSing: -1
           })
         );
-        return new DeleteJournalEntryCompleted(res);
+        return new DeleteJournalEntryCompleted(action.payload.journalEntry);
       }),
       catchError((err, caught) => {
         return of(new DeleteJournalEntryFailed(err));

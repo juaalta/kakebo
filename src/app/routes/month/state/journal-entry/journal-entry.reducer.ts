@@ -1,6 +1,12 @@
 import { Action } from "@ngrx/store";
-import { JournalEntryActions, JournalEntryActionTypes } from "@routes/month/state/journal-entry/journal-entry.actions";
-import { JournalEntry, journalEntriesInitialState } from "@routes/month/state/journal-entry/models/journal-entry.model";
+import {
+  JournalEntryActions,
+  JournalEntryActionTypes
+} from "@routes/month/state/journal-entry/journal-entry.actions";
+import {
+  JournalEntry,
+  journalEntriesInitialState
+} from "@routes/month/state/journal-entry/models/journal-entry.model";
 
 export function journalEntryReducer(
   state = journalEntriesInitialState,
@@ -23,7 +29,7 @@ export function journalEntryReducer(
     case JournalEntryActionTypes.DeleteJournalEntry:
       return state;
     case JournalEntryActionTypes.DeleteJournalEntryCompleted:
-      return state.filter(j=>j._id!==action.payload._id);
+      return state.filter(j => j._id !== action.payload._id);
     case JournalEntryActionTypes.DeleteJournalEntryFailed:
       return state;
     default:

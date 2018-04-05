@@ -45,7 +45,7 @@ export class MonthBalanceEffects {
     }
     mB.savings = mB.incomes - mB.outgoings - mB.expenses;
     mB.available = mB.savings - mB.goal;
-    return of(new PutMonthBalanceCompleted(mB));
+    return of(new PutMonthBalance(mB));
   };
   private sumAmount = (entries: JournalEntry[]): number =>
     entries.map(p => p.amount).reduce((state, current) => state + current, 0);
@@ -82,7 +82,7 @@ export class MonthBalanceEffects {
     );
   };
 
-  private onPutMonthBalance$ = (action: PostMonthBalance) => {
+  private onPutMonthBalance$ = (action: PutMonthBalance) => {
     return this.monthBalanceApi.putMonthBalance$(action.payload).pipe(
       map((res: MonthBalance) => {
         return new PutMonthBalanceCompleted(res);
