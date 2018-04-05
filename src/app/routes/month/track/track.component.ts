@@ -1,16 +1,27 @@
 import { Component, OnInit } from "@angular/core";
-import { JournalEntry } from "@routes/month/models/journal_entry.model";
-import { MonthBalance } from "@routes/month/models/month_balance.model";
-import { StoreService } from "@routes/month/store.service";
+
 import { Subscription } from "rxjs/Subscription";
+import { Store } from "@ngrx/store";
+import {
+  MonthState,
+  monthBalanceSelector,
+  journalEntriesSelector
+} from "@routes/month/state";
+import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
+import { MonthBalance } from "@routes/month/state/month-balance/models/month_balance.model";
+import {
+  PostJournalEntry,
+  DeleteJournalEntry
+} from "@routes/month/state/journal-entry/journal-entry.actions";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "kab-track",
   template: `
-    <kab-widget-header mode="h2" caption="Track your expenses. Left to expend" value="{{month_balance.available}} €"></kab-widget-header>
+    <kab-widget-header mode="h2" caption="Track your expenses. Left to expend" value="{{monthBalance.available}} €"></kab-widget-header>
     <main class="column">
       <section>
-        <kab-new-expense [year]="month_balance.year" [month]="month_balance.month" (saveExpense)="saveNewExpense($event)"></kab-new-expense>
+        <kab-new-expense [year]="monthBalance.year" [month]="monthBalance.month" (saveExpense)="saveNewExpense($event)"></kab-new-expense>
       </section>
       <section>
         <kab-expenses-list [expensesToList]="expenses" (deleteExpense)="deleteExpense($event)"></kab-expenses-list>
@@ -23,22 +34,30 @@ export class TrackComponent implements OnInit {
   public monthBalanceSubscription: Subscription;
   public expensesSubscription: Subscription;
   public expenses: JournalEntry[] = [];
-  public month_balance: MonthBalance;
-  constructor(private store: StoreService) {}
+  public monthBalance: MonthBalance;
+
+  constructor(private store: Store<MonthState>) {}
 
   ngOnInit() {
-    this.monthBalanceSubscription = this.store.selectMonthBalance$.subscribe(
-      res => (this.month_balance = res)
-    );
-    this.expensesSubscription = this.store.selectExpenses$.subscribe(
-      res => (this.expenses = res)
-    );
+    this.monthBalanceSubscription = this.store
+      .select(monthBalanceSelector)
+      .subscribe(
+        (monthBalance: MonthBalance) => (this.monthBalance = monthBalance)
+      );
+    this.expensesSubscription = this.store
+      .select(journalEntriesSelector)
+      .pipe(
+        map((journalEntries: JournalEntry[]) =>
+          journalEntries.filter(j => j.kind === "E")
+        )
+      )
+      .subscribe((expenses: JournalEntry[]) => (this.expenses = expenses));
   }
   public saveNewExpense(expense: JournalEntry) {
-    this.store.dispatchPostJournalEntry(expense);
+    this.store.dispatch(new PostJournalEntry(expense));
   }
   public deleteExpense(expense: JournalEntry) {
-    this.store.dispatchDeleteJournalEntry(expense);
+    this.store.dispatch(new DeleteJournalEntry(expense));
   }
 
   ngOnDestroy(): void {
