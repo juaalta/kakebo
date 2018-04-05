@@ -20,7 +20,7 @@ import { SetGoalMonthBalance } from "@routes/month/state/month-balance/month-bal
   template: `
     <kab-widget-header mode="h2" caption="Plan your goal to save" value="{{monthBalance.goal}} €"></kab-widget-header>
     <main class="column">
-      <kab-goal *ngIf="monthBalance.incomes>0" class="" [month_balance]="monthBalance" (setGoal)="setGoalForMonth($event)"></kab-goal>
+      <kab-goal *ngIf="monthBalance.incomes>0" class="" [monthBalance]="monthBalance" (setGoal)="setGoalForMonth($event)"></kab-goal>
       <section class="row">
         <section class="column column-40">
           <kab-prevision class="container" [year]="monthBalance.year" [month]="monthBalance.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
@@ -94,7 +94,7 @@ export class PlanComponent implements OnInit, OnDestroy {
     );
   }
 
-  public setGoalForMonth(savingsGoal: any) {
+  public setGoalForMonth(savingsGoal: number) {
     const monthBalance = { ...this.monthBalance, goal: savingsGoal };
     this.store.dispatch(new SetGoalMonthBalance(monthBalance));
   }

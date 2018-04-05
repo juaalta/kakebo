@@ -1,7 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
-import { MonthBalance } from "@routes/month/models/month_balance.model";
 
 @Component({
   selector: "kab-dashboard",
@@ -45,6 +44,6 @@ export class DashboardComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.balances$ = this.http.get<MonthBalance[]>(this.urlMonthBalances);
+    this.balances$ = this.http.get<any[]>(this.urlMonthBalances);
   }
 }
