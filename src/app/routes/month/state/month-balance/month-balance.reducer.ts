@@ -17,11 +17,13 @@ export function monthBalanceReducer(
     case MonthBalanceActionTypes.GetMonthBalanceCompleted:
       return action.payload;
     case MonthBalanceActionTypes.GetMonthBalanceFailed:
-      return {
-        ...monthBalanceInitialState, 
-        year:action.payload.year, 
-        month: action.payload.month
-      };
+      return action.payload;
+    case MonthBalanceActionTypes.PostMonthBalance:
+      return state;
+    case MonthBalanceActionTypes.PostMonthBalanceCompleted:
+      return action.payload;
+    case MonthBalanceActionTypes.PostMonthBalanceFailed:
+      return state;
     default:
       return state;
   }

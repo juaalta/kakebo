@@ -32,7 +32,7 @@ export class StoreService {
     this.controlApi.getMonthBalancesList$().subscribe(res => {
       this.reducers.reduceGetMonthBalances(this.state, res);
       if (!this.state.monthBalance) {
-        this.dispatchPostMonthBalance();
+        // this.dispatchPostMonthBalance();
       }
     });
   }
