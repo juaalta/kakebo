@@ -17,12 +17,12 @@ import {
 @Component({
   selector: "kab-plan",
   template: `
-    <kab-widget-header mode="h2" caption="Plan your goal to save" value="{{month_balance.goal}} €"></kab-widget-header>
+    <kab-widget-header mode="h2" caption="Plan your goal to save" value="{{monthBalance.goal}} €"></kab-widget-header>
     <main class="column">
-      <kab-goal *ngIf="month_balance.incomes>0" class="" [month_balance]="month_balance" (setGoal)="setGoalForMonth($event)"></kab-goal>
+      <kab-goal *ngIf="monthBalance.incomes>0" class="" [month_balance]="monthBalance" (setGoal)="setGoalForMonth($event)"></kab-goal>
       <section class="row">
         <section class="column column-40">
-          <kab-prevision class="container" [year]="month_balance.year" [month]="month_balance.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
+          <kab-prevision class="container" [year]="monthBalance.year" [month]="monthBalance.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
         </section>
         <section class="column column-50 column-offset-10">
           <kab-incomes class="container" 

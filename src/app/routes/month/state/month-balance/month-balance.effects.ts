@@ -13,7 +13,10 @@ import {
   PostMonthBalanceCompleted,
   PostMonthBalanceFailed
 } from "@routes/month/state/month-balance/month-balance.actions";
-import { MonthBalance, monthBalanceInitialState } from "@routes/month/state/month-balance/models/month_balance.model";
+import {
+  MonthBalance,
+  monthBalanceInitialState
+} from "@routes/month/state/month-balance/models/month_balance.model";
 import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
 import { MonthState } from "@routes/month/state";
 import { HttpErrorResponse } from "@angular/common/http";
@@ -24,16 +27,16 @@ export class MonthBalanceEffects {
     return this.monthBalanceApi
       .getMonthBalancesByYearMonth$(action.payload)
       .pipe(
-        map((res:MonthBalance) =>{
-          return new GetMonthBalanceCompleted(res);
+        map((res: MonthBalance[]) => {
+          return new GetMonthBalanceCompleted(res[0]);
         }),
-        catchError((err,caught)=>{
-          const newMonthBalance ={
-            ...monthBalanceInitialState, 
-            year:action.payload.year, 
+        catchError((err, caught) => {
+          const newMonthBalance = {
+            ...monthBalanceInitialState,
+            year: action.payload.year,
             month: action.payload.month
-          }
-          if (err instanceof HttpErrorResponse && err.status === 404) { 
+          };
+          if (err instanceof HttpErrorResponse && err.status === 404) {
             this.store.dispatch(new PostMonthBalance(newMonthBalance));
           }
           return of(new GetMonthBalanceFailed(newMonthBalance));
@@ -42,21 +45,20 @@ export class MonthBalanceEffects {
   };
 
   private onPostMonthBalance$ = (action: PostMonthBalance) => {
-    return this.monthBalanceApi
-      .postMonthBalance$(action.payload)
-      .pipe(
-        map((res:MonthBalance) =>{
-          return new PostMonthBalanceCompleted(res);
-        }),
-        catchError((err,caught)=>{
-          return of(new PostMonthBalanceFailed(err));
-        })
-      );
+    return this.monthBalanceApi.postMonthBalance$(action.payload).pipe(
+      map((res: MonthBalance) => {
+        return new PostMonthBalanceCompleted(res);
+      }),
+      catchError((err, caught) => {
+        return of(new PostMonthBalanceFailed(err));
+      })
+    );
   };
   constructor(
-    private actions$: Actions, 
-    private monthBalanceApi: MonthBalanceApi, 
-    private store: Store<MonthState>) {}
+    private actions$: Actions,
+    private monthBalanceApi: MonthBalanceApi,
+    private store: Store<MonthState>
+  ) {}
 
   @Effect()
   public getMonthBalance$: Observable<Action> = this.actions$.pipe(
@@ -69,5 +71,4 @@ export class MonthBalanceEffects {
     ofType<PostMonthBalance>(MonthBalanceActionTypes.PostMonthBalance),
     switchMap(this.onPostMonthBalance$)
   );
-
 }
