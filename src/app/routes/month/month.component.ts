@@ -26,6 +26,7 @@ import { GetMonthBalance } from "@routes/month/state/month-balance/month-balance
   <ng-template #noMonthBalance>
     <kab-widget-header mode="h3" caption="No Balance for {{month | monthName }} of {{ year }}" value="Creating a new one..."></kab-widget-header>
   </ng-template>
+  {{ monthBalance | json }}
   `,
   styles: []
 })
@@ -48,6 +49,7 @@ export class MonthComponent implements OnInit {
       routerLink: "review"
     }
   ];
+  public monthBalance;
   constructor(
     private activatedRoute: ActivatedRoute,
     private oldStore: StoreService,
@@ -67,5 +69,8 @@ export class MonthComponent implements OnInit {
     this.store.dispatch(
       new GetMonthBalance({ year: this.year, month: this.month })
     );
+    this.store
+      .select(state => state.monthBalance)
+      .subscribe((monthBalance: MonthBalance) => (this.monthBalance = monthBalance));
   }
 }

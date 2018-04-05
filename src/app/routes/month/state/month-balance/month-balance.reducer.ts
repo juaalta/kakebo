@@ -10,13 +10,18 @@ export function monthBalanceReducer(
   state = monthBalanceInitialState,
   action: MonthBalanceActions
 ): MonthBalance {
+  console.log(action.type, action.payload);
   switch (action.type) {
     case MonthBalanceActionTypes.GetMonthBalance:
       return state;
     case MonthBalanceActionTypes.GetMonthBalanceCompleted:
-      return state;
+      return action.payload;
     case MonthBalanceActionTypes.GetMonthBalanceFailed:
-      return state;
+      return {
+        ...monthBalanceInitialState, 
+        year:action.payload.year, 
+        month: action.payload.month
+      };
     default:
       return state;
   }
