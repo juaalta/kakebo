@@ -13,6 +13,7 @@ import {
   PostJournalEntry,
   DeleteJournalEntry
 } from "@routes/month/state/journal-entry/journal-entry.actions";
+import { SetGoalMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
 
 @Component({
   selector: "kab-plan",
@@ -79,7 +80,7 @@ export class PlanComponent implements OnInit, OnDestroy {
   public saveNewEntry(projectedEntry: JournalEntry) {
     this.store.dispatch(
       new PostJournalEntry({
-        monthBalanace: this.monthBalance,
+        monthBalance: this.monthBalance,
         journalEntry: projectedEntry
       })
     );
@@ -87,14 +88,15 @@ export class PlanComponent implements OnInit, OnDestroy {
   public deleteAnEntry(projectedEntry: JournalEntry) {
     this.store.dispatch(
       new DeleteJournalEntry({
-        monthBalanace: this.monthBalance,
+        monthBalance: this.monthBalance,
         journalEntry: projectedEntry
       })
     );
   }
-  // SavingsGoal
+
   public setGoalForMonth(savingsGoal: any) {
-    // this.store.dispatchSetGoalMonth(savingsGoal.goalToSave);
+    const monthBalance = { ...this.monthBalance, goal: savingsGoal };
+    this.store.dispatch(new SetGoalMonthBalance(monthBalance));
   }
 
   ngOnDestroy(): void {

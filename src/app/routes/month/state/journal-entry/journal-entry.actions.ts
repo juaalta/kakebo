@@ -36,7 +36,7 @@ export class PostJournalEntry implements Action {
   readonly type = JournalEntryActionTypes.PostJournalEntry;
   constructor(
     public payload: {
-      monthBalanace: MonthBalance;
+      monthBalance: MonthBalance;
       journalEntry: JournalEntry;
     }
   ) {}
@@ -56,7 +56,7 @@ export class DeleteJournalEntry implements Action {
   readonly type = JournalEntryActionTypes.DeleteJournalEntry;
   constructor(
     public payload: {
-      monthBalanace: MonthBalance;
+      monthBalance: MonthBalance;
       journalEntry: JournalEntry;
     }
   ) {}

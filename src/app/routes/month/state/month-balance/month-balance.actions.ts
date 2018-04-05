@@ -16,7 +16,8 @@ export enum MonthBalanceActionTypes {
   PostMonthBalanceFailed = "[MonthBalance] PostMonthBalanceFailed",
   PutMonthBalance = "[MonthBalance] PutMonthBalance",
   PutMonthBalanceCompleted = "[MonthBalance] PutMonthBalanceCompleted",
-  PutMonthBalanceFailed = "[MonthBalance] PutMonthBalanceFailed"
+  PutMonthBalanceFailed = "[MonthBalance] PutMonthBalanceFailed",
+  SetGoalMonthBalance = "[MonthBalance] PutMonthBalanceFailed"
 }
 
 export class CalculateMonthBalance implements Action {
@@ -74,6 +75,11 @@ export class PutMonthBalanceFailed implements Action {
   constructor(public payload: MonthBalance) {}
 }
 
+export class SetGoalMonthBalance implements Action {
+  readonly type = MonthBalanceActionTypes.SetGoalMonthBalance;
+  constructor(public payload: MonthBalance) {}
+}
+
 export type MonthBalanceActions =
   | CalculateMonthBalance
   | GetMonthBalance
@@ -84,4 +90,5 @@ export type MonthBalanceActions =
   | PostMonthBalanceFailed
   | PutMonthBalance
   | PutMonthBalanceCompleted
-  | PutMonthBalanceFailed;
+  | PutMonthBalanceFailed
+  | SetGoalMonthBalance;

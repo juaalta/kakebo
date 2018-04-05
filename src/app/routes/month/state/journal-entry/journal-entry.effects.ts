@@ -47,7 +47,7 @@ export class JournalEntryEffects {
       map((res: JournalEntry) => {
         this.store.dispatch(
           new CalculateMonthBalance({
-            monthBalance: action.payload.monthBalanace,
+            monthBalance: action.payload.monthBalance,
             journalEntry: action.payload.journalEntry,
             amountSing: 1
           })
@@ -67,7 +67,7 @@ export class JournalEntryEffects {
       map((res: JournalEntry) => {
         this.store.dispatch(
           new CalculateMonthBalance({
-            monthBalance: action.payload.monthBalanace,
+            monthBalance: action.payload.monthBalance,
             journalEntry: action.payload.journalEntry,
             amountSing: -1
           })

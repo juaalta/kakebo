@@ -56,7 +56,7 @@ export class TrackComponent implements OnInit {
   public saveNewExpense(expense: JournalEntry) {
     this.store.dispatch(
       new PostJournalEntry({
-        monthBalanace: this.monthBalance,
+        monthBalance: this.monthBalance,
         journalEntry: expense
       })
     );
@@ -64,7 +64,7 @@ export class TrackComponent implements OnInit {
   public deleteExpense(expense: JournalEntry) {
     this.store.dispatch(
       new DeleteJournalEntry({
-        monthBalanace: this.monthBalance,
+        monthBalance: this.monthBalance,
         journalEntry: expense
       })
     );

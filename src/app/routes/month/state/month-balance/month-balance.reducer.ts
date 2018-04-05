@@ -32,6 +32,8 @@ export function monthBalanceReducer(
       return action.payload;
     case MonthBalanceActionTypes.PutMonthBalanceFailed:
       return state;
+    case MonthBalanceActionTypes.SetGoalMonthBalance:
+      return action.payload;
     default:
       return state;
   }

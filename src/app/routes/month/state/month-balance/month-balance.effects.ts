@@ -15,7 +15,8 @@ import {
   CalculateMonthBalance,
   PutMonthBalance,
   PutMonthBalanceCompleted,
-  PutMonthBalanceFailed
+  PutMonthBalanceFailed,
+  SetGoalMonthBalance
 } from "@routes/month/state/month-balance/month-balance.actions";
 import {
   MonthBalance,
@@ -93,6 +94,12 @@ export class MonthBalanceEffects {
     );
   };
 
+  private onSetGoalMonthBalance$ = (action: SetGoalMonthBalance) => {
+    const monthBalance = action.payload;
+    monthBalance.available = monthBalance.savings - monthBalance.goal;
+    return of(new PutMonthBalance(monthBalance));
+  };
+
   constructor(
     private actions$: Actions,
     private monthBalanceApi: MonthBalanceApi,
@@ -123,5 +130,11 @@ export class MonthBalanceEffects {
   public putMonthBalance$: Observable<Action> = this.actions$.pipe(
     ofType<PutMonthBalance>(MonthBalanceActionTypes.PutMonthBalance),
     switchMap(this.onPutMonthBalance$)
+  );
+
+  @Effect()
+  public setGoalMonthBalance$: Observable<Action> = this.actions$.pipe(
+    ofType<SetGoalMonthBalance>(MonthBalanceActionTypes.SetGoalMonthBalance),
+    switchMap(this.onSetGoalMonthBalance$)
   );
 }
