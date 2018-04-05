@@ -11,6 +11,7 @@ import { journalEntryReducer } from "@routes/month/state/journal-entry/journal-e
 import { MonthBalance } from "@routes/month/state/month-balance/models/month_balance.model";
 import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
 
+export const MONTH_FEATURE = 'month'
 
 export interface MonthState {
   monthBalance: MonthBalance;
@@ -25,3 +26,7 @@ export const reducers: ActionReducerMap<MonthState> = {
 export const metaReducers: MetaReducer<MonthState>[] = !environment.production
   ? []
   : [];
+
+export const monthStateFeatureSelector = createFeatureSelector<MonthState>(MONTH_FEATURE);
+export const monthBalanceSelector = createSelector(monthStateFeatureSelector,(s)=>s.monthBalance);
+export const journalEntriesSelector = createSelector(monthStateFeatureSelector,(s)=>s.journalEntries);

@@ -8,7 +8,7 @@ import { ApiService } from "@routes/month/api.service";
 import { StoreService } from "@routes/month/store.service";
 import { Reducers } from "@routes/month/reducers.service";
 import { StoreModule } from "@ngrx/store";
-import { reducers, metaReducers } from "@routes/month/state";
+import { reducers, metaReducers, MONTH_FEATURE } from "@routes/month/state";
 import { EffectsModule } from "@ngrx/effects";
 import { MonthBalanceEffects } from "@routes/month/state/month-balance/month-balance.effects";
 import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
@@ -20,7 +20,7 @@ import { JournalEntryApi } from "@routes/month/state/journal-entry/journal-entry
     CommonModule,
     ControlRoutingModule,
     ComponentsModule,
-    StoreModule.forFeature("month", reducers, { metaReducers }),
+    StoreModule.forFeature(MONTH_FEATURE, reducers, { metaReducers }),
     EffectsModule.forFeature([MonthBalanceEffects,JournalEntryEffects])
   ],
   declarations: [MonthComponent],

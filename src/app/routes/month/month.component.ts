@@ -3,8 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { NavLink } from "@tools/models/nav-link.model";
 import { Observable } from "rxjs/Observable";
 import { map } from "rxjs/operators";
-import { Store, createFeatureSelector, createSelector } from "@ngrx/store";
-import { MonthState } from "@routes/month/state";
+import { Store } from "@ngrx/store";
+import { MonthState, monthBalanceSelector } from "@routes/month/state";
 import { GetMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
 import { GetJournalEntries } from "@routes/month/state/journal-entry/journal-entry.actions";
 import { MonthBalance } from "@routes/month/state/month-balance/models/month_balance.model";
@@ -20,7 +20,7 @@ import { MonthBalance } from "@routes/month/state/month-balance/models/month_bal
         <kab-nav [navLinks]="navLinks"></kab-nav>
       </aside>  
       <main class="column float-left">
-        
+        <router-outlet></router-outlet>
       </main>    
     </section>
   </section>
@@ -32,7 +32,6 @@ import { MonthBalance } from "@routes/month/state/month-balance/models/month_bal
   `,
   styles: []
 })
-//<router-outlet></router-outlet>
 export class MonthComponent implements OnInit {
   public year: number;
   public month: number;
@@ -68,7 +67,7 @@ export class MonthComponent implements OnInit {
       new GetJournalEntries({ year: this.year, month: this.month })
     );
     this.store
-      .select(createSelector(createFeatureSelector<MonthState>('month'),(s)=>s.monthBalance))
+      .select(monthBalanceSelector)
       .subscribe((monthBalance: MonthBalance) => (this.monthBalance = monthBalance));
   }
 }
