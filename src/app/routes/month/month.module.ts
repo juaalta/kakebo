@@ -12,6 +12,8 @@ import { reducers, metaReducers } from "@routes/month/state";
 import { EffectsModule } from "@ngrx/effects";
 import { MonthBalanceEffects } from "@routes/month/state/month-balance/month-balance.effects";
 import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
+import { JournalEntryEffects } from "@routes/month/state/journal-entry/journal-entry.effects";
+import { JournalEntryApi } from "@routes/month/state/journal-entry/journal-entry-api.service";
 
 @NgModule({
   imports: [
@@ -19,9 +21,9 @@ import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance
     ControlRoutingModule,
     ComponentsModule,
     StoreModule.forFeature("month", reducers, { metaReducers }),
-    EffectsModule.forFeature([MonthBalanceEffects])
+    EffectsModule.forFeature([MonthBalanceEffects,JournalEntryEffects])
   ],
   declarations: [MonthComponent],
-  providers: [ApiService, MonthBalanceApi , StoreService, Reducers]
+  providers: [ApiService, MonthBalanceApi ,JournalEntryApi, StoreService, Reducers]
 })
 export class MonthModule {}

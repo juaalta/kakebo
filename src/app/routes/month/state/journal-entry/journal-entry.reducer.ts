@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { JournalEntryActions, JournalEntryActionTypes } from "@routes/month/state/journal-entry/journal-entry.actions";
-import { JournalEntry, journalEntriesInitialState } from "@routes/month/state/journal-entry/models/journal_entry.model";
+import { JournalEntry, journalEntriesInitialState } from "@routes/month/state/journal-entry/models/journal-entry.model";
 
 export function journalEntryReducer(
   state = journalEntriesInitialState,
@@ -13,7 +13,7 @@ export function journalEntryReducer(
     case JournalEntryActionTypes.GetJournalEntriesCompleted:
       return action.payload;
     case JournalEntryActionTypes.GetJournalEntriesFailed:
-      return action.payload;
+      return state;
     case JournalEntryActionTypes.PostJournalEntry:
       return state;
     case JournalEntryActionTypes.PostJournalEntryCompleted:
