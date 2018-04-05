@@ -26,6 +26,7 @@ import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance
 import { MonthState } from "@routes/month/state";
 import { HttpErrorResponse } from "@angular/common/http";
 import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
+import { error } from "util";
 
 @Injectable()
 export class MonthBalanceEffects {
@@ -67,7 +68,7 @@ export class MonthBalanceEffects {
           if (err instanceof HttpErrorResponse && err.status === 404) {
             this.store.dispatch(new PostMonthBalance(newMonthBalance));
           }
-          return of(new GetMonthBalanceFailed(newMonthBalance));
+          return of(new GetMonthBalanceFailed(err));
         })
       );
   };
@@ -89,6 +90,7 @@ export class MonthBalanceEffects {
         return new PutMonthBalanceCompleted(res);
       }),
       catchError((err, caught) => {
+        console.log("onPutMonthBalance.catchError", err);
         return of(new PutMonthBalanceFailed(err));
       })
     );

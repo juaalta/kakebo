@@ -12,7 +12,6 @@ export function journalEntryReducer(
   state = journalEntriesInitialState,
   action: JournalEntryActions
 ): JournalEntry[] {
-  console.log(action.type, action.payload);
   switch (action.type) {
     case JournalEntryActionTypes.GetJournalEntries:
       return state;
