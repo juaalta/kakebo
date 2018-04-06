@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
-import { State } from "@tools/global/state";
+import { GlobalState } from "@tools/global/state";
 import { ValidateUser } from "@tools/global/state/user/user.actions";
 
 @Component({
@@ -32,7 +32,7 @@ export class CredentialsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private store: Store<State>
+    private store: Store<GlobalState>
   ) {}
 
   public ngOnInit() {

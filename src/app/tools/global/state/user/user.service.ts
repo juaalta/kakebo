@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { UserApi } from "@tools/global/state/user/user-api.service";
 import { Router } from "@angular/router";
 import { Store, Action } from "@ngrx/store";
-import { State } from "@tools/global/state";
+import { GlobalState } from "@tools/global/state";
 import { ValidateUser, ValidateUserCompleted, ValidateUserFailed } from "@tools/global/state/user/user.actions";
 import { Observable } from "rxjs/Observable";
 import { ShowMessage } from "@tools/global/state/message/message.actions";
@@ -17,7 +17,7 @@ export class UserService{
   constructor(
     private api: UserApi,
     private router: Router,
-    private store: Store<State>
+    private store: Store<GlobalState>
   ) {}
 
   public validateUser$ = (action: ValidateUser): Observable<Action> => {

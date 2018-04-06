@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { Observable } from "rxjs/Observable";
 import { Store } from "@ngrx/store";
-import { State } from "@tools/global/state";
+import { GlobalState } from "@tools/global/state";
 import { User } from "@tools/global/state/user/models/user.model";
 
 @Component({
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
   public month: number;
   public balances$: Observable<any[]>;
 
-  constructor(private store: Store<State>, private http: HttpClient) {
+  constructor(private store: Store<GlobalState>, private http: HttpClient) {
     const today = new Date();
     this.year = today.getFullYear();
     this.month = today.getMonth() + 1;

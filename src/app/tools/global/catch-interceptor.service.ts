@@ -11,14 +11,14 @@ import { Observable } from "rxjs/Observable";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { State } from "@tools/global/state";
+import { GlobalState } from "@tools/global/state";
 import { ShowMessage } from "@tools/global/state/message/message.actions";
 
 @Injectable()
 export class CatchInterceptorService implements HttpInterceptor {
   private started;
 
-  constructor(private router: Router, private store: Store<State>) {}
+  constructor(private router: Router, private store: Store<GlobalState>) {}
 
   public intercept(
     req: HttpRequest<any>,
