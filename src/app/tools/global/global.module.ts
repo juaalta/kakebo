@@ -10,6 +10,7 @@ import { reducers, metaReducers } from "@tools/global/state";
 import { EffectsModule } from "@ngrx/effects";
 import { UserEffects } from "@tools/global/state/user/user.effects";
 import { UserApi } from "@tools/global/state/user/user-api.service";
+import { UserService } from "@tools/global/state/user/user.service";
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { UserApi } from "@tools/global/state/user/user-api.service";
       useClass: CatchInterceptorService,
       multi: true
     },
-    UserApi
+    UserApi,
+    UserService
   ]
 })
 /**

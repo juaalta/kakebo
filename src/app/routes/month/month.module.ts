@@ -11,6 +11,8 @@ import { MonthBalanceEffects } from "@routes/month/state/month-balance/month-bal
 import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
 import { JournalEntryEffects } from "@routes/month/state/journal-entry/journal-entry.effects";
 import { JournalEntryApi } from "@routes/month/state/journal-entry/journal-entry-api.service";
+import { JournalEntryService } from "@routes/month/state/journal-entry/journal-entry.service";
+import { MonthBalanceService } from "@routes/month/state/month-balance/month-balance.service";
 
 @NgModule({
   imports: [
@@ -21,6 +23,6 @@ import { JournalEntryApi } from "@routes/month/state/journal-entry/journal-entry
     EffectsModule.forFeature([MonthBalanceEffects, JournalEntryEffects])
   ],
   declarations: [MonthComponent],
-  providers: [MonthBalanceApi, JournalEntryApi]
+  providers: [MonthBalanceApi, MonthBalanceService, JournalEntryApi, JournalEntryService]
 })
 export class MonthModule {}
