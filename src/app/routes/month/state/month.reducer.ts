@@ -18,32 +18,30 @@ export const MonthReducers = {
     );
     MonthReducers.reduceSetCurrentMonthBalance(state);
   },
-  reduceJournalEntries(state: any, journalEntries: JournalEntry[]) {
+  reduceJournalEntries(state: any, journalEntries: JournalEntry[]): any {
     if (journalEntries) {
       state.journalEntries = [...journalEntries];
-      projectedIncomes$.next(MonthReducers.filterJournalsByKind(state, "I"));
-      projectedOutgoings$.next(MonthReducers.filterJournalsByKind(state, "O"));
-      expenses$.next(MonthReducers.filterJournalsByKind(state, "E"));
-      MonthReducers.reduceSetCurrentMonthBalance(state);
+      return MonthReducers.reduceSetCurrentMonthBalance(state);
     }
+    return state;
   },
-  reducePostJournalEntry(state: any, journalEntry: JournalEntry) {
+  reducePostJournalEntry(state: any, journalEntry: JournalEntry): any {
     state.journalEntries = [...state.journalEntries, journalEntry];
-    MonthReducers.updateEntriesByKind(state, journalEntry);
+    return { ...state };
   },
-  reduceDeleteJournalEntry(state: any, journalEntry: JournalEntry) {
+  reduceDeleteJournalEntry(state: any, journalEntry: JournalEntry): any {
     state.journalEntries = state.journalEntries.filter(
       j => j._id !== journalEntry._id
     );
-    MonthReducers.updateEntriesByKind(state, journalEntry);
+    return { ...state };
   },
-  reduceSetCurrentMonthBalance(state: any): void {
+  reduceSetCurrentMonthBalance(state: any): MonthBalance {
     state.monthBalance = state.monthBalances.find(
       m => m.year === state.year && m.month === state.month
     );
-    MonthReducers.calculateMonthBalance(state);
+    return MonthReducers.calculateMonthBalance(state);
   },
-  calculateMonthBalance(state: any): void {
+  calculateMonthBalance(state: any): MonthBalance {
     const mb = state.monthBalance;
     if (mb) {
       if (state.journalEntries) {
@@ -59,25 +57,9 @@ export const MonthReducers = {
         mb.savings = mb.incomes - mb.outgoings - mb.expenses;
         mb.available = mb.savings - mb.goal;
       }
-      monthBalance$.next({ ...state.monthBalance });
+      return mb;
     }
-  },
-  updateEntriesByKind(state: any, journalEntry: JournalEntry) {
-    switch (journalEntry.kind) {
-      case "I":
-        projectedIncomes$.next(MonthReducers.filterJournalsByKind(state, "I"));
-        break;
-      case "O":
-        projectedOutgoings$.next(
-          MonthReducers.filterJournalsByKind(state, "O")
-        );
-        break;
-      case "E":
-        expenses$.next(MonthReducers.filterJournalsByKind(state, "E"));
-        break;
-      default:
-        break;
-    }
+    return null;
   },
   filterJournalsByKind(state: any, kind: string): JournalEntry[] {
     return state.journalEntries.filter(

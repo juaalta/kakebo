@@ -27,7 +27,9 @@ export class MonthStore {
 
   public dispatchYearMonth(year: number, month: number) {
     this.state = { ...this.state, year, month };
-    MonthReducers.reduceSetCurrentMonthBalance(this.state);
+    const mb = MonthReducers.reduceSetCurrentMonthBalance(this.state);
+    this.state = { ...this.state, monthBalance: mb };
+    this.monthBalance$.next(this.state.monthBalance);
   }
   public dispatchGetMonthBalances(): void {
     this.controlApi.getMonthBalancesList$().subscribe(res => {
@@ -42,19 +44,31 @@ export class MonthStore {
     this.dispatchPutMonthBalance();
   }
   public dispatchGetJournalEntries() {
-    this.controlApi
-      .getJournalEntriesList$()
-      .subscribe(res => MonthReducers.reduceJournalEntries(this.state, res));
+    this.controlApi.getJournalEntriesList$().subscribe(res => {
+      this.state = MonthReducers.reduceJournalEntries(this.state, res);
+      this.projectedIncomes$.next(
+        MonthReducers.filterJournalsByKind(this.state, "I")
+      );
+      this.projectedOutgoings$.next(
+        MonthReducers.filterJournalsByKind(this.state, "O")
+      );
+      this.expenses$.next(MonthReducers.filterJournalsByKind(this.state, "E"));
+    });
   }
   public dispatchPostJournalEntry(aJournalEntry: JournalEntry): void {
     this.controlApi.postJournalEntry$(aJournalEntry).subscribe(res => {
-      MonthReducers.reducePostJournalEntry(this.state, res);
+      this.state = MonthReducers.reducePostJournalEntry(this.state, res);
+      this.updateEntriesByKind(this.state, aJournalEntry);
       this.dispatchPutMonthBalance();
     });
   }
   public dispatchDeleteJournalEntry(aJournalEntry: JournalEntry) {
     this.controlApi.deleteJournalEntry$(aJournalEntry).subscribe(res => {
-      MonthReducers.reduceDeleteJournalEntry(this.state, aJournalEntry);
+      this.state = MonthReducers.reduceDeleteJournalEntry(
+        this.state,
+        aJournalEntry
+      );
+      this.updateEntriesByKind(this.state, aJournalEntry);
       this.dispatchPutMonthBalance();
     });
   }
@@ -70,4 +84,24 @@ export class MonthStore {
       .putMonthBalance$(this.state.monthBalance)
       .subscribe(res => MonthReducers.reducePutMonthBalance(this.state, res));
   }
+
+  private updateEntriesByKind = (state: any, journalEntry: JournalEntry) => {
+    switch (journalEntry.kind) {
+      case "I":
+        this.projectedIncomes$.next(
+          MonthReducers.filterJournalsByKind(state, "I")
+        );
+        break;
+      case "O":
+        this.projectedOutgoings$.next(
+          MonthReducers.filterJournalsByKind(state, "O")
+        );
+        break;
+      case "E":
+        this.expenses$.next(MonthReducers.filterJournalsByKind(state, "E"));
+        break;
+      default:
+        break;
+    }
+  };
 }
