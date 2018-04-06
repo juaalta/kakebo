@@ -7,13 +7,13 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import { Store, select } from "@ngrx/store";
-import { State } from "@tools/global/state";
+import { GlobalState } from "@tools/global/state";
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
   private token: string = "";
 
-  constructor(private store: Store<State>) {
+  constructor(private store: Store<GlobalState>) {
     this.subscribeToTokenChanges();
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Store, select } from "@ngrx/store";
-import { State } from "@tools/global/state";
+import { GlobalState } from "@tools/global/state";
 import { Observable } from "rxjs/Observable";
 import { User } from "@tools/global/state/user/models/user.model";
 import { Message } from "@tools/global/state/message/models/message.model";
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   public user: User;
   public message: Message;
 
-  constructor(private store: Store<State>) {}
+  constructor(private store: Store<GlobalState>) {}
 
   ngOnInit(): void {
     this.store

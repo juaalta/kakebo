@@ -5,16 +5,16 @@ import { Message } from "@tools/global/state/message/models/message.model";
 import { messageReducer } from "@tools/global/state/message/message.reducer";
 import { ActionReducerMap, MetaReducer } from "@ngrx/store";
 
-export interface State {
+export interface GlobalState {
   user: User;
   message: Message;
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<GlobalState> = {
   user: userReducer,
   message: messageReducer
 };
 
-export const metaReducers: MetaReducer<State>[] = !environment.production
+export const metaReducers: MetaReducer<GlobalState>[] = !environment.production
   ? []
   : [];
