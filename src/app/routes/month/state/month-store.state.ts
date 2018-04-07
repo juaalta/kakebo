@@ -73,19 +73,17 @@ export class MonthStore {
   private dispatchPostMonthBalance(): void {
     this.controlApi
       .postMonthBalance$(this.state.year, this.state.month)
-      .subscribe(
-        res =>
-          (this.state = MonthReducers.reducePostMonthBalance(this.state, res))
-      );
+      .subscribe(res => {
+        this.state = MonthReducers.reducePostMonthBalance(this.state, res);
+        this.monthBalance$.next(this.state.monthBalance);
+      });
   }
   private dispatchPutMonthBalance(): void {
     this.state = MonthReducers.calculateMonthBalance(this.state);
-    this.controlApi
-      .putMonthBalance$(this.state.monthBalance)
-      .subscribe(
-        res =>
-          (this.state = MonthReducers.reducePutMonthBalance(this.state, res))
-      );
+    this.controlApi.putMonthBalance$(this.state.monthBalance).subscribe(res => {
+      this.state = MonthReducers.reducePutMonthBalance(this.state, res);
+      this.monthBalance$.next(this.state.monthBalance);
+    });
   }
 
   private updateEntriesByKind = (state: any, journalEntry: JournalEntry) => {
