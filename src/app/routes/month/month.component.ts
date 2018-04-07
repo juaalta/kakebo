@@ -9,7 +9,7 @@ import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 @Component({
   selector: "kab-month",
   template: `
-  <section *ngIf="month_balance$ | async ">
+  <section *ngIf="monthBalance$ | async ">
     <kab-widget-header mode="h1" caption="Balance on {{month | monthName }} of {{ year }}" value="{{savings$ | async}} €"></kab-widget-header>
     <section class="row">
       <aside class="column column-20">
@@ -27,7 +27,7 @@ import { MonthBalance } from "@routes/month/state/models/month_balance.model";
   styles: []
 })
 export class MonthComponent implements OnInit {
-  public month_balance$: Observable<MonthBalance>;
+  public monthBalance$: Observable<MonthBalance>;
   public savings$: Observable<number>;
   public year: number;
   public month: number;
@@ -54,8 +54,8 @@ export class MonthComponent implements OnInit {
     const params = this.activatedRoute.snapshot.params;
     this.year = +params["y"];
     this.month = +params["m"];
-    this.month_balance$ = this.store.selectMonthBalance$;
-    this.savings$ = this.month_balance$.pipe(map(m => m.savings));
+    this.monthBalance$ = this.store.selectMonthBalance$;
+    this.savings$ = this.monthBalance$.pipe(map(m => m.savings));
     this.store.dispatchYearMonth(this.year, this.month);
     this.store.dispatchGetMonthBalances();
     this.store.dispatchGetJournalEntries();
