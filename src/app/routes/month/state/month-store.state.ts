@@ -4,15 +4,14 @@ import { ApiService } from "@routes/month/api.service";
 import { MonthReducers } from "@routes/month/state/month.reducer";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
+import {
+  Month,
+  monthInitialState
+} from "@routes/month/state/models/month.model";
+
 @Injectable()
 export class MonthStore {
-  private state = {
-    monthBalances: [],
-    journalEntries: [],
-    year: 0,
-    month: 0,
-    monthBalance: null
-  };
+  private state: Month = monthInitialState;
   private monthBalance$ = new BehaviorSubject<MonthBalance>(null);
   private projectedIncomes$ = new BehaviorSubject<JournalEntry[]>([]);
   private projectedOutgoings$ = new BehaviorSubject<JournalEntry[]>([]);
@@ -25,25 +24,24 @@ export class MonthStore {
 
   constructor(private controlApi: ApiService) {}
 
-  public dispatchYearMonth(year: number, month: number) {
-    this.state = { ...this.state, year, month };
-    const mb = MonthReducers.reduceSetCurrentMonthBalance(this.state);
-    this.state = { ...this.state, monthBalance: mb };
+  public dispatchYearMonth(year: number, month: number): void {
+    this.state = MonthReducers.reduceYearMonth(this.state, year, month);
     this.monthBalance$.next(this.state.monthBalance);
   }
   public dispatchGetMonthBalances(): void {
     this.controlApi.getMonthBalancesList$().subscribe(res => {
-      MonthReducers.reduceGetMonthBalances(this.state, res);
+      this.state = MonthReducers.reduceGetMonthBalances(this.state, res);
       if (!this.state.monthBalance) {
         this.dispatchPostMonthBalance();
       }
     });
   }
+
   public dispatchSetGoalMonth(goal: number): void {
-    this.state.monthBalance = { ...this.state.monthBalance, goal };
+    this.state = MonthReducers.reduceSetGoalMonth(this.state, goal);
     this.dispatchPutMonthBalance();
   }
-  public dispatchGetJournalEntries() {
+  public dispatchGetJournalEntries(): void {
     this.controlApi.getJournalEntriesList$().subscribe(res => {
       this.state = MonthReducers.reduceJournalEntries(this.state, res);
       this.projectedIncomes$.next(
@@ -62,7 +60,7 @@ export class MonthStore {
       this.dispatchPutMonthBalance();
     });
   }
-  public dispatchDeleteJournalEntry(aJournalEntry: JournalEntry) {
+  public dispatchDeleteJournalEntry(aJournalEntry: JournalEntry): void {
     this.controlApi.deleteJournalEntry$(aJournalEntry).subscribe(res => {
       this.state = MonthReducers.reduceDeleteJournalEntry(
         this.state,
@@ -73,16 +71,22 @@ export class MonthStore {
     });
   }
 
-  private dispatchPostMonthBalance() {
+  private dispatchPostMonthBalance(): void {
     this.controlApi
       .postMonthBalance$(this.state.year, this.state.month)
-      .subscribe(res => MonthReducers.reducePostMonthBalance(this.state, res));
+      .subscribe(
+        res =>
+          (this.state = MonthReducers.reducePostMonthBalance(this.state, res))
+      );
   }
   private dispatchPutMonthBalance(): void {
-    MonthReducers.calculateMonthBalance(this.state);
+    this.state = MonthReducers.calculateMonthBalance(this.state);
     this.controlApi
       .putMonthBalance$(this.state.monthBalance)
-      .subscribe(res => MonthReducers.reducePutMonthBalance(this.state, res));
+      .subscribe(
+        res =>
+          (this.state = MonthReducers.reducePutMonthBalance(this.state, res))
+      );
   }
 
   private updateEntriesByKind = (state: any, journalEntry: JournalEntry) => {

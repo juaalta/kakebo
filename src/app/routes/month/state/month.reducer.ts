@@ -1,65 +1,84 @@
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
+import { Month } from "@routes/month/state/models/month.model";
 
 export const MonthReducers = {
-  reduceGetMonthBalances(state: any, monthBalances: MonthBalance[]) {
+  reduceYearMonth(state: Month, year: number, month: number): Month {
+    let stateClone = { ...state, year, month };
+    stateClone = MonthReducers.reduceSetCurrentMonthBalance(stateClone);
+    return stateClone;
+  },
+  reduceGetMonthBalances(state: Month, monthBalances: MonthBalance[]): Month {
+    let stateClone = { ...state };
     if (monthBalances) {
       state.monthBalances = monthBalances;
-      MonthReducers.reduceSetCurrentMonthBalance(state);
+      stateClone = MonthReducers.reduceSetCurrentMonthBalance(state);
     }
+    return stateClone;
   },
-  reducePostMonthBalance(state: any, monthBalance: MonthBalance) {
-    state.monthBalances = [...state.monthBalances, monthBalance];
-    MonthReducers.reduceSetCurrentMonthBalance(state);
+  reducePostMonthBalance(state: Month, monthBalance: MonthBalance): Month {
+    let stateClone = { ...state };
+    stateClone.monthBalances = [...stateClone.monthBalances, monthBalance];
+    stateClone = MonthReducers.reduceSetCurrentMonthBalance(stateClone);
+    return stateClone;
   },
-  reducePutMonthBalance(state: any, monthBalance: MonthBalance) {
-    state.monthBalances = state.monthBalances.map(
+  reducePutMonthBalance(state: Month, monthBalance: MonthBalance): Month {
+    let stateClone = { ...state };
+    stateClone.monthBalances = stateClone.monthBalances.map(
       m => (m._id === monthBalance._id ? monthBalance : m)
     );
-    MonthReducers.reduceSetCurrentMonthBalance(state);
+    stateClone = MonthReducers.reduceSetCurrentMonthBalance(stateClone);
+    return stateClone;
   },
-  reduceJournalEntries(state: any, journalEntries: JournalEntry[]): any {
+  reduceSetGoalMonth(state: Month, goal: number): Month {
+    const stateClone = { ...state, goal };
+    this.state.monthBalance = { ...this.state.monthBalance, goal };
+    return stateClone;
+  },
+
+  reduceJournalEntries(state: Month, journalEntries: JournalEntry[]): Month {
     if (journalEntries) {
       state.journalEntries = [...journalEntries];
       return MonthReducers.reduceSetCurrentMonthBalance(state);
     }
     return state;
   },
-  reducePostJournalEntry(state: any, journalEntry: JournalEntry): any {
+  reducePostJournalEntry(state: Month, journalEntry: JournalEntry): Month {
     state.journalEntries = [...state.journalEntries, journalEntry];
     return { ...state };
   },
-  reduceDeleteJournalEntry(state: any, journalEntry: JournalEntry): any {
+  reduceDeleteJournalEntry(state: Month, journalEntry: JournalEntry): Month {
     state.journalEntries = state.journalEntries.filter(
       j => j._id !== journalEntry._id
     );
     return { ...state };
   },
-  reduceSetCurrentMonthBalance(state: any): MonthBalance {
+
+  reduceSetCurrentMonthBalance(state: Month): Month {
     state.monthBalance = state.monthBalances.find(
       m => m.year === state.year && m.month === state.month
     );
     return MonthReducers.calculateMonthBalance(state);
   },
-  calculateMonthBalance(state: any): MonthBalance {
-    const mb = state.monthBalance;
+  calculateMonthBalance(state: Month): Month {
+    const stateClone = { ...state };
+    const mb = stateClone.monthBalance;
     if (mb) {
-      if (state.journalEntries) {
+      if (stateClone.journalEntries) {
         mb.incomes = MonthReducers.sumAmount(
-          MonthReducers.filterJournalsByKind(state, "I")
+          MonthReducers.filterJournalsByKind(stateClone, "I")
         );
         mb.outgoings = MonthReducers.sumAmount(
-          MonthReducers.filterJournalsByKind(state, "O")
+          MonthReducers.filterJournalsByKind(stateClone, "O")
         );
         mb.expenses = MonthReducers.sumAmount(
-          MonthReducers.filterJournalsByKind(state, "E")
+          MonthReducers.filterJournalsByKind(stateClone, "E")
         );
         mb.savings = mb.incomes - mb.outgoings - mb.expenses;
         mb.available = mb.savings - mb.goal;
       }
-      return mb;
     }
-    return null;
+    return stateClone;
   },
   filterJournalsByKind(state: any, kind: string): JournalEntry[] {
     return state.journalEntries.filter(
