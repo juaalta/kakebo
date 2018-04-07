@@ -36,7 +36,6 @@ export class MonthStore {
       }
     });
   }
-
   public dispatchSetGoalMonth(goal: number): void {
     this.state = MonthReducers.reduceSetGoalMonth(this.state, goal);
     this.dispatchPutMonthBalance();
@@ -53,20 +52,20 @@ export class MonthStore {
       this.expenses$.next(MonthReducers.filterJournalsByKind(this.state, "E"));
     });
   }
-  public dispatchPostJournalEntry(aJournalEntry: JournalEntry): void {
-    this.controlApi.postJournalEntry$(aJournalEntry).subscribe(res => {
+  public dispatchPostJournalEntry(journalEntry: JournalEntry): void {
+    this.controlApi.postJournalEntry$(journalEntry).subscribe(res => {
       this.state = MonthReducers.reducePostJournalEntry(this.state, res);
-      this.updateEntriesByKind(this.state, aJournalEntry);
+      this.updateEntriesByKind(this.state, journalEntry);
       this.dispatchPutMonthBalance();
     });
   }
-  public dispatchDeleteJournalEntry(aJournalEntry: JournalEntry): void {
-    this.controlApi.deleteJournalEntry$(aJournalEntry).subscribe(res => {
+  public dispatchDeleteJournalEntry(journalEntry: JournalEntry): void {
+    this.controlApi.deleteJournalEntry$(journalEntry).subscribe(res => {
       this.state = MonthReducers.reduceDeleteJournalEntry(
         this.state,
-        aJournalEntry
+        journalEntry
       );
-      this.updateEntriesByKind(this.state, aJournalEntry);
+      this.updateEntriesByKind(this.state, journalEntry);
       this.dispatchPutMonthBalance();
     });
   }

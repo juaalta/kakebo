@@ -31,27 +31,29 @@ export const MonthReducers = {
     return stateClone;
   },
   reduceSetGoalMonth(state: Month, goal: number): Month {
-    const stateClone = { ...state, goal };
-    this.state.monthBalance = { ...this.state.monthBalance, goal };
+    const stateClone = { ...state };
+    stateClone.monthBalance.goal = goal;
     return stateClone;
   },
-
   reduceJournalEntries(state: Month, journalEntries: JournalEntry[]): Month {
+    let stateClone = { ...state };
     if (journalEntries) {
-      state.journalEntries = [...journalEntries];
-      return MonthReducers.reduceSetCurrentMonthBalance(state);
+      stateClone.journalEntries = [...journalEntries];
+      return MonthReducers.reduceSetCurrentMonthBalance(stateClone);
     }
-    return state;
+    return stateClone;
   },
   reducePostJournalEntry(state: Month, journalEntry: JournalEntry): Month {
-    state.journalEntries = [...state.journalEntries, journalEntry];
-    return { ...state };
+    let stateClone = { ...state };
+    stateClone.journalEntries = [...stateClone.journalEntries, journalEntry];
+    return stateClone;
   },
   reduceDeleteJournalEntry(state: Month, journalEntry: JournalEntry): Month {
-    state.journalEntries = state.journalEntries.filter(
+    let stateClone = { ...state };
+    stateClone.journalEntries = stateClone.journalEntries.filter(
       j => j._id !== journalEntry._id
     );
-    return { ...state };
+    return stateClone;
   },
 
   reduceSetCurrentMonthBalance(state: Month): Month {
@@ -87,7 +89,7 @@ export const MonthReducers = {
   },
   sumAmount(entries: JournalEntry[]): number {
     return entries
-      .map(p => p.amount)
+      .map(e => e.amount)
       .reduce((state, current) => state + current, 0);
   }
 };
