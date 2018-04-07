@@ -5,12 +5,11 @@ import { ControlRoutingModule } from "./month-routing.module";
 import { MonthComponent } from "./month.component";
 import { ComponentsModule } from "@tools/components/components.module";
 import { ApiService } from "@routes/month/api.service";
-import { StoreService } from "@routes/month/store.service";
-import { Reducers } from "@routes/month/reducers.service";
+import { MonthStore } from "@routes/month/state/month-store.state";
 
 @NgModule({
   imports: [CommonModule, ControlRoutingModule, ComponentsModule],
   declarations: [MonthComponent],
-  providers: [ApiService, StoreService, Reducers]
+  providers: [ApiService, MonthStore]
 })
 export class MonthModule {}

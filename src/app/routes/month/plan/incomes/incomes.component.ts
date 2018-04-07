@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ChangeDetectionStrategy
 } from "@angular/core";
-import { JournalEntry } from "@routes/month/models/journal_entry.model";
+import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 
 @Component({
   selector: "kab-incomes",

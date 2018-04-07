@@ -7,7 +7,7 @@ import {
   Input
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { JournalEntry } from "@routes/month/models/journal_entry.model";
+import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 
 @Component({
   selector: "kab-prevision",

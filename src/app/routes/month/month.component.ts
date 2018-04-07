@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { MonthBalance } from "@routes/month/models/month_balance.model";
-import { StoreService } from "@routes/month/store.service";
 import { NavLink } from "@tools/models/nav-link.model";
 import { Observable } from "rxjs/Observable";
 import { map } from "rxjs/operators";
+import { MonthStore } from "@routes/month/state/month-store.state";
+import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 
 @Component({
   selector: "kab-month",
@@ -47,7 +47,7 @@ export class MonthComponent implements OnInit {
   ];
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: StoreService
+    private store: MonthStore
   ) {}
 
   ngOnInit() {

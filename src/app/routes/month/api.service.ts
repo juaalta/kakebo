@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { environment } from "@environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
-import { JournalEntry } from "@routes/month/models/journal_entry.model";
-import { MonthBalance } from "@routes/month/models/month_balance.model";
+import { MonthBalance } from "@routes/month/state/models/month_balance.model";
+import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
 
 @Injectable()
 export class ApiService {

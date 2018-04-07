@@ -9,21 +9,21 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MonthBalance } from "@routes/month/models/month_balance.model";
 import { SavingsGoal } from "@routes/month/models/savings_goal.model";
+import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 
 @Component({
   selector: "kab-goal",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-  <section *ngIf="month_balance">
+  <section *ngIf="monthBalance">
     <form [formGroup]="form" (submit)="submit(form.value)"> 
       <fieldset >
         <section  class="row">
           <label for="goalToSave">Goal to save</label>
           <section class="column ">
             <input type="number" formControlName="goalToSave">
-            <p><small>Maximun {{month_balance?.savings}}</small></p>
+            <p><small>Maximun {{monthBalance?.savings}}</small></p>
           </section>
           <input class="button-primary" type="submit" value="Save Goal" [disabled]="form.invalid">
         </section>
@@ -34,18 +34,18 @@ import { SavingsGoal } from "@routes/month/models/savings_goal.model";
   styles: []
 })
 export class GoalComponent implements OnInit, OnChanges {
-  @Input() public month_balance: MonthBalance;
+  @Input() public monthBalance: MonthBalance;
   @Output() setGoal = new EventEmitter<SavingsGoal>();
   public form: FormGroup;
   constructor(private formbuilder: FormBuilder) {}
 
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.month_balance) {
+    if (this.monthBalance) {
       this.form = this.formbuilder.group({
         goalToSave: [
-          this.month_balance.goal,
-          [Validators.required, Validators.max(this.month_balance.savings)]
+          this.monthBalance.goal,
+          [Validators.required, Validators.max(this.monthBalance.savings)]
         ]
       });
     }
@@ -53,8 +53,8 @@ export class GoalComponent implements OnInit, OnChanges {
 
   public submit(value) {
     const month_goal: SavingsGoal = {
-      year: this.month_balance.year,
-      month: this.month_balance.month,
+      year: this.monthBalance.year,
+      month: this.monthBalance.month,
       goalToSave: value.goalToSave
     };
     this.setGoal.emit(month_goal);
