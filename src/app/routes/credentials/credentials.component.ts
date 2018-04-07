@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { GlobalStoreService } from "@tools/global/global-store.service";
 import { CredentialsService } from "@routes/credentials/credentials.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { GlobalStore } from "@tools/global/state/global-store.state";
 
 @Component({
   selector: "kab-login",
@@ -33,7 +33,7 @@ export class CredentialsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private credentialsService: CredentialsService,
     private router: Router,
-    private store: GlobalStoreService,
+    private store: GlobalStore,
     private formbuilder: FormBuilder
   ) {}
 

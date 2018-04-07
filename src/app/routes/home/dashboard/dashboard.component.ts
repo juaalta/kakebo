@@ -38,13 +38,14 @@ import { MonthBalance } from "@routes/month/state/models/month_balance.model";
   styles: []
 })
 export class DashboardComponent implements OnInit {
-  private urlMonthBalances = environment.apiUrl + "priv/monthbalances/";
-  public balances$;
   public year = new Date().getFullYear();
   public month = new Date().getMonth() + 1;
+  public balances$;
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.balances$ = this.http.get<MonthBalance[]>(this.urlMonthBalances);
+    const urlMonthBalances = environment.apiUrl + "priv/monthbalances/";
+    this.balances$ = this.http.get<MonthBalance[]>(urlMonthBalances);
   }
 }

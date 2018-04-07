@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { GlobalStoreService } from "@tools/global/global-store.service";
+import { GlobalStore } from "@tools/global/state/global-store.state";
 
 @Component({
   selector: "kab-header",
@@ -16,11 +16,11 @@ import { GlobalStoreService } from "@tools/global/global-store.service";
 })
 export class HeaderComponent implements OnInit {
   public userIsAnonymous;
-  constructor(private globalStore: GlobalStoreService) {}
+  constructor(private store: GlobalStore) {}
 
   ngOnInit() {
-    this.globalStore
+    this.store
       .selectUserIsAnonymous$()
-      .subscribe(res => (this.userIsAnonymous = res));
+      .subscribe((res: boolean) => (this.userIsAnonymous = res));
   }
 }

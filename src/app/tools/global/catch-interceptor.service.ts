@@ -10,13 +10,13 @@ import {
 import { Observable } from "rxjs/Observable";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
-import { GlobalStoreService } from "@tools/global/global-store.service";
+import { GlobalStore } from "@tools/global/state/global-store.state";
 
 @Injectable()
 export class CatchInterceptorService implements HttpInterceptor {
   private started;
 
-  constructor(private router: Router, private store: GlobalStoreService) {}
+  constructor(private router: Router, private store: GlobalStore) {}
 
   public intercept(
     req: HttpRequest<any>,

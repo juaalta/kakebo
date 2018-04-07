@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { GlobalStoreService } from "@tools/global/global-store.service";
 import { TokenInterceptorService } from "@tools/global/token-interceptor.service";
 import { CatchInterceptorService } from "@tools/global/catch-interceptor.service";
+import { GlobalStore } from "@tools/global/state/global-store.state";
 
 @NgModule({
   imports: [CommonModule, HttpClientModule],
   providers: [
-    GlobalStoreService,
+    GlobalStore,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

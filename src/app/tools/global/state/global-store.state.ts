@@ -2,14 +2,11 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Subject } from "rxjs/Subject";
+import { globalInitialState } from "@tools/global/state/models/global.model";
 
 @Injectable()
-export class GlobalStoreService {
-  private state = {
-    userToken: "",
-    userIsAnonymous: true,
-    userMessage: ""
-  };
+export class GlobalStore {
+  private state = globalInitialState;
 
   private userToken$ = new Subject<string>();
   private userIsAnonymous$ = new BehaviorSubject<boolean>(
