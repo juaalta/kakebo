@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
-import { ApiService } from "@routes/month/api.service";
 import { MonthReducers } from "@routes/month/state/month.reducer";
 import { MonthBalance } from "@routes/month/state/models/month_balance.model";
 import { JournalEntry } from "@routes/month/state/models/journal_entry.model";
@@ -8,6 +7,7 @@ import {
   Month,
   monthInitialState
 } from "@routes/month/state/models/month.model";
+import { ApiService } from "@routes/month/state/api.service";
 
 @Injectable()
 export class MonthStore {
