@@ -15,13 +15,10 @@ import { ComponentsModule } from "@tools/components/components.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ServiceWorkerModule.register("/ngsw-worker.js", {
-      enabled: environment.production
-    }),
     GlobalModule,
     ComponentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
