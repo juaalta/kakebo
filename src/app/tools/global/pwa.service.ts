@@ -10,12 +10,12 @@ export class PwaService {
   checkForUpdates() {
     this.swUpate.available.subscribe(
       (event: UpdateAvailableEvent) => {
-        const message1 = `Update available: current version is ${event.current}, available version is ${event.available}.`;
+        const message1 = `Update available: current version is ${event.current.hash}, available version is ${event.available.hash}.`;
         const message2 = ' Would you like to update?';
         const value = confirm(message1 + message2);
 
         if (value) {
-          location.reload();
+          this.swUpate.checkForUpdate();
         }
       }
     );
