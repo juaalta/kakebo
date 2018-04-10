@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { PwaService } from "@tools/global/pwa.service";
 
 @Component({
   selector: "kab-root",
@@ -15,6 +16,14 @@ import { Component } from "@angular/core";
   `,
   styles: []
 })
-export class AppComponent {
-  title = "kab";
+export class AppComponent implements OnInit {
+
+  public title = "kab";
+
+  constructor(private pwaService: PwaService) { }
+
+  ngOnInit() {
+    this.pwaService.checkForUpdates();
+  }
+
 }

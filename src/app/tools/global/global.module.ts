@@ -11,6 +11,7 @@ import { EffectsModule } from "@ngrx/effects";
 import { UserEffects } from "@tools/global/state/user/user.effects";
 import { UserApi } from "@tools/global/state/user/user-api.service";
 import { UserService } from "@tools/global/state/user/user.service";
+import { PwaService } from "@tools/global/pwa.service";
 
 @NgModule({
   imports: [
@@ -32,10 +33,11 @@ import { UserService } from "@tools/global/state/user/user.service";
       multi: true
     },
     UserApi,
-    UserService
+    UserService,
+    PwaService
   ]
 })
 /**
  * Core module with providers for the Root Module
  */
-export class GlobalModule {}
+export class GlobalModule { }
