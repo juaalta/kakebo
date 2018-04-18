@@ -17,26 +17,27 @@ import { SetGoalMonthBalance } from "@routes/month/state/month-balance/month-bal
 
 @Component({
   selector: "kab-plan",
-  template: `
-    <kab-widget-header mode="h2" caption="Plan your goal to save" value="{{monthBalance.goal}} €"></kab-widget-header>
-    <main class="column">
-      <kab-goal *ngIf="monthBalance.incomes>0" class="" [monthBalance]="monthBalance" (setGoal)="setGoalForMonth($event)"></kab-goal>
-      <section class="row">
-        <section class="column column-40">
-          <kab-prevision class="container" [year]="monthBalance.year" [month]="monthBalance.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
-        </section>
-        <section class="column column-50 column-offset-10">
-          <kab-incomes class="container" 
-          [projectionsToList]="projectedIncomes" 
-          (deleteProjection)="deleteAnEntry($event)"></kab-incomes>
-          <hr>
-          <kab-outgoings class="container" 
-          [projectionsToList]="projectedOutgoings" 
-          (deleteProjection)="deleteAnEntry($event)"></kab-outgoings>
-        </section>
-      </section>
-    <main>
-  `,
+  // template: `
+  //   <kab-widget-header mode="h2" caption="Plan your goal to save" value="{{monthBalance.goal}} €"></kab-widget-header>
+  //   <main class="column">
+  //     <kab-goal *ngIf="monthBalance.incomes>0" class="" [monthBalance]="monthBalance" (setGoal)="setGoalForMonth($event)"></kab-goal>
+  //     <section class="row">
+  //       <section class="column column-40">
+  //         <kab-prevision class="container" [year]="monthBalance.year" [month]="monthBalance.month" (saveProjection)="saveNewEntry($event)"></kab-prevision>
+  //       </section>
+  //       <section class="column column-50 column-offset-10">
+  //         <kab-incomes class="container" 
+  //         [projectionsToList]="projectedIncomes" 
+  //         (deleteProjection)="deleteAnEntry($event)"></kab-incomes>
+  //         <hr>
+  //         <kab-outgoings class="container" 
+  //         [projectionsToList]="projectedOutgoings" 
+  //         (deleteProjection)="deleteAnEntry($event)"></kab-outgoings>
+  //       </section>
+  //     </section>
+  //   <main>
+  // `,
+  templateUrl: './plan.component.html',
   styles: []
 })
 export class PlanComponent implements OnInit, OnDestroy {
@@ -47,7 +48,7 @@ export class PlanComponent implements OnInit, OnDestroy {
   public projectedOutgoings: JournalEntry[];
   public monthBalance: MonthBalance;
 
-  constructor(private store: Store<MonthState>) {}
+  constructor(private store: Store<MonthState>) { }
 
   ngOnInit() {
     this.monthBalanceSubscription = this.store

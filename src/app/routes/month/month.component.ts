@@ -11,31 +11,31 @@ import { MonthBalance } from "@routes/month/state/month-balance/models/month_bal
 
 @Component({
   selector: "kab-month",
-  template: `
-
-  <section *ngIf="monthBalance; else noMonthBalance">
-    <kab-widget-header mode="h1" caption="Balance on {{month | monthName }} of {{ year }}" value="{{ monthBalance.savings }} €"></kab-widget-header>
-    <section class="row">
-      <aside class="column column-20">
-        <kab-nav [navLinks]="navLinks"></kab-nav>
-      </aside>  
-      <main class="column float-left">
-        <router-outlet></router-outlet>
-      </main>    
-    </section>
-  </section>
-  <ng-template #noMonthBalance>
-    nada
-    <kab-widget-header mode="h3" caption="No Balance for {{month | monthName }} of {{ year }}" value="Creating a new one..."></kab-widget-header>
-  </ng-template>
-  {{ monthBalance | json }}
-  `,
+  // template: `
+  // <section *ngIf="monthBalance; else noMonthBalance">
+  //   <kab-widget-header mode="h1" caption="Balance on {{month | monthName }} of {{ year }}" value="{{ monthBalance.savings }} €"></kab-widget-header>
+  //   <section class="row">
+  //     <aside class="column column-20">
+  //       <kab-nav [navLinks]="navLinks"></kab-nav>
+  //     </aside>  
+  //     <main class="column float-left">
+  //       <router-outlet></router-outlet>
+  //     </main>    
+  //   </section>
+  // </section>
+  // <ng-template #noMonthBalance>
+  //   nada
+  //   <kab-widget-header mode="h3" caption="No Balance for {{month | monthName }} of {{ year }}" value="Creating a new one..."></kab-widget-header>
+  // </ng-template>
+  // {{ monthBalance | json }}
+  // `,
+  templateUrl: './month.component.html',
   styles: []
 })
 export class MonthComponent implements OnInit {
   public year: number;
   public month: number;
-  public monthBalance : MonthBalance;
+  public monthBalance: MonthBalance;
   public navLinks: NavLink[] = [
     {
       caption: "Plan",
@@ -50,11 +50,11 @@ export class MonthComponent implements OnInit {
       routerLink: "review"
     }
   ];
-  
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private store: Store<MonthState>
-  ) {}
+  ) { }
 
   ngOnInit() {
     const params = this.activatedRoute.snapshot.params;

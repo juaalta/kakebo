@@ -14,31 +14,32 @@ import { MonthBalance } from "@routes/month/state/month-balance/models/month_bal
 @Component({
   selector: "kab-goal",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-  <section *ngIf="monthBalance">
-    <form [formGroup]="form" (submit)="submit(form.value)"> 
-      <fieldset >
-        <section  class="row">
-          <label for="goalToSave">Goal to save</label>
-          <section class="column ">
-            <input type="number" formControlName="goalToSave">
-            <p><small>Maximun {{monthBalance?.savings}}</small></p>
-          </section>
-          <input class="button-primary" type="submit" value="Save Goal" [disabled]="form.invalid">
-        </section>
-      </fieldset>
-    </form>
-  </section>
-  `,
+  // template: `
+  // <section *ngIf="monthBalance">
+  //   <form [formGroup]="form" (submit)="submit(form.value)"> 
+  //     <fieldset >
+  //       <section  class="row">
+  //         <label for="goalToSave">Goal to save</label>
+  //         <section class="column ">
+  //           <input type="number" formControlName="goalToSave">
+  //           <p><small>Maximun {{monthBalance?.savings}}</small></p>
+  //         </section>
+  //         <input class="button-primary" type="submit" value="Save Goal" [disabled]="form.invalid">
+  //       </section>
+  //     </fieldset>
+  //   </form>
+  // </section>
+  // `,
+  templateUrl: './goal.component.html',
   styles: []
 })
 export class GoalComponent implements OnInit, OnChanges {
   @Input() public monthBalance: MonthBalance;
   @Output() setGoal = new EventEmitter<number>();
   public form: FormGroup;
-  constructor(private formbuilder: FormBuilder) {}
+  constructor(private formbuilder: FormBuilder) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.monthBalance) {
       this.form = this.formbuilder.group({

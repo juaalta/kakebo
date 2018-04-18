@@ -12,23 +12,24 @@ import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-e
 @Component({
   selector: "kab-prevision",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-  <kab-widget-header mode="h3" caption="Set your Previsions" value=""></kab-widget-header>
-  <form [formGroup]="form" (submit)="submit(form.value)">
-    <fieldset>
-      <label for="kind">Kind of prevision</label>
-      <input type="radio" name="kind" formControlName="kind" value="I"> + Projected Income: <small>Salary, extras</small><br>
-      <input type="radio" name="kind" formControlName="kind" value="O"> - Regular Outgoing: <small>Mortgage, energy, phone</small><br>
-      <label for="date">Date</label>
-      <input type="date" formControlName="date">
-      <label for="description">Description</label>
-      <input type="text" formControlName="description">
-      <label for="amount">Amount</label>
-      <input type="number" formControlName="amount">
-      <input class="button-primary" type="submit" value="Save Prevision" [disabled]="form.invalid">
-    </fieldset>
-  </form>
-  `,
+  // template: `
+  // <kab-widget-header mode="h3" caption="Set your Previsions" value=""></kab-widget-header>
+  // <form [formGroup]="form" (submit)="submit(form.value)">
+  //   <fieldset>
+  //     <label for="kind">Kind of prevision</label>
+  //     <input type="radio" name="kind" formControlName="kind" value="I"> + Projected Income: <small>Salary, extras</small><br>
+  //     <input type="radio" name="kind" formControlName="kind" value="O"> - Regular Outgoing: <small>Mortgage, energy, phone</small><br>
+  //     <label for="date">Date</label>
+  //     <input type="date" formControlName="date">
+  //     <label for="description">Description</label>
+  //     <input type="text" formControlName="description">
+  //     <label for="amount">Amount</label>
+  //     <input type="number" formControlName="amount">
+  //     <input class="button-primary" type="submit" value="Save Prevision" [disabled]="form.invalid">
+  //   </fieldset>
+  // </form>
+  // `,
+  templateUrl: './prevision.component.html',
   styles: []
 })
 export class PrevisionComponent implements OnInit {
@@ -36,7 +37,7 @@ export class PrevisionComponent implements OnInit {
   @Input() public month: number;
   @Output() public saveProjection = new EventEmitter<JournalEntry>();
   public form: FormGroup;
-  constructor(private formbuilder: FormBuilder) {}
+  constructor(private formbuilder: FormBuilder) { }
 
   ngOnInit() {
     this.form = this.formbuilder.group({

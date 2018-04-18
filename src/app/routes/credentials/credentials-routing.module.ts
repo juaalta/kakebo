@@ -9,7 +9,7 @@ const routes: Routes = [
     data: {
       alternate: "Registration",
       credential: { email: "admin@api-base.com", password: "1234" },
-      title: "LogIn"
+      title: "Login"
     }
   },
   {
@@ -27,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CredentialsRoutingModule {}
+export class CredentialsRoutingModule { }

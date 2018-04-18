@@ -7,37 +7,41 @@ import { ValidateUser } from "@tools/global/state/user/user.actions";
 
 @Component({
   selector: "kab-login",
-  template: `
-  <kab-widget-header mode="h1" caption="{{pageData.title}}" value="Wellcome"></kab-widget-header>
-  <form [formGroup]="form" (submit)="submit(form.value)">
-    <label for="email">Email</label>
-    <input name="email"
-      formControlName="email"
-      type="email"/>
-    <label for="password">Password</label>
-    <input name="password"
-      formControlName="password"
-      type="password"/>
-    <input class="button-primary" type="submit" [value]="pageData.title" [disabled]="form.invalid">
-    <a class="button button-clear" [routerLink]="['..',pageData.alternate | lowercase]">{{ pageData.alternate }}</a>
-  </form>
-  <i>{{ errorMessage }}</i>
-  `,
+  // template: `
+  // <kab-widget-header mode="h1" caption="{{pageData.title}}" value="Welcome"></kab-widget-header>
+  // <form [formGroup]="form" (submit)="submit(form.value)">
+  //   <label for="email">Email</label>
+  //   <input name="email"
+  //     formControlName="email"
+  //     type="email"/>
+  //   <label for="password">Password</label>
+  //   <input name="password"
+  //     formControlName="password"
+  //     type="password"/>
+  //   <input class="button-primary" type="submit" [value]="pageData.title" [disabled]="form.invalid">
+  //   <a class="button button-clear" [routerLink]="['..',pageData.alternate | lowercase]">{{ pageData.alternate }}</a>
+  // </form>
+  // <i>{{ errorMessage }}</i>
+  // `,
+  templateUrl: './credentials.component.html',
   styles: []
 })
 export class CredentialsComponent implements OnInit {
+
   public pageData: any;
   public errorMessage = "";
   public form: FormGroup;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private store: Store<GlobalState>
-  ) {}
+  ) { }
 
   public ngOnInit() {
     this.obtainPageDataFromRoute();
   }
+
   private obtainPageDataFromRoute() {
     this.pageData = this.activatedRoute.snapshot.data;
     this.form = this.formBuilder.group({
@@ -51,6 +55,7 @@ export class CredentialsComponent implements OnInit {
       ]
     });
   }
+
   public submit(credentials) {
     this.store.dispatch(
       new ValidateUser({
@@ -60,4 +65,13 @@ export class CredentialsComponent implements OnInit {
       })
     );
   }
+
+  get email() {
+    return this.form.get('email');
+  }
+
+  get password() {
+    return this.form.get('password');
+  }
+
 }

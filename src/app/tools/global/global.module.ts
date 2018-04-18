@@ -11,7 +11,6 @@ import { EffectsModule } from "@ngrx/effects";
 import { UserEffects } from "@tools/global/state/user/user.effects";
 import { UserApi } from "@tools/global/state/user/user-api.service";
 import { UserService } from "@tools/global/state/user/user.service";
-import { PwaService } from "@tools/global/pwa.service";
 
 @NgModule({
   imports: [
@@ -33,8 +32,7 @@ import { PwaService } from "@tools/global/pwa.service";
       multi: true
     },
     UserApi,
-    UserService,
-    PwaService
+    UserService
   ]
 })
 /**

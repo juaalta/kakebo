@@ -1,0 +1,13 @@
+<kab-widget-header mode="h1"
+                   caption="Plan your goal to save"
+                   value="{{monthBalance.goal}} €"></kab-widget-header>
+<kab-goal *ngIf="monthBalance.incomes>0"
+          [monthBalance]="monthBalance"
+          (setGoal)="setGoalForMonth($event)"></kab-goal>
+<kab-prevision [year]="monthBalance.year"
+               [month]="monthBalance.month"
+               (saveProjection)="saveNewEntry($event)"></kab-prevision>
+<kab-incomes [projectionsToList]="projectedIncomes"
+             (deleteProjection)="deleteAnEntry($event)"></kab-incomes>
+<kab-outgoings [projectionsToList]="projectedOutgoings"
+               (deleteProjection)="deleteAnEntry($event)"></kab-outgoings>

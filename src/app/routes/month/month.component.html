@@ -1,0 +1,20 @@
+<section *ngIf="monthBalance; else noMonthBalance">
+  <kab-widget-header mode="h1"
+                     caption="Balance on {{month | monthName }} of {{ year }}"
+                     value="{{ monthBalance.savings }} €"></kab-widget-header>
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link
+       *ngFor="let link of navLinks"
+       [routerLink]="link.routerLink"
+       routerLinkActive>
+      {{ link.caption }}
+    </a>
+  </nav>
+  <router-outlet></router-outlet>
+</section>
+<ng-template #noMonthBalance>
+  <kab-widget-header mode="h3"
+                     caption="No Balance for {{month | monthName }} of {{ year }}"
+                     value="Creating a new one..."></kab-widget-header>
+</ng-template>
+{{ monthBalance | json }}

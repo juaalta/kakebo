@@ -1,0 +1,56 @@
+<section *ngIf="user?.userIsAnonymous ;else userData">
+  <kab-widget-header mode="h1"
+                     caption="Kakebo"
+                     value="Welcome"></kab-widget-header>
+  <kab-widget-header mode="h2"
+                     caption="Take Control"
+                     value="Ledger for household economy."></kab-widget-header>
+  <a mat-button
+     color="primary"
+     routerLink="credentials/login"> Log in to start saving money </a>
+</section>
+<ng-template #userData>
+  <kab-widget-header mode="h1"
+                     caption="Kakebo"
+                     value="Monthly balances"></kab-widget-header>
+  <a mat-button
+     color="primary"
+     [routerLink]="['month', year , month]"> Create or view a balance controller for the current month </a>
+  <mat-table #table
+             [dataSource]="balances$ | async">
+    <ng-container matColumnDef="year">
+      <mat-header-cell *matHeaderCellDef>Year</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.year}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="month">
+      <mat-header-cell *matHeaderCellDef>Month</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.month }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="incoming">
+      <mat-header-cell *matHeaderCellDef>Incomings</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.incomes }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="outgoing">
+      <mat-header-cell *matHeaderCellDef>Outgoing</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.outgoings }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="expenses">
+      <mat-header-cell *matHeaderCellDef>Expenses</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.expenses }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="goal">
+      <mat-header-cell *matHeaderCellDef>Goal</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.goal }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="savings">
+      <mat-header-cell *matHeaderCellDef>Savings</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.savings }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="available">
+      <mat-header-cell *matHeaderCellDef>Available</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.available }}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</ng-template>

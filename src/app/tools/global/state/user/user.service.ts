@@ -12,13 +12,13 @@ import { catchError } from "rxjs/operators/catchError";
 import { of } from "rxjs/observable/of";
 
 @Injectable()
-export class UserService{
+export class UserService {
 
   constructor(
     private api: UserApi,
     private router: Router,
     private store: Store<GlobalState>
-  ) {}
+  ) { }
 
   public validateUser$ = (action: ValidateUser): Observable<Action> => {
     this.store.dispatch(
@@ -28,6 +28,7 @@ export class UserService{
       map((res: CredentialResponse) => {
         this.store.dispatch(new ShowMessage({ caption: "", type: "info" }));
         this.router.navigateByUrl("/");
+        localStorage.setItem('token', res.token);
         return new ValidateUserCompleted(res);
       }),
       catchError(() => {

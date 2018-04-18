@@ -49,7 +49,6 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": true,
               "fileReplacements": [
                 {
                   "src": "src/environments/environment.ts",

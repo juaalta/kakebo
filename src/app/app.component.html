@@ -1,0 +1,20 @@
+<div fxLayout="column"
+     style="height:100vh;">
+  <kab-header [user]="user"
+              (toggleSidenav)="onToggleSidenav()"
+              fxFlex="60px"></kab-header>
+  <mat-sidenav-container fxFlex="grow">
+    <mat-sidenav #sidenav
+                 mode="side"
+                 opened="false"
+                 class="sidenav">
+      <kab-sidenav [user]="user">
+      </kab-sidenav>
+    </mat-sidenav>
+    <mat-sidenav-content fxLayout="column"
+                         class="mat-typography">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <kab-footer fxFlex="60px"></kab-footer>
+</div>

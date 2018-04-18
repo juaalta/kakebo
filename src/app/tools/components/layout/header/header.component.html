@@ -1,0 +1,8 @@
+<mat-toolbar>
+  <button mat-icon-button
+          (click)="onToggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>Kakebo</h1>
+  <span *ngIf="!user?.userIsAnonymous">&nbsp;- Hola {{ user.email }}</span>
+</mat-toolbar>
