@@ -12,24 +12,25 @@ import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-e
 @Component({
   selector: "kab-new-expense",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-  <kab-widget-header mode="h3" caption="Record a new Expense"></kab-widget-header>
-  <form [formGroup]="form" (submit)="submit(form.value)">
-    <fieldset>
-      <label for="expenseCategory">Category</label>
-      <select id="expenseCategory" formControlName="expenseCategory">
-        <option *ngFor="let expenseCategory of expenseCategories | objectKeys" [value]="expenseCategory">{{ expenseCategory | categoryName }}</option>
-      </select>
-      <label for="date">Date</label>
-      <input type="date" formControlName="date">
-      <label for="description">Description</label>
-      <input type="text" formControlName="description">
-      <label for="amount">Amount</label>
-      <input type="number" formControlName="amount">
-      <input class="button-primary" type="submit" value="Save Expense" [disabled]="form.invalid" >
-    </fieldset>
-  </form>
-  `,
+  // template: `
+  // <kab-widget-header mode="h3" caption="Record a new Expense"></kab-widget-header>
+  // <form [formGroup]="form" (submit)="submit(form.value)">
+  //   <fieldset>
+  //     <label for="expenseCategory">Category</label>
+  //     <select id="expenseCategory" formControlName="expenseCategory">
+  //       <option *ngFor="let expenseCategory of expenseCategories | objectKeys" [value]="expenseCategory">{{ expenseCategory | categoryName }}</option>
+  //     </select>
+  //     <label for="date">Date</label>
+  //     <input type="date" formControlName="date">
+  //     <label for="description">Description</label>
+  //     <input type="text" formControlName="description">
+  //     <label for="amount">Amount</label>
+  //     <input type="number" formControlName="amount">
+  //     <input class="button-primary" type="submit" value="Save Expense" [disabled]="form.invalid" >
+  //   </fieldset>
+  // </form>
+  // `,
+  templateUrl: './new-expense.component.html',
   styles: []
 })
 export class NewExpenseComponent implements OnInit {
@@ -38,7 +39,7 @@ export class NewExpenseComponent implements OnInit {
   @Output() saveExpense = new EventEmitter<JournalEntry>();
   public expenseCategories = expenseCategories;
   public form: FormGroup;
-  constructor(private formbuilder: FormBuilder) {}
+  constructor(private formbuilder: FormBuilder) { }
 
   ngOnInit() {
     this.form = this.formbuilder.group({

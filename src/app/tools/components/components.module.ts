@@ -15,7 +15,8 @@ import {
   MatTabsModule,
   MatRadioModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatSelectModule,
 } from "@angular/material";
 import { RouterModule } from "@angular/router";
 import { FooterComponent } from "./layout/footer/footer.component";
@@ -46,7 +47,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTabsModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ],
   declarations: [
     HeaderComponent,
@@ -80,7 +82,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTabsModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ]
 })
 /**

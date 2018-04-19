@@ -6,7 +6,9 @@
     <a mat-tab-link
        *ngFor="let link of navLinks"
        [routerLink]="link.routerLink"
-       routerLinkActive>
+       routerLinkActive
+       #rla="routerLinkActive"
+       [active]="rla.isActive">
       {{ link.caption }}
     </a>
   </nav>

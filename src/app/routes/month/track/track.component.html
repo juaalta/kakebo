@@ -1,0 +1,8 @@
+<kab-widget-header mode="h1"
+                   caption="Track your expenses. Left to expend"
+                   value="{{monthBalance.available}} €"></kab-widget-header>
+<kab-new-expense [year]="monthBalance.year"
+                 [month]="monthBalance.month"
+                 (saveExpense)="saveNewExpense($event)"></kab-new-expense>
+<kab-expenses-list [expensesToList]="expenses"
+                   (deleteExpense)="deleteExpense($event)"></kab-expenses-list>

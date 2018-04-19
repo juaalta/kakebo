@@ -17,17 +17,18 @@ import { map } from "rxjs/operators";
 
 @Component({
   selector: "kab-track",
-  template: `
-    <kab-widget-header mode="h2" caption="Track your expenses. Left to expend" value="{{monthBalance.available}} €"></kab-widget-header>
-    <main class="column">
-      <section>
-        <kab-new-expense [year]="monthBalance.year" [month]="monthBalance.month" (saveExpense)="saveNewExpense($event)"></kab-new-expense>
-      </section>
-      <section>
-        <kab-expenses-list [expensesToList]="expenses" (deleteExpense)="deleteExpense($event)"></kab-expenses-list>
-      </section>
-    <main>
-  `,
+  // template: `
+  //   <kab-widget-header mode="h2" caption="Track your expenses. Left to expend" value="{{monthBalance.available}} €"></kab-widget-header>
+  //   <main class="column">
+  //     <section>
+  //       <kab-new-expense [year]="monthBalance.year" [month]="monthBalance.month" (saveExpense)="saveNewExpense($event)"></kab-new-expense>
+  //     </section>
+  //     <section>
+  //       <kab-expenses-list [expensesToList]="expenses" (deleteExpense)="deleteExpense($event)"></kab-expenses-list>
+  //     </section>
+  //   <main>
+  // `,
+  templateUrl: './track.component.html',
   styles: []
 })
 export class TrackComponent implements OnInit {
@@ -36,7 +37,7 @@ export class TrackComponent implements OnInit {
   public expenses: JournalEntry[] = [];
   public monthBalance: MonthBalance;
 
-  constructor(private store: Store<MonthState>) {}
+  constructor(private store: Store<MonthState>) { }
 
   ngOnInit() {
     this.monthBalanceSubscription = this.store
