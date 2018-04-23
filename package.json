@@ -1,10 +1,10 @@
 {
   "name": "kakebo",
-  "version": "0.0.0",
+  "version": "6.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
