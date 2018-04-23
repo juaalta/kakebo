@@ -1,7 +1,7 @@
 {
   "name": "kakebo",
-  "version": "6.1.0",
-  "description": "Base for an advanced project with Angular",
+  "version": "6.2.0",
+  "description": "Single Page Application with Angular",
   "homepage": "http://academia-binaria.com/categories/Tutorial/Angular/",
   "author": {
     "name": "Alberto Basalo",
