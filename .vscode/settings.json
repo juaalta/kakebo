@@ -12,8 +12,9 @@
   "liveServer.settings.donotShowInfoMsg": true,
   "material-icon-theme.activeIconPack": "angular_ngrx",
   "material-icon-theme.folders.associations": {
+    "app": "Global",
+    "core": "Tools",
     "environments": "Config",
-    "app": "Global"
   },
   "window.zoomLevel": 1,
   "workbench.colorTheme": "Winter is Coming (Light)",
