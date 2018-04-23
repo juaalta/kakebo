@@ -17,14 +17,14 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "/"
               },
               {
                 "glob": "**/*",
-                "input": "src/favicon.ico",
-                "output": "/favicon.ico"
+                "input": "src/assets",
+                "output": "/assets"
               }
             ],
             "styles": [
