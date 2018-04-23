@@ -17,7 +17,7 @@
     "environments": "Config",
   },
   "window.zoomLevel": 1,
-  "workbench.colorTheme": "Winter is Coming (Light)",
+  "workbench.colorTheme": "Default Light+",
   "workbench.colorCustomizations": {
     "editorWarning.foreground": "#BBCBC2"
   },
