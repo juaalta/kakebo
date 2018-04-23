@@ -1,2 +1,16 @@
 {
+  "git.autofetch": true,
+  "workbench.iconTheme": "material-icon-theme",
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "material-icon-theme.activeIconPack": "angular_ngrx",
+  "explorer.confirmDelete": false,
+  "workbench.colorTheme": "Default Light+",
+  "editor.minimap.enabled": false,
+  "terminal.integrated.shell.windows":
+    "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+  "window.zoomLevel": 1,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2
 }
