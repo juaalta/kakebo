@@ -35,6 +35,8 @@
     "@angular/language-service": "~6.0.0-rc.5",
     "@compodoc/compodoc": "^1.1.2",
     "typescript": "~2.7.2",
-    "@angular-devkit/build-angular": "~0.5.0"
+    "prettier": "^1.12.0",
+    "@angular-devkit/build-angular": "~0.5.0",
+    "tslint": "~5.9.1"
   }
 }
