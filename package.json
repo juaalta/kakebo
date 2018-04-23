@@ -1,6 +1,13 @@
 {
   "name": "kakebo",
   "version": "6.1.0",
+  "description": "Base for an advanced project with Angular",
+  "homepage": "http://academia-binaria.com/categories/Tutorial/Angular/",
+  "author": {
+    "name": "Alberto Basalo",
+    "email": "albertobasalo@agorabinaria.com",
+    "url": "https://twitter.com/albertobasalo"
+  },
   "license": "MIT",
   "scripts": {
     "ng": "ng",
