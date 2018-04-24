@@ -28,8 +28,8 @@ export class ExpensesComponent implements OnInit {
 		this.numberOfExpenses = this.expenses.length;
 		this.expense = expenseInitialState;
 	}
-	public deleteExpense(journalEntry: JournalEntry) {
-		const index = this.expenses.indexOf(journalEntry);
+	public deleteExpense(expense: JournalEntry) {
+		const index = this.expenses.indexOf(expense);
 		this.expenses.splice(index, 1);
 		this.numberOfExpenses = this.expenses.length;
 	}

@@ -48,7 +48,7 @@
       </td>
       <td>{{ expense.description }}</td>
       <td>{{ expense.category }}</td>
-      <td>{{ expense.amount | number:'7.2-2' }}</td>
+      <td>{{ expense.amount | number }}</td>
       <td>
         <button (click)="deleteExpense(expense)">Delete</button>
       </td>
