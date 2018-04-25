@@ -1,0 +1,58 @@
+<h2>{{ title | uppercase }}</h2>
+<form #expenseForm="ngForm"
+      class="container">
+  <label for="description">Description</label>
+  <input name="description"
+         #descriptionInput
+         [value]="expense.description"
+         (change)="expense.description=descriptionInput.value"
+         type="text" />
+  <label for="amount">Amount</label>
+  <input name="amount"
+         id="amount"
+         [(ngModel)]="expense.amount"
+         required
+         #amountModel="ngModel"
+         type="number" />
+  <span *ngIf="mustShowErrors(amountModel)">
+    {{amountModel.errors | json}}
+  </span>
+  <label>Category of the expense</label>
+  <select name="category"
+          [(ngModel)]="expense.category">
+    <option [value]="">Please select a category</option>
+    <option *ngFor="let category of expenseCategories"
+            [value]="category._id">{{category.name}}</option>
+  </select>
+  <button (click)="saveExpense()"
+          [disabled]="expenseForm.invalid">Save</button>
+</form>
+<blockquote>
+  Number of expenses:{{ numberOfExpenses }}
+  <em>Current: {{ expense | json }}</em>
+</blockquote>
+<table *ngIf="numberOfExpenses>0;else emptyList">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Kind</th>
+      <th>Amount</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let expense of expenses">
+      <td>{{ expense._id }}</td>
+      <td>{{ expense.description }}</td>
+      <td>{{ expense.category }}</td>
+      <td>{{ expense.amount | number }}</td>
+      <td>
+        <button (click)="deleteExpense(expense)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #emptyList>
+  <h3>No expenses yet.</h3>
+</ng-template>
