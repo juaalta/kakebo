@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
+import { JournalEntry } from '../../state/models/journal-entry.model';
 
 @Component({
   selector: 'kab-list-expenses',
@@ -6,10 +15,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: []
 })
 export class ListExpensesComponent implements OnInit {
+  @Input() public expenses: JournalEntry[];
+  @Output() public delete = new EventEmitter<JournalEntry>();
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
+  public deleteExpense = (expense: JournalEntry) =>
+    this.delete.next(expense);
 }

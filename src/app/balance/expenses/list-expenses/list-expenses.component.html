@@ -1,3 +1,25 @@
-<p>
-  list-expenses works!
-</p>
+<table *ngIf="expenses?.length>0;else emptyList">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Kind</th>
+      <th>Amount</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let expense of expenses">
+      <td>{{ expense._id }}</td>
+      <td>{{ expense.description }}</td>
+      <td>{{ expense.category }}</td>
+      <td>{{ expense.amount | number }}</td>
+      <td>
+        <button (click)="deleteExpense(expense)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #emptyList>
+  <h3>No expenses yet.</h3>
+</ng-template>

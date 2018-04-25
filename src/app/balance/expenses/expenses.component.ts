@@ -5,7 +5,6 @@ import {
   journalEntriesInitialState
 } from '../state/models/journal-entry.model';
 import { expenseCategories } from '../state/models/expense-categories.model';
-import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'kab-expenses',
@@ -14,9 +13,8 @@ import { AbstractControl } from '@angular/forms';
 })
 export class ExpensesComponent implements OnInit {
   public expenseCategories = expenseCategories;
-  public numberOfExpenses = 0;
-  public expense: JournalEntry = expenseInitialState;
-  public expenses: JournalEntry[] = journalEntriesInitialState;
+  public currentExpense: JournalEntry = expenseInitialState;
+  public expensesList: JournalEntry[] = journalEntriesInitialState;
   public title = 'New Expense';
 
   constructor() {}
@@ -25,19 +23,14 @@ export class ExpensesComponent implements OnInit {
 
   public saveExpense() {
     const clonedJournalEntry = {
-      ...this.expense,
+      ...this.currentExpense,
       _id: new Date().getTime().toString()
     };
-    this.expenses.push(clonedJournalEntry);
-    this.numberOfExpenses = this.expenses.length;
-    this.expense = expenseInitialState;
+    this.expensesList.push(clonedJournalEntry);
+    this.currentExpense = expenseInitialState;
   }
   public deleteExpense(expense: JournalEntry) {
-    const index = this.expenses.indexOf(expense);
-    this.expenses.splice(index, 1);
-    this.numberOfExpenses = this.expenses.length;
+    const index = this.expensesList.indexOf(expense);
+    this.expensesList.splice(index, 1);
   }
-
-  public mustShowErrors = (control: AbstractControl) =>
-    (control.touched || control.dirty) && control.invalid;
 }
