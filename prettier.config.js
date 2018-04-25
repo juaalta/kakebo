@@ -1,11 +1,11 @@
 module.exports = {
-    printWidth: 64, 
-    tabWidth: 2,    
-    useTabs: true,  
-    semi: true,
-    singleQuote: false,
-    trailingComma: 'none',
-    bracketSpacing: true,
-    arrowParens: 'avoid',
-    parser: 'typescript',
-  };
+	printWidth: 64,
+	tabWidth: 2,
+	useTabs: false,
+	semi: true,
+	singleQuote: true,
+	trailingComma: "none",
+	bracketSpacing: true,
+	arrowParens: "avoid",
+	parser: "typescript"
+};

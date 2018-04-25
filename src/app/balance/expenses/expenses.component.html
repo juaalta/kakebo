@@ -1,6 +1,6 @@
 <h2>{{ title | uppercase }}</h2>
-<form class="container"
-      #expenseForm="ngForm">
+<form #expenseForm="ngForm"
+      class="container">
   <label for="description">Description</label>
   <input name="description"
          #descriptionInput
@@ -14,7 +14,7 @@
          required
          #amountModel="ngModel"
          type="number" />
-  <span *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)">
+  <span *ngIf="mustShowErrors(amountModel)">
     {{amountModel.errors | json}}
   </span>
   <label>Category of the expense</label>
