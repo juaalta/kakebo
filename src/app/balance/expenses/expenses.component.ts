@@ -4,7 +4,7 @@ import {
   expenseInitialState,
   journalEntriesInitialState
 } from '../state/models/journal-entry.model';
-import { expenseCategories } from '../state/models/expenseCategories.model';
+import { expenseCategories } from '../state/models/expense-categories.model';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
@@ -24,7 +24,10 @@ export class ExpensesComponent implements OnInit {
   ngOnInit() {}
 
   public saveExpense() {
-    const clonedJournalEntry = { ...this.expense };
+    const clonedJournalEntry = {
+      ...this.expense,
+      _id: new Date().getTime().toString()
+    };
     this.expenses.push(clonedJournalEntry);
     this.numberOfExpenses = this.expenses.length;
     this.expense = expenseInitialState;

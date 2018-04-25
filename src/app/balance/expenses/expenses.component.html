@@ -43,9 +43,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let expense of expenses">
-      <td>
-        <a routerLink="/expenses/{{ expense._id }}">{{ expense._id }}</a>
-      </td>
+      <td>{{ expense._id }}</td>
       <td>{{ expense.description }}</td>
       <td>{{ expense.category }}</td>
       <td>{{ expense.amount | number }}</td>
