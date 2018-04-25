@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: "kab-home",
-	templateUrl: "./home.component.html",
-	styleUrls: []
+  selector: 'kab-home',
+  templateUrl: './home.component.html',
+  styleUrls: []
 })
 export class HomeComponent implements OnInit {
-	constructor() {}
+  constructor() {}
 
-	ngOnInit() {}
+  ngOnInit() {}
 }
