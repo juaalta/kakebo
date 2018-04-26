@@ -2,19 +2,22 @@
       class="container">
   <label for="description">Description</label>
   <input name="description"
-         #descriptionInput
-         [value]="expense.description"
-         (change)="expense.description=descriptionInput.value"
+         [(ngModel)]="expense.description"
+         required
+         #descriptionModel="ngModel"
          type="text" />
+  <kab-validation-error [mustShow]="mustShowErrors(descriptionModel)"
+                        [message]="descriptionModel.errors | json">
+  </kab-validation-error>
   <label for="amount">Amount</label>
   <input name="amount"
          [(ngModel)]="expense.amount"
          required
          #amountModel="ngModel"
          type="number" />
-  <span *ngIf="mustShowErrors(amountModel)">
-    {{amountModel.errors | json}}
-  </span>
+  <kab-validation-error [mustShow]="mustShowErrors(amountModel)"
+                        [message]="amountModel.errors | json">
+  </kab-validation-error>
   <label>Category of the expense</label>
   <select name="category"
           [(ngModel)]="expense.category">
@@ -22,6 +25,7 @@
     <option *ngFor="let category of categories"
             [value]="category._id">{{category.name}}</option>
   </select>
-  <button (click)="onClickSubmitExpense()"
+  <button type="submit"
+          (click)="onSubmitExpense()"
           [disabled]="expenseForm.invalid">Save</button>
 </form>

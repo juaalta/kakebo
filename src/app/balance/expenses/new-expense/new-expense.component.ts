@@ -24,6 +24,5 @@ export class NewExpenseComponent implements OnInit {
 
   ngOnInit() {}
 
-  public onClickSubmitExpense = () =>
-    this.save.next(this.expense);
+  public onSubmitExpense = () => this.save.next(this.expense);
 }

@@ -13,7 +13,8 @@
   "material-icon-theme.activeIconPack": "angular_ngrx",
   "material-icon-theme.folders.associations": {
     "app": "Global",
-    "core": "Tools",
+    "core": "Public",
+    "shared": "Tools",
     "environments": "Config",
   },
   "window.zoomLevel": 1,

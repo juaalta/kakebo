@@ -7,9 +7,15 @@ import { JournalEntryService } from './state/journal-entry.service';
 import { ListExpensesComponent } from './expenses/list-expenses/list-expenses.component';
 import { NewExpenseComponent } from './expenses/new-expense/new-expense.component';
 import { NgModule } from '@angular/core';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, BalanceRoutingModule, FormsModule],
+  imports: [
+    CommonModule,
+    BalanceRoutingModule,
+    FormsModule,
+    SharedModule
+  ],
   declarations: [
     BalanceComponent,
     ExpensesComponent,
