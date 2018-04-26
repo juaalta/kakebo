@@ -15,7 +15,7 @@ import { AbstractControl } from '@angular/forms';
 })
 export class NewExpenseComponent implements OnInit {
   @Input() public expense: JournalEntry;
-  @Input() public expenseCategories: Array<any>;
+  @Input() public categories: Array<any>;
   @Output() public save = new EventEmitter<JournalEntry>();
   constructor() {}
 
@@ -24,5 +24,6 @@ export class NewExpenseComponent implements OnInit {
   public mustShowErrors = (control: AbstractControl) =>
     (control.touched || control.dirty) && control.invalid;
 
-  public submitExpense = () => this.save.next(this.expense);
+  public onClickSubmitExpense = () =>
+    this.save.next(this.expense);
 }

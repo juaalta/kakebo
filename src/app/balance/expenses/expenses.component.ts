@@ -21,7 +21,7 @@ export class ExpensesComponent implements OnInit {
 
   ngOnInit() {}
 
-  public saveExpense() {
+  public onSaveExpense() {
     const clonedJournalEntry = {
       ...this.currentExpense,
       _id: new Date().getTime().toString()
@@ -29,7 +29,7 @@ export class ExpensesComponent implements OnInit {
     this.expensesList.push(clonedJournalEntry);
     this.currentExpense = expenseInitialState;
   }
-  public deleteExpense(expense: JournalEntry) {
+  public onDeleteExpense(expense: JournalEntry) {
     const index = this.expensesList.indexOf(expense);
     this.expensesList.splice(index, 1);
   }

@@ -1,12 +1,12 @@
 <h2>{{ title | uppercase }}</h2>
 <kab-new-expense [expense]="currentExpense"
-                 [expenseCategories]="expenseCategories"
-                 (save)="saveExpense()">
+                 [categories]="expenseCategories"
+                 (save)="onSaveExpense()">
 </kab-new-expense>
 <blockquote>
   Number of expenses:{{ expensesList?.length }}
   <em>Current: {{ currentExpense | json }}</em>
 </blockquote>
 <kab-list-expenses [expenses]="expensesList"
-                   (delete)="deleteExpense($event)">
+                   (delete)="onDeleteExpense($event)">
 </kab-list-expenses>

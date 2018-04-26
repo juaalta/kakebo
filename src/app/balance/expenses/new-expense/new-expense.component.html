@@ -8,7 +8,6 @@
          type="text" />
   <label for="amount">Amount</label>
   <input name="amount"
-         id="amount"
          [(ngModel)]="expense.amount"
          required
          #amountModel="ngModel"
@@ -20,9 +19,9 @@
   <select name="category"
           [(ngModel)]="expense.category">
     <option [value]="">Please select a category</option>
-    <option *ngFor="let category of expenseCategories"
+    <option *ngFor="let category of categories"
             [value]="category._id">{{category.name}}</option>
   </select>
-  <button (click)="submitExpense()"
+  <button (click)="onClickSubmitExpense()"
           [disabled]="expenseForm.invalid">Save</button>
 </form>

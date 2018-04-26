@@ -21,6 +21,6 @@ export class ListExpensesComponent implements OnInit {
 
   ngOnInit() {}
 
-  public deleteExpense = (expense: JournalEntry) =>
+  public onClickDeleteExpense = (expense: JournalEntry) =>
     this.delete.next(expense);
 }
