@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { JournalEntry } from '../../state/models/journal-entry.model';
 import { AbstractControl } from '@angular/forms';
+import { FormsService } from '../../../core/forms.service';
 
 @Component({
   selector: 'kab-new-expense',
@@ -17,12 +18,11 @@ export class NewExpenseComponent implements OnInit {
   @Input() public expense: JournalEntry;
   @Input() public categories: Array<any>;
   @Output() public save = new EventEmitter<JournalEntry>();
-  constructor() {}
+  public mustShowErrors = this.formsService.mustShowErrors;
+
+  constructor(private formsService: FormsService) {}
 
   ngOnInit() {}
-
-  public mustShowErrors = (control: AbstractControl) =>
-    (control.touched || control.dirty) && control.invalid;
 
   public onClickSubmitExpense = () =>
     this.save.next(this.expense);
