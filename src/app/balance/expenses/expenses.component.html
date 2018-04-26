@@ -5,7 +5,10 @@
 </kab-new-expense>
 <blockquote>
   Number of expenses:{{ expensesList?.length }}
-  <em>Current: {{ currentExpense | json }}</em>
+  <em>Current:
+    <pre>
+    {{ currentExpense | json }}
+  </pre> </em>
 </blockquote>
 <kab-list-expenses [expenses]="expensesList"
                    (delete)="onDeleteExpense($event)">
