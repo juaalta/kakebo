@@ -22,6 +22,6 @@
     <option *ngFor="let category of categories"
             [value]="category._id">{{category.name}}</option>
   </select>
-  <button (click)="onClickSubmitExpense()"
+  <button (click)="onSubmitExpense()"
           [disabled]="expenseForm.invalid">Save</button>
 </form>
