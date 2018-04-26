@@ -13,7 +13,6 @@
     "baseUrl": "src",
     "paths": {
       "@tools/*": ["./app/tools/*"],
-      "@routes/*": ["./app/routes/*"],
       "@environments/*": ["./environments/*"]
     }
   }
