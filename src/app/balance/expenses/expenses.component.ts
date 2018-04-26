@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  JournalEntry,
-  expenseInitialState,
-  journalEntriesInitialState
-} from '../state/models/journal-entry.model';
+import { JournalEntry } from '../state/models/journal-entry.model';
 import { expenseCategories } from '../state/models/expense-categories.model';
+import { JournalEntryService } from '../state/journal-entry.service';
 
 @Component({
   selector: 'kab-expenses',
@@ -13,24 +10,22 @@ import { expenseCategories } from '../state/models/expense-categories.model';
 })
 export class ExpensesComponent implements OnInit {
   public expenseCategories = expenseCategories;
-  public currentExpense: JournalEntry = expenseInitialState;
-  public expensesList: JournalEntry[] = journalEntriesInitialState;
+  public currentExpense: JournalEntry;
+  public expensesList: JournalEntry[];
   public title = 'New Expense';
 
-  constructor() {}
+  constructor(private jeService: JournalEntryService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentExpense = this.jeService.getNewExpense();
+    this.expensesList = this.jeService.journalEntriesList;
+  }
 
   public onSaveExpense() {
-    const clonedJournalEntry = {
-      ...this.currentExpense,
-      _id: new Date().getTime().toString()
-    };
-    this.expensesList.push(clonedJournalEntry);
-    this.currentExpense = expenseInitialState;
+    this.jeService.saveJournalEntry(this.currentExpense);
+    this.currentExpense = this.jeService.getNewExpense();
   }
   public onDeleteExpense(expense: JournalEntry) {
-    const index = this.expensesList.indexOf(expense);
-    this.expensesList.splice(index, 1);
+    this.jeService.deleteJournalEntry(expense);
   }
 }

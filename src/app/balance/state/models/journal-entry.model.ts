@@ -17,7 +17,7 @@ export const expenseInitialState = {
   year: 0,
   month: 0,
   day: 0,
-  kind: journalEntryKindsEnum.O,
+  kind: journalEntryKindsEnum.E,
   category: expenseCategoriesEnum.G,
   amount: 0
 };
