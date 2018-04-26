@@ -1,0 +1,25 @@
+<table *ngIf="forecasts?.length>0;else emptyList">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Kind</th>
+      <th>Amount</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forecast of forecasts">
+      <td>{{ forecast._id }}</td>
+      <td>{{ forecast.description }}</td>
+      <td>{{ forecast.kind }}</td>
+      <td>{{ forecast.amount | number }}</td>
+      <td>
+        <button (click)="onClickDeleteForecast(forecast)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #emptyList>
+  <h3>No forecasts yet.</h3>
+</ng-template>

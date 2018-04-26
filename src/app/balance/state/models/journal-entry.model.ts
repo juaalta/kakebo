@@ -22,4 +22,12 @@ export const expenseInitialState = {
   amount: 0
 };
 
+export const forecastInitialState = {
+  year: 0,
+  month: 0,
+  day: 0,
+  kind: journalEntryKindsEnum.I,
+  amount: 0
+};
+
 export const journalEntriesInitialState = [];

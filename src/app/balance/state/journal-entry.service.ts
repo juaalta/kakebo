@@ -2,22 +2,29 @@ import { Injectable } from '@angular/core';
 import {
   JournalEntry,
   journalEntriesInitialState,
-  expenseInitialState
+  expenseInitialState,
+  forecastInitialState
 } from './models/journal-entry.model';
 import { journalEntryKindsEnum } from './models/journal-entry-kinds.model';
 
 @Injectable()
 export class JournalEntryService {
-  public journalEntriesList: JournalEntry[] = journalEntriesInitialState;
+  private journalEntriesList: JournalEntry[] = journalEntriesInitialState;
 
   constructor() {}
 
   public getNewExpense = (): JournalEntry =>
     expenseInitialState;
+  public getNewForecast = (): JournalEntry =>
+    forecastInitialState;
 
   public getExpensesList = (): JournalEntry[] =>
     this.journalEntriesList.filter(
       je => je.kind === journalEntryKindsEnum.E
+    );
+  public getForecastList = (): JournalEntry[] =>
+    this.journalEntriesList.filter(
+      je => je.kind !== journalEntryKindsEnum.E
     );
 
   public saveJournalEntry(journalEntry: JournalEntry): void {

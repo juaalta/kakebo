@@ -8,6 +8,9 @@ import { ListExpensesComponent } from './expenses/list-expenses/list-expenses.co
 import { NewExpenseComponent } from './expenses/new-expense/new-expense.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
+import { ForecastsComponent } from './forecasts/forecasts.component';
+import { NewForecastComponent } from './forecasts/new-forecast/new-forecast.component';
+import { ListForecastsComponent } from './forecasts/list-forecasts/list-forecasts.component';
 
 @NgModule({
   imports: [
@@ -20,7 +23,10 @@ import { SharedModule } from '../shared/shared.module';
     BalanceComponent,
     ExpensesComponent,
     NewExpenseComponent,
-    ListExpensesComponent
+    ListExpensesComponent,
+    ForecastsComponent,
+    NewForecastComponent,
+    ListForecastsComponent
   ],
   providers: [JournalEntryService]
 })

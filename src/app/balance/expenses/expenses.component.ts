@@ -17,15 +17,19 @@ export class ExpensesComponent implements OnInit {
   constructor(private jeService: JournalEntryService) {}
 
   ngOnInit() {
-    this.currentExpense = this.jeService.getNewExpense();
-    this.expensesList = this.jeService.journalEntriesList;
+    this.refreshData();
   }
 
   public onSaveExpense() {
     this.jeService.saveJournalEntry(this.currentExpense);
-    this.currentExpense = this.jeService.getNewExpense();
+    this.refreshData();
   }
   public onDeleteExpense(expense: JournalEntry) {
     this.jeService.deleteJournalEntry(expense);
+    this.refreshData();
   }
+  private refreshData = () => {
+    this.currentExpense = this.jeService.getNewExpense();
+    this.expensesList = this.jeService.getExpensesList();
+  };
 }
