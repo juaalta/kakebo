@@ -7,15 +7,17 @@ import { ExpensesComponent } from './expenses/expenses.component';
 const routes: Routes = [
   {
     path: '',
-    component: BalanceComponent
-  },
-  {
-    path: 'forecasts',
-    component: ForecastsComponent
-  },
-  {
-    path: 'expenses',
-    component: ExpensesComponent
+    component: BalanceComponent,
+    children: [
+      {
+        path: 'forecasts',
+        component: ForecastsComponent
+      },
+      {
+        path: 'expenses',
+        component: ExpensesComponent
+      }
+    ]
   }
 ];
 
