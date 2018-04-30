@@ -17,7 +17,6 @@ export class ForecastsComponent implements OnInit {
   constructor(private jeService: JournalEntryService) {}
 
   ngOnInit() {
-    console.log('ForecastsComponent');
     this.refreshData();
   }
 

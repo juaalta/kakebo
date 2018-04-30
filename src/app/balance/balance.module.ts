@@ -12,6 +12,9 @@ import { NewForecastComponent } from './forecasts/new-forecast/new-forecast.comp
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { JournalEntryApiService } from './state/journal-entry-api.service';
+import { GoalComponent } from './goal/goal.component';
+import { MonthBalanceService } from './state/month-balance.service';
+import { MonthBalanceApiService } from './state/month-balance-api.service';
 
 @NgModule({
   imports: [
@@ -27,8 +30,14 @@ import { JournalEntryApiService } from './state/journal-entry-api.service';
     ListExpensesComponent,
     ListForecastsComponent,
     NewExpenseComponent,
-    NewForecastComponent
+    NewForecastComponent,
+    GoalComponent
   ],
-  providers: [JournalEntryService, JournalEntryApiService]
+  providers: [
+    JournalEntryService,
+    JournalEntryApiService,
+    MonthBalanceService,
+    MonthBalanceApiService
+  ]
 })
 export class BalanceModule {}

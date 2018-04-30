@@ -6,8 +6,8 @@ export const expenseCategories = [
 ];
 
 export enum expenseCategoriesEnum {
-  'G',
-  'C',
-  'L',
-  'E'
+  'General' = 'G',
+  'Culture' = 'C',
+  'Leisure' = 'L',
+  'Extras' = 'E'
 }

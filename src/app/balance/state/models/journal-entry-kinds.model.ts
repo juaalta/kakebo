@@ -5,7 +5,7 @@ export const journalEntryKinds = [
 ];
 
 export enum journalEntryKindsEnum {
-  'I',
-  'O',
-  'E'
+  'Income' = 'I',
+  'Outgoing' = 'O',
+  'Expense' = 'E'
 }

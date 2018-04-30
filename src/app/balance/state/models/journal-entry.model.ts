@@ -17,8 +17,8 @@ export const expenseInitialState = {
   year: 0,
   month: 0,
   day: 0,
-  kind: journalEntryKindsEnum.E,
-  category: expenseCategoriesEnum.G,
+  kind: journalEntryKindsEnum.Expense,
+  category: expenseCategoriesEnum.General,
   amount: 0
 };
 
@@ -26,7 +26,7 @@ export const forecastInitialState = {
   year: 0,
   month: 0,
   day: 0,
-  kind: journalEntryKindsEnum.I,
+  kind: journalEntryKindsEnum.Income,
   amount: 0
 };
 

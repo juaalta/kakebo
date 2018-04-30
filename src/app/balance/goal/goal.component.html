@@ -1,0 +1,18 @@
+<form #goalForm="ngForm"
+      class="container">
+  <label for="goal">Savings Goal</label>
+  <input name="goal"
+         [(ngModel)]="monthBalance.goal"
+         required
+         #goalModel="ngModel"
+         type="number" />
+  <kab-validation-error [mustShow]="mustShowErrors(goalModel)"
+                        [message]="goalModel.errors | json">
+  </kab-validation-error>
+  <button type="submit"
+          (click)="onSubmitGoal()"
+          [disabled]="goalForm.invalid">Save</button>
+</form>
+<pre>
+  {{ monthBalance | json }}
+</pre>
