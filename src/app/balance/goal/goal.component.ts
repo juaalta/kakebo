@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthBalance } from '../state/models/month-balance.model';
-import { MonthBalanceService } from '../state/month-balance.service';
+import { MonthBalance } from '../store/models/month-balance.model';
+import { MonthBalanceService } from '../store/month-balance.service';
 import { FormsService } from '../../core/forms.service';
 
 @Component({

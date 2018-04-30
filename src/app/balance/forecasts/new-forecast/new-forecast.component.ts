@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { JournalEntry } from '../../state/models/journal-entry.model';
+import { JournalEntry } from '../../store/models/journal-entry.model';
 import { FormsService } from '../../../core/forms.service';
 
 @Component({

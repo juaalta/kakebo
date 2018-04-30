@@ -14,8 +14,9 @@
   "material-icon-theme.folders.associations": {
     "app": "Global",
     "core": "Public",
-    "shared": "Tools",
     "environments": "Config",
+    "shared": "Tools",
+    "store": "Ngrx-state"
   },
   "window.zoomLevel": 1,
   "workbench.colorTheme": "Default Light+",

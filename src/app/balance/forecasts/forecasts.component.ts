@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { JournalEntryService } from '../state/journal-entry.service';
-import { JournalEntry } from '../state/models/journal-entry.model';
+import { JournalEntryService } from '../store/journal-entry.service';
+import { JournalEntry } from '../store/models/journal-entry.model';
 import { Observable } from 'rxjs';
 
 @Component({
