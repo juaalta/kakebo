@@ -15,7 +15,9 @@ export class ExpensesComponent implements OnInit {
   public currentExpense: JournalEntry;
   public expensesList$: Observable<JournalEntry[]>;
 
-  constructor(private jeService: JournalEntryService) {}
+  constructor(private jeService: JournalEntryService) {
+    console.log('ExpensesComponent');
+  }
 
   ngOnInit() {
     this.refreshData();
