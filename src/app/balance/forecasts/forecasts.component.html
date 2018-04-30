@@ -1,0 +1,12 @@
+<h2>{{ title | uppercase }}</h2>
+<kab-new-forecast [forecast]="currentForecast"
+                  [kinds]="forecastKinds"
+                  (save)="onSaveForecast()">
+</kab-new-forecast>
+<blockquote>
+  Number of forecasts:{{ forecastsList?.length }}
+  <em>Current: {{ currentForecast | json }}</em>
+</blockquote>
+<kab-list-forecasts [forecasts]="forecastsList"
+                    (delete)="onDeleteForecast($event)">
+</kab-list-forecasts>

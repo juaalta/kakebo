@@ -1,2 +1,26 @@
 {
+  "editor.fontSize": 14,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.minimap.enabled": false,
+  "editor.tabSize": 2,
+  "explorer.confirmDelete": false,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "html.format.wrapAttributes": "force-aligned",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "material-icon-theme.activeIconPack": "angular_ngrx",
+  "material-icon-theme.folders.associations": {
+    "app": "Global",
+    "core": "Public",
+    "shared": "Tools",
+    "environments": "Config",
+  },
+  "window.zoomLevel": 1,
+  "workbench.colorTheme": "Default Light+",
+  "workbench.colorCustomizations": {
+    "editorWarning.foreground": "#BBCBC2"
+  },
+  "workbench.iconTheme": "material-icon-theme"
 }

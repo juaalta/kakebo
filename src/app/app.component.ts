@@ -1,20 +1,8 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: "kab-root",
-  template: `
-  <section class="container">
-    <kab-header class="row"></kab-header>
-    <hr>
-    <main>
-      <router-outlet ></router-outlet>
-    </main>
-    <hr>
-    <kab-footer class="row"></kab-footer>
-  </section>
-  `,
+  selector: 'kab-root',
+  templateUrl: './app.component.html',
   styles: []
 })
-export class AppComponent {
-  title = "kab";
-}
+export class AppComponent {}
