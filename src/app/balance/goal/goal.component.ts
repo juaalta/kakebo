@@ -28,18 +28,7 @@ export class GoalComponent implements OnInit {
 
   private refreshData = () => {
     this.mbService.getMonthBalancesList$().subscribe(list => {
-      if (!list || list.length === 0) {
-        this.createMonthBalance();
-      } else {
-        this.monthBalance = list[0];
-      }
+      this.monthBalance = list[0];
     });
   };
-
-  private createMonthBalance() {
-    this.monthBalance = this.mbService.getNewMonthBalance();
-    this.mbService
-      .createMonthBalance$(this.monthBalance)
-      .subscribe(this.refreshData);
-  }
 }

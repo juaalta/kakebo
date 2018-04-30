@@ -15,6 +15,7 @@ import { JournalEntryApiService } from './state/journal-entry-api.service';
 import { GoalComponent } from './goal/goal.component';
 import { MonthBalanceService } from './state/month-balance.service';
 import { MonthBalanceApiService } from './state/month-balance-api.service';
+import { ReviewComponent } from './review/review.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { MonthBalanceApiService } from './state/month-balance-api.service';
     ListForecastsComponent,
     NewExpenseComponent,
     NewForecastComponent,
-    GoalComponent
+    GoalComponent,
+    ReviewComponent
   ],
   providers: [
     JournalEntryService,

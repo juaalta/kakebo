@@ -4,6 +4,7 @@ import { BalanceComponent } from './balance.component';
 import { ForecastsComponent } from './forecasts/forecasts.component';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { GoalComponent } from './goal/goal.component';
+import { ReviewComponent } from './review/review.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'goal'
+        component: ReviewComponent
       },
       {
         path: 'forecasts',
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'goal',
         component: GoalComponent
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }
     ]
   }

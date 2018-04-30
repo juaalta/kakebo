@@ -1,3 +1,4 @@
+<h2>SAVINGS GOAL</h2>
 <form #goalForm="ngForm"
       class="container">
   <label for="goal">Savings Goal</label>
@@ -13,6 +14,3 @@
           (click)="onSubmitGoal()"
           [disabled]="goalForm.invalid">Save</button>
 </form>
-<pre>
-  {{ monthBalance | json }}
-</pre>
