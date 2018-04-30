@@ -10,7 +10,7 @@ import {
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GlobalStoreService } from './state/global-store.service';
+import { GlobalStoreService } from './store/global-store.service';
 
 @Injectable()
 export class CatchInterceptorService

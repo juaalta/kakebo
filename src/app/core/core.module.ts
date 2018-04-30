@@ -11,7 +11,7 @@ import {
 import { RequestInterceptorService } from './request-interceptor.service';
 import { CatchInterceptorService } from './catch-interceptor.service';
 import { TokenInterceptorService } from './token-interceptor.service';
-import { GlobalStoreService } from './state/global-store.service';
+import { GlobalStoreService } from './store/global-store.service';
 
 @NgModule({
   imports: [CommonModule, RouterModule, HttpClientModule],

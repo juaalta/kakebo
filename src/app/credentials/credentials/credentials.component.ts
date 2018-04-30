@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsService } from '../../core/forms.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Credential } from '../state/models/credential.model';
-import { CredentialsPageData } from '../state/models/credentials-page-data.model';
-import { CredentialsService } from '../state/credentials.service';
-import { GlobalStoreService } from '../../core/state/global-store.service';
+import { Credential } from '../store/models/credential.model';
+import { CredentialsPageData } from '../store/models/credentials-page-data.model';
+import { CredentialsService } from '../store/credentials.service';
+import { GlobalStoreService } from '../../core/store/global-store.service';
 
 @Component({
   selector: 'kab-credentials',

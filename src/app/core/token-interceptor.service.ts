@@ -6,7 +6,7 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { GlobalStoreService } from './state/global-store.service';
+import { GlobalStoreService } from './store/global-store.service';
 
 @Injectable()
 export class TokenInterceptorService

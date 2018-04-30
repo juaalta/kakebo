@@ -7,7 +7,7 @@ import {
   OnChanges,
   SimpleChanges
 } from '@angular/core';
-import { JournalEntry } from '../../state/models/journal-entry.model';
+import { JournalEntry } from '../../store/models/journal-entry.model';
 
 @Component({
   selector: 'kab-list-expenses',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthBalanceService } from '../state/month-balance.service';
-import { MonthBalance } from '../state/models/month-balance.model';
+import { MonthBalanceService } from '../store/month-balance.service';
+import { MonthBalance } from '../store/models/month-balance.model';
 
 @Component({
   selector: 'kab-review',
