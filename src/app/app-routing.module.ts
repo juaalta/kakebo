@@ -13,6 +13,11 @@ const routes: Routes = [
   {
     path: 'balance',
     loadChildren: './balance/balance.module#BalanceModule'
+  },
+  {
+    path: 'credentials',
+    loadChildren:
+      './credentials/credentials.module#CredentialsModule'
   }
 ];
 @NgModule({

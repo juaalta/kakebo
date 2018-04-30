@@ -3,7 +3,6 @@ import { BalanceRoutingModule } from './balance-routing.module';
 import { CommonModule } from '@angular/common';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { ForecastsComponent } from './forecasts/forecasts.component';
-import { FormsModule } from '@angular/forms';
 import { JournalEntryService } from './state/journal-entry.service';
 import { ListExpensesComponent } from './expenses/list-expenses/list-expenses.component';
 import { ListForecastsComponent } from './forecasts/list-forecasts/list-forecasts.component';
@@ -18,12 +17,7 @@ import { MonthBalanceApiService } from './state/month-balance-api.service';
 import { ReviewComponent } from './review/review.component';
 
 @NgModule({
-  imports: [
-    BalanceRoutingModule,
-    CommonModule,
-    FormsModule,
-    SharedModule
-  ],
+  imports: [BalanceRoutingModule, CommonModule, SharedModule],
   declarations: [
     BalanceComponent,
     ExpensesComponent,
