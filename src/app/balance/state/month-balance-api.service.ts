@@ -7,7 +7,7 @@ import { MonthBalance } from './models/month-balance.model';
 
 @Injectable()
 export class MonthBalanceApiService {
-  private urlMB = environment.apiUrl + 'pub/monthbalances/';
+  private urlMB = environment.apiUrl + 'priv/monthbalances/';
 
   constructor(private http: HttpClient) {}
 

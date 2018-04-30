@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class JournalEntryApiService {
-  private urlJE = environment.apiUrl + 'pub/journalentries/';
+  private urlJE = environment.apiUrl + 'priv/journalentries/';
 
   constructor(private http: HttpClient) {}
 
