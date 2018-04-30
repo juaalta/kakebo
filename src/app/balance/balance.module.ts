@@ -11,6 +11,7 @@ import { NewExpenseComponent } from './expenses/new-expense/new-expense.componen
 import { NewForecastComponent } from './forecasts/new-forecast/new-forecast.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
+import { JournalEntryApiService } from './state/journal-entry-api.service';
 
 @NgModule({
   imports: [
@@ -28,6 +29,6 @@ import { SharedModule } from '../shared/shared.module';
     NewExpenseComponent,
     NewForecastComponent
   ],
-  providers: [JournalEntryService]
+  providers: [JournalEntryService, JournalEntryApiService]
 })
 export class BalanceModule {}

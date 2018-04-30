@@ -6,36 +6,49 @@ import {
   forecastInitialState
 } from './models/journal-entry.model';
 import { journalEntryKindsEnum } from './models/journal-entry-kinds.model';
-
+import { JournalEntryApiService } from './journal-entry-api.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Injectable()
 export class JournalEntryService {
-  private journalEntriesList: JournalEntry[] = journalEntriesInitialState;
+  constructor(private api: JournalEntryApiService) {}
 
-  constructor() {}
+  public getNewExpense = (): JournalEntry => {
+    return { ...expenseInitialState };
+  };
+  public getNewForecast = (): JournalEntry => {
+    return { ...forecastInitialState };
+  };
 
-  public getNewExpense = (): JournalEntry =>
-    expenseInitialState;
-  public getNewForecast = (): JournalEntry =>
-    forecastInitialState;
+  public getExpensesList$ = (): Observable<JournalEntry[]> =>
+    this.api
+      .getJEList$()
+      .pipe(
+        map(list =>
+          list.filter(je => je.kind === journalEntryKindsEnum.E)
+        )
+      );
+  public getForecastsList$ = (): Observable<JournalEntry[]> =>
+    this.api
+      .getJEList$()
+      .pipe(
+        map(list =>
+          list.filter(je => je.kind !== journalEntryKindsEnum.E)
+        )
+      );
 
-  public getExpensesList = (): JournalEntry[] =>
-    this.journalEntriesList.filter(
-      je => je.kind === journalEntryKindsEnum.E
-    );
-  public getForecastList = (): JournalEntry[] =>
-    this.journalEntriesList.filter(
-      je => je.kind !== journalEntryKindsEnum.E
-    );
-
-  public saveJournalEntry(journalEntry: JournalEntry): void {
+  public saveJournalEntry$(
+    journalEntry: JournalEntry
+  ): Observable<any> {
     const clonedJournalEntry = {
       ...journalEntry,
       _id: new Date().getTime().toString()
     };
-    this.journalEntriesList.push(clonedJournalEntry);
+    return this.api.postJE$(journalEntry);
   }
-  public deleteJournalEntry(journalEntry: JournalEntry): void {
-    const index = this.journalEntriesList.indexOf(journalEntry);
-    this.journalEntriesList.splice(index, 1);
+  public deleteJournalEntry$(
+    journalEntry: JournalEntry
+  ): Observable<any> {
+    return this.api.deleteJE$(journalEntry);
   }
 }

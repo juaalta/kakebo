@@ -4,9 +4,9 @@
                  (save)="onSaveExpense()">
 </kab-new-expense>
 <blockquote>
-  Number of expenses:{{ expensesList?.length }}
+  Number of expenses:{{ (expensesList$ | async)?.length }}
   <em>Current: {{ currentExpense | json }}</em>
 </blockquote>
-<kab-list-expenses [expenses]="expensesList"
+<kab-list-expenses [expenses]="expensesList$ | async"
                    (delete)="onDeleteExpense($event)">
 </kab-list-expenses>

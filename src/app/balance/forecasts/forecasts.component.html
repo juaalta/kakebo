@@ -4,9 +4,9 @@
                   (save)="onSaveForecast()">
 </kab-new-forecast>
 <blockquote>
-  Number of forecasts:{{ forecastsList?.length }}
+  Number of forecasts:{{ (forecastsList$ | async)?.length }}
   <em>Current: {{ currentForecast | json }}</em>
 </blockquote>
-<kab-list-forecasts [forecasts]="forecastsList"
+<kab-list-forecasts [forecasts]="forecastsList$ | async "
                     (delete)="onDeleteForecast($event)">
 </kab-list-forecasts>
