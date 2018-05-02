@@ -18,7 +18,7 @@
     "shared": "Tools",
     "store": "Ngrx-state"
   },
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 2,
   "workbench.colorTheme": "Default Light+",
   "workbench.colorCustomizations": {
     "editorWarning.foreground": "#BBCBC2"

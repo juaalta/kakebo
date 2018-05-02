@@ -10,7 +10,7 @@ export interface MonthBalance {
   savings: number;
 }
 
-export const monthBalanceInitialState = {
+export const monthBalanceInitialState : MonthBalance = {
   year: 0,
   month: 0,
   incomes: 0,

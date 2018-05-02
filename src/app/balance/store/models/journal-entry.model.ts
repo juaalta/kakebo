@@ -13,7 +13,7 @@ export interface JournalEntry {
   amount: number;
 }
 
-export const expenseInitialState = {
+export const expenseInitialState: JournalEntry = {
   year: 0,
   month: 0,
   day: 0,
