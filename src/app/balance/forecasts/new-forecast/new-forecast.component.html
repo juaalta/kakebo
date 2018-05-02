@@ -1,36 +1,34 @@
-<form #forecastForm="ngForm"
+<form [formGroup]="form"
+      (submit)="onSubmitForecast(form.value)"
       class="container">
   <label for="kind">Kind of prevision</label>
   <input name="kind"
          value="I"
-         [(ngModel)]="forecast.kind"
+         formControlName="kind"
          type="radio"> + Projected Income:
   <small>Salary, extras</small>
   <br>
   <input name="kind"
          value="O"
-         [(ngModel)]="forecast.kind"
+         formControlName="kind"
          type="radio"> - Regular Outgoing:
   <small>Mortgage, energy, phone</small>
   <label for="description">Description</label>
-  <input name="description"
-         [(ngModel)]="forecast.description"
-         required
-         #descriptionModel="ngModel"
-         type="text" />
-  <kab-validation-error [mustShow]="mustShowErrors(descriptionModel)"
+  <input type="text"
+         formControlName="description">
+  <!-- <kab-validation-error [mustShow]="mustShowErrors(descriptionModel)"
                         [message]="descriptionModel.errors | json">
-  </kab-validation-error>
+  </kab-validation-error> -->
   <label for="amount">Amount</label>
-  <input name="amount"
-         [(ngModel)]="forecast.amount"
-         required
-         #amountModel="ngModel"
-         type="number" />
-  <kab-validation-error [mustShow]="mustShowErrors(amountModel)"
+  <label for="amount">Amount</label>
+  <input type="number"
+         formControlName="amount">
+  <!-- <kab-validation-error [mustShow]="mustShowErrors(amountModel)"
                         [message]="amountModel.errors | json">
-  </kab-validation-error>
+  </kab-validation-error> -->
+  <label for="date">Date</label>
+  <input type="date"
+         formControlName="date">
   <button type="submit"
-          (click)="onSubmitForecast()"
-          [disabled]="forecastForm.invalid">Save</button>
+          [disabled]="form.invalid">Save</button>
 </form>

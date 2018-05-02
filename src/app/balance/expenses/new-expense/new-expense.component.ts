@@ -20,9 +20,10 @@ import { FormsService } from 'app/core/forms.service';
   styleUrls: []
 })
 export class NewExpenseComponent implements OnInit {
-  public form: FormGroup;
+  @Input() public expense: JournalEntry;
   @Input() public categories: Array<any>;
   @Output() public save = new EventEmitter<JournalEntry>();
+  public form: FormGroup;
   public mustShowErrors = this.formsService.mustShowErrors;
 
   constructor(
@@ -32,9 +33,12 @@ export class NewExpenseComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formbuilder.group({
-      description: '',
-      amount: [0, [Validators.required, Validators.min(0)]],
-      expenseCategory: [null, Validators.required],
+      description: this.expense.description,
+      amount: [
+        this.expense.amount,
+        [Validators.required, Validators.min(0)]
+      ],
+      category: [this.expense.category, Validators.required],
       date: this.formsService.getSafeDateFromMonth(2018, 5)
     });
   }
