@@ -10,6 +10,7 @@ import {
   FormBuilder,
   Validators
 } from '@angular/forms';
+import { CustomValidators } from 'app/shared/custom.validators';
 
 @Component({
   selector: 'kab-credentials',
@@ -45,8 +46,8 @@ export class CredentialsComponent implements OnInit {
         credential.password,
         [
           Validators.required,
-          Validators.minLength(4)
-          // ValidatePassword
+          Validators.minLength(4),
+          CustomValidators.password
         ]
       ]
     });
