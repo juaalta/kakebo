@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthBalance } from '../store/models/month-balance.model';
 import { MonthBalanceService } from '../store/month-balance.service';
-import { FormsService } from '../../core/forms.service';
+import { FormsService } from 'app/core/forms.service';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
 @Component({
   selector: 'kab-goal',
@@ -9,11 +14,13 @@ import { FormsService } from '../../core/forms.service';
   styleUrls: []
 })
 export class GoalComponent implements OnInit {
+  public form: FormGroup;
   public monthBalance: MonthBalance = this.mbService.getNewMonthBalance();
   public mustShowErrors = this.formsService.mustShowErrors;
   constructor(
-    private mbService: MonthBalanceService,
-    private formsService: FormsService
+    private formbuilder: FormBuilder,
+    private formsService: FormsService,
+    private mbService: MonthBalanceService
   ) {}
 
   ngOnInit() {
@@ -21,6 +28,16 @@ export class GoalComponent implements OnInit {
   }
 
   public onSubmitGoal() {
+    this.form = this.formbuilder.group({
+      goal: [
+        this.monthBalance.goal,
+        [
+          Validators.required,
+          Validators.min(0),
+          Validators.max(this.monthBalance.savings)
+        ]
+      ]
+    });
     this.mbService
       .updateMonthBalance$(this.monthBalance)
       .subscribe();
@@ -29,6 +46,15 @@ export class GoalComponent implements OnInit {
   private refreshData = () => {
     this.mbService.getMonthBalancesList$().subscribe(list => {
       this.monthBalance = list[0];
+      this.form.controls['goal'].setValidators(
+        Validators.required
+      );
+      this.form.controls['goal'].setValidators(
+        Validators.min(0)
+      );
+      this.form.controls['goal'].setValidators(
+        Validators.max(this.monthBalance.savings)
+      );
     });
   };
 }
