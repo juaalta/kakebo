@@ -20,7 +20,8 @@ export class ForecastsComponent implements OnInit {
     this.refreshData();
   }
 
-  public onSaveForecast() {
+  public onSaveForecast(forecast: JournalEntry) {
+    this.currentForecast = forecast;
     this.jeService
       .saveJournalEntry$(this.currentForecast)
       .subscribe(this.refreshData);

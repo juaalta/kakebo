@@ -9,6 +9,5 @@
                         [message]="form.controls['goal'].errors | json">
   </kab-validation-error>
   <button type="submit"
-          (click)="onSubmitGoal()"
           [disabled]="form.invalid">Save</button>
 </form>

@@ -23,7 +23,8 @@ export class ExpensesComponent implements OnInit {
     this.refreshData();
   }
 
-  public onSaveExpense() {
+  public onSaveExpense(expense: JournalEntry) {
+    this.currentExpense = expense;
     this.jeService
       .saveJournalEntry$(this.currentExpense)
       .subscribe(this.refreshData);

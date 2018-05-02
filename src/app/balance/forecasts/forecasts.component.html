@@ -1,7 +1,7 @@
 <h2>{{ title | uppercase }}</h2>
 <kab-new-forecast [forecast]="currentForecast"
                   [kinds]="forecastKinds"
-                  (save)="onSaveForecast()">
+                  (save)="onSaveForecast($event)">
 </kab-new-forecast>
 <blockquote>
   Number of forecasts:{{ (forecastsList$ | async)?.length }}

@@ -37,7 +37,8 @@ export class GoalComponent implements OnInit {
     this.refreshData();
   }
 
-  public onSubmitGoal() {
+  public onSubmitGoal(formValue: any) {
+    this.monthBalance.goal = formValue.goal;
     this.mbService
       .updateMonthBalance$(this.monthBalance)
       .subscribe();

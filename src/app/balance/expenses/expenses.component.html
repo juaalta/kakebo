@@ -1,7 +1,7 @@
 <h2>{{ title | uppercase }}</h2>
 <kab-new-expense [expense]="currentExpense"
                  [categories]="expenseCategories"
-                 (save)="onSaveExpense()">
+                 (save)="onSaveExpense($event)">
 </kab-new-expense>
 <blockquote>
   Number of expenses:{{ (expensesList$ | async)?.length }}
