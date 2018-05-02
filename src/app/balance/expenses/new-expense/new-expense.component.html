@@ -1,31 +1,28 @@
-<form #expenseForm="ngForm"
+<form [formGroup]="form"
+      (submit)="onSubmitExpense(form.value)"
       class="container">
   <label for="description">Description</label>
-  <input name="description"
-         [(ngModel)]="expense.description"
-         required
-         #descriptionModel="ngModel"
-         type="text" />
-  <kab-validation-error [mustShow]="mustShowErrors(descriptionModel)"
+  <input type="text"
+         formControlName="description">
+  <!-- <kab-validation-error [mustShow]="mustShowErrors(descriptionModel)"
                         [message]="descriptionModel.errors | json">
-  </kab-validation-error>
+  </kab-validation-error> -->
   <label for="amount">Amount</label>
-  <input name="amount"
-         [(ngModel)]="expense.amount"
-         required
-         #amountModel="ngModel"
-         type="number" />
-  <kab-validation-error [mustShow]="mustShowErrors(amountModel)"
+  <input type="number"
+         formControlName="amount">
+  <!-- <kab-validation-error [mustShow]="mustShowErrors(amountModel)"
                         [message]="amountModel.errors | json">
-  </kab-validation-error>
+  </kab-validation-error> -->
   <label>Category of the expense</label>
   <select name="category"
-          [(ngModel)]="expense.category">
+          formControlName="category">
     <option [value]="">Please select a category</option>
     <option *ngFor="let category of categories"
             [value]="category._id">{{category.name}}</option>
   </select>
+  <label for="date">Date</label>
+  <input type="date"
+         formControlName="date">
   <button type="submit"
-          (click)="onSubmitExpense()"
-          [disabled]="expenseForm.invalid">Save</button>
+          [disabled]="form.invalid">Save</button>
 </form>

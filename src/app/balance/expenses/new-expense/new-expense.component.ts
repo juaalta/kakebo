@@ -6,8 +6,13 @@ import {
   EventEmitter
 } from '@angular/core';
 import { JournalEntry } from '../../store/models/journal-entry.model';
-import { AbstractControl } from '@angular/forms';
-import { FormsService } from '../../../core/forms.service';
+import {
+  AbstractControl,
+  FormGroup,
+  FormBuilder,
+  Validators
+} from '@angular/forms';
+import { FormsService } from 'app/core/forms.service';
 
 @Component({
   selector: 'kab-new-expense',
@@ -15,14 +20,25 @@ import { FormsService } from '../../../core/forms.service';
   styleUrls: []
 })
 export class NewExpenseComponent implements OnInit {
-  @Input() public expense: JournalEntry;
+  public form: FormGroup;
   @Input() public categories: Array<any>;
   @Output() public save = new EventEmitter<JournalEntry>();
   public mustShowErrors = this.formsService.mustShowErrors;
 
-  constructor(private formsService: FormsService) {}
+  constructor(
+    private formbuilder: FormBuilder,
+    private formsService: FormsService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.formbuilder.group({
+      description: '',
+      amount: [0, [Validators.required, Validators.min(0)]],
+      expenseCategory: [null, Validators.required],
+      date: this.formsService.getSafeDateFromMonth(2018, 5)
+    });
+  }
 
-  public onSubmitExpense = () => this.save.next(this.expense);
+  public onSubmitExpense = (expense: JournalEntry) =>
+    this.save.next(expense);
 }

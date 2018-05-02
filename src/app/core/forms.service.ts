@@ -9,4 +9,11 @@ export class FormsService {
 
   public mustShowErrors = (control: AbstractControl) =>
     (control.touched || control.dirty) && control.invalid;
+
+  public getSafeDateFromMonth = (year, month): string =>
+    new Date(year, month - 1, 1, 12, 0, 0)
+      .toISOString()
+      .substring(0, 10);
+  public getSafeDay = (date: Date): number =>
+    new Date(date).getDay();
 }
