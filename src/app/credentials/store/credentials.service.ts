@@ -10,7 +10,7 @@ export class CredentialsService {
   private url = environment.apiUrl + 'pub/credentials/';
   constructor(private http: HttpClient) {}
 
-  public sendCredential(
+  public sendCredential$(
     credential: Credential,
     endPoint: string
   ): Observable<Token> {
