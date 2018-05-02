@@ -24,10 +24,6 @@ export class GoalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.refreshData();
-  }
-
-  public onSubmitGoal() {
     this.form = this.formbuilder.group({
       goal: [
         this.monthBalance.goal,
@@ -38,6 +34,10 @@ export class GoalComponent implements OnInit {
         ]
       ]
     });
+    this.refreshData();
+  }
+
+  public onSubmitGoal() {
     this.mbService
       .updateMonthBalance$(this.monthBalance)
       .subscribe();
@@ -46,15 +46,12 @@ export class GoalComponent implements OnInit {
   private refreshData = () => {
     this.mbService.getMonthBalancesList$().subscribe(list => {
       this.monthBalance = list[0];
-      this.form.controls['goal'].setValidators(
-        Validators.required
-      );
-      this.form.controls['goal'].setValidators(
-        Validators.min(0)
-      );
-      this.form.controls['goal'].setValidators(
+      this.form.controls['goal'].setValidators([
+        Validators.required,
+        Validators.min(0),
         Validators.max(this.monthBalance.savings)
-      );
+      ]);
+      this.form.controls['goal'].updateValueAndValidity();
     });
   };
 }

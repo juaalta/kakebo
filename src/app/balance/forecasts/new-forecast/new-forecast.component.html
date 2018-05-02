@@ -16,16 +16,12 @@
   <label for="description">Description</label>
   <input type="text"
          formControlName="description">
-  <!-- <kab-validation-error [mustShow]="mustShowErrors(descriptionModel)"
-                        [message]="descriptionModel.errors | json">
-  </kab-validation-error> -->
-  <label for="amount">Amount</label>
   <label for="amount">Amount</label>
   <input type="number"
          formControlName="amount">
-  <!-- <kab-validation-error [mustShow]="mustShowErrors(amountModel)"
-                        [message]="amountModel.errors | json">
-  </kab-validation-error> -->
+  <kab-validation-error [mustShow]="mustShowErrors(form.controls['amount'])"
+                        [message]="form.controls['amount'].errors | json">
+  </kab-validation-error>
   <label for="date">Date</label>
   <input type="date"
          formControlName="date">

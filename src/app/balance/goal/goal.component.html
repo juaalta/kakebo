@@ -5,9 +5,9 @@
   <label for="goal">Savings Goal</label>
   <input type="number"
          formControlName="goal">
-  <!-- <kab-validation-error [mustShow]="mustShowErrors(goalModel)"
-                        [message]="goalModel.errors | json">
-  </kab-validation-error> -->
+  <kab-validation-error [mustShow]="mustShowErrors(form.controls['goal'])"
+                        [message]="form.controls['goal'].errors | json">
+  </kab-validation-error>
   <button type="submit"
           (click)="onSubmitGoal()"
           [disabled]="form.invalid">Save</button>
