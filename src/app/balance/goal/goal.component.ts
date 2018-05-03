@@ -14,17 +14,17 @@ import {
   styleUrls: []
 })
 export class GoalComponent implements OnInit {
-  public form: FormGroup;
   public monthBalance: MonthBalance = this.mbService.getNewMonthBalance();
   public mustShowErrors = this.formsService.mustShowErrors;
+  public form: FormGroup;
   constructor(
-    private formbuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private formsService: FormsService,
     private mbService: MonthBalanceService
   ) {}
 
   ngOnInit() {
-    this.form = this.formbuilder.group({
+    this.form = this.formBuilder.group({
       goal: [
         this.monthBalance.goal,
         [

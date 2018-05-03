@@ -27,12 +27,12 @@ export class NewExpenseComponent implements OnInit {
   public mustShowErrors = this.formsService.mustShowErrors;
 
   constructor(
-    private formbuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private formsService: FormsService
   ) {}
 
   ngOnInit() {
-    this.form = this.formbuilder.group({
+    this.form = this.formBuilder.group({
       description: this.expense.description,
       amount: [
         this.expense.amount,

@@ -26,12 +26,12 @@ export class NewForecastComponent implements OnInit {
   public mustShowErrors = this.formsService.mustShowErrors;
 
   constructor(
-    private formbuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private formsService: FormsService
   ) {}
 
   ngOnInit() {
-    this.form = this.formbuilder.group({
+    this.form = this.formBuilder.group({
       kind: [this.forecast.kind, Validators.required],
       description: this.forecast.description,
       amount: [

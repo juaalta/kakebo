@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { RouterModule } from '@angular/router';
-import { FormsService } from './forms.service';
 import {
-  HttpClientModule,
-  HTTP_INTERCEPTORS
+  HTTP_INTERCEPTORS,
+  HttpClientModule
 } from '@angular/common/http';
-import { RequestInterceptorService } from './request-interceptor.service';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CatchInterceptorService } from './catch-interceptor.service';
-import { TokenInterceptorService } from './token-interceptor.service';
+import { FooterComponent } from './footer/footer.component';
+import { FormsService } from './forms.service';
+import { HeaderComponent } from './header/header.component';
+import { RequestInterceptorService } from './request-interceptor.service';
 import { GlobalStoreService } from './store/global-store.service';
+import { TokenInterceptorService } from './token-interceptor.service';
 
 @NgModule({
   imports: [CommonModule, RouterModule, HttpClientModule],
