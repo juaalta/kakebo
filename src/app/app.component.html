@@ -1,5 +1,7 @@
 <section class="container">
-  <kab-header class="row"></kab-header>
+  <kab-header class="row"
+              [userMessage]="userMessage$ | async"
+              [userIsAnonymous]="userIsAnonymous$ | async"></kab-header>
   <hr>
   <main>
     <router-outlet></router-outlet>

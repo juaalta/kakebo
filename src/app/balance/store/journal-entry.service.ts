@@ -65,7 +65,6 @@ export class JournalEntryService {
   ): Observable<any> {
     return this.api
       .deleteJE$(journalEntry)
-      .pipe(tap())
       .pipe(
         tap(() => this.calculateMonthBalance(journalEntry, -1))
       );

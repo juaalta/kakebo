@@ -14,8 +14,10 @@ export class MonthBalanceApiService {
   public getMBList$ = (): Observable<MonthBalance[]> =>
     this.http.get<MonthBalance[]>(this.urlMB);
 
-  public postMB$ = (mb: MonthBalance): Observable<any> =>
-    this.http.post(this.urlMB, mb);
+  public postMB$ = (
+    mb: MonthBalance
+  ): Observable<MonthBalance> =>
+    this.http.post<MonthBalance>(this.urlMB, mb);
 
   public putMB$ = (mb: MonthBalance): Observable<any> =>
     this.http.put(this.urlMB + mb._id, mb);

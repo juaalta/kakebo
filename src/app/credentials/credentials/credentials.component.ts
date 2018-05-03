@@ -59,7 +59,7 @@ export class CredentialsComponent implements OnInit {
     );
     const endPoint = this.pageData.endPoint;
     this.credentialsService
-      .sendCredential(credential, endPoint)
+      .sendCredential$(credential, endPoint)
       .subscribe(
         this.acceptedCredentials,
         this.invalidCredentials

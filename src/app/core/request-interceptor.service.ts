@@ -24,8 +24,7 @@ export class RequestInterceptorService
     this.started = Date.now();
     const handledRequest = next.handle(req);
     const interceptionOperator = tap<HttpEvent<any>>(
-      this.interceptResponse,
-      this.catchError
+      this.interceptResponse
     );
     return handledRequest.pipe(interceptionOperator);
   }
@@ -36,14 +35,6 @@ export class RequestInterceptorService
       console.log(
         `Request for ${event.url} took ${elapsed_ms} ms.`
       );
-    }
-  };
-
-  private catchError = (err): void => {
-    if (err instanceof HttpErrorResponse) {
-      console.warn(err.status + ' - ' + err.statusText);
-    } else {
-      console.error(err.message);
     }
   };
 }
