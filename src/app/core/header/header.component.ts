@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'kab-header',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: []
 })
 export class HeaderComponent implements OnInit {
+  @Input() public userMessage: string;
+  @Input() public userIsAnonymous = true;
   constructor() {}
 
   ngOnInit() {}

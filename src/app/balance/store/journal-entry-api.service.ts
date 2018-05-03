@@ -14,8 +14,8 @@ export class JournalEntryApiService {
   public getJEList$ = (): Observable<JournalEntry[]> =>
     this.http.get<JournalEntry[]>(this.urlJE);
 
-  public postJE$ = (je: JournalEntry): Observable<any> =>
-    this.http.post(this.urlJE, je);
+  public postJE$ = (je: JournalEntry): Observable<JournalEntry> =>
+    this.http.post<JournalEntry>(this.urlJE, je);
 
   public deleteJE$ = (jE: JournalEntry): Observable<any> =>
     this.http.delete(this.urlJE + jE._id);
