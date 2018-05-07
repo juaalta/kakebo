@@ -25,7 +25,6 @@ export class ValidationErrorComponent
     this.checkErrors();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.table(changes.control);
     this.checkErrors();
   }
   private checkErrors() {

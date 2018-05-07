@@ -53,6 +53,7 @@ export class CatchInterceptorService
 
   private catchUnauthorized() {
     console.warn('Not authorized');
+    this.globalStore.dispatchUserToken(null);
     this.globalStore.dispatchUserMessage('Not authorized');
     this.navigateToLogin();
   }

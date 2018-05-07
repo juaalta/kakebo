@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
   constructor(private globalStore: GlobalStoreService) {}
 
   ngOnInit(): void {
-    console.log('AppComponent.ngOnInit');
     this.userMessage$ = this.globalStore.selectUserMessage$();
     this.userIsAnonymous$ = this.globalStore.selectUserIsAnonymous$();
   }
