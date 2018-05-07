@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { CredentialsComponent } from './credentials/credentials.component';
 
 const routes: Routes = [
@@ -20,7 +20,7 @@ const routes: Routes = [
     path: 'registration',
     component: CredentialsComponent,
     data: {
-      alternateAction: 'Log In',
+      alternateAction: 'LogIn',
       credential: { email: '', password: '' },
       endPoint: 'registration',
       title: 'Registration'
