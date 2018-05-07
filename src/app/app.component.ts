@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalStoreService } from './core/store/global-store.service';
 import { Observable } from 'rxjs';
+import { GlobalStoreService } from './core/store/global-store.service';
 
 @Component({
   selector: 'kab-root',
@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private globalStore: GlobalStoreService) {}
 
   ngOnInit(): void {
+    console.log('AppComponent.ngOnInit');
     this.userMessage$ = this.globalStore.selectUserMessage$();
     this.userIsAnonymous$ = this.globalStore.selectUserIsAnonymous$();
   }

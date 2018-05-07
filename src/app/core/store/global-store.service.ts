@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
-  globalInitialState,
-  Global
+  Global,
+  globalInitialState
 } from './models/global.model';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class GlobalStoreService {
@@ -20,8 +20,8 @@ export class GlobalStoreService {
   );
 
   constructor() {
-    this.state.userToken = localStorage.getItem('userToken');
-    this.userToken$.next(this.state.userToken);
+    const userToken = localStorage.getItem('userToken');
+    this.dispatchUserToken(userToken);
   }
 
   public selectUserToken$(): Observable<string> {

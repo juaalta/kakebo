@@ -23,5 +23,8 @@
   "workbench.colorCustomizations": {
     "editorWarning.foreground": "#BBCBC2"
   },
-  "workbench.iconTheme": "material-icon-theme"
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+  }
 }

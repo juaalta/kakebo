@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor,
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
-  HttpRequest,
-  HttpResponse,
-  HttpErrorResponse
+  HttpInterceptor,
+  HttpRequest
 } from '@angular/common/http';
-import { tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { GlobalStoreService } from './store/global-store.service';
 
 @Injectable()
@@ -30,7 +29,6 @@ export class CatchInterceptorService
       response => {},
       this.catchError
     );
-    this.globalStore.dispatchUserMessage('');
     const handledRequest = next.handle(req);
     return handledRequest.pipe(interceptionOperator);
   }
