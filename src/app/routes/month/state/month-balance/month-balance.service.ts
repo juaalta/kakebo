@@ -1,33 +1,20 @@
-import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { MonthState } from "@routes/month/state";
-import { Injectable } from "@angular/core";
-import {
-  CalculateMonthBalance,
-  PutMonthBalance,
-  GetMonthBalance,
-  GetMonthBalanceCompleted,
-  PostMonthBalance,
-  GetMonthBalanceFailed,
-  PostMonthBalanceCompleted,
-  PostMonthBalanceFailed,
-  PutMonthBalanceCompleted,
-  PutMonthBalanceFailed,
-  SetGoalMonthBalance
-} from "@routes/month/state/month-balance/month-balance.actions";
-import { of } from "rxjs/observable/of";
 import { JournalEntry } from "@routes/month/state/journal-entry/models/journal-entry.model";
-import { map } from "rxjs/operators/map";
 import { MonthBalance, monthBalanceInitialState } from "@routes/month/state/month-balance/models/month_balance.model";
-import { catchError } from "rxjs/operators/catchError";
-import { HttpErrorResponse } from "@angular/common/http";
+import { MonthBalanceApi } from "@routes/month/state/month-balance/month-balance-api.service";
+import { CalculateMonthBalance, GetMonthBalance, GetMonthBalanceCompleted, GetMonthBalanceFailed, PostMonthBalance, PostMonthBalanceCompleted, PostMonthBalanceFailed, PutMonthBalance, PutMonthBalanceCompleted, PutMonthBalanceFailed, SetGoalMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
+import { of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 @Injectable()
 export class MonthBalanceService {
   constructor(
     private monthBalanceApi: MonthBalanceApi,
     private store: Store<MonthState>
-  ) {}
+  ) { }
 
   public onCalculateMonthBalance$ = (action: CalculateMonthBalance) => {
     const payload = action.payload;

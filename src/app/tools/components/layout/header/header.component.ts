@@ -1,9 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Store, select } from "@ngrx/store";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { GlobalState } from "@tools/global/state";
-import { Observable } from "rxjs/Observable";
-import { User } from "@tools/global/state/user/models/user.model";
 import { Message } from "@tools/global/state/message/models/message.model";
+import { User } from "@tools/global/state/user/models/user.model";
 
 @Component({
   selector: "kab-header",

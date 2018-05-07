@@ -1,13 +1,11 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { NavLink } from "@tools/models/nav-link.model";
-import { Observable } from "rxjs/Observable";
-import { map } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 import { MonthState, monthBalanceSelector } from "@routes/month/state";
-import { GetMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
 import { GetJournalEntries } from "@routes/month/state/journal-entry/journal-entry.actions";
 import { MonthBalance } from "@routes/month/state/month-balance/models/month_balance.model";
+import { GetMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
+import { NavLink } from "@tools/models/nav-link.model";
 
 @Component({
   selector: "kab-month",

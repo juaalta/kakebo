@@ -1,24 +1,17 @@
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import {
-  HttpInterceptor,
-  HttpEvent,
-  HttpHandler,
-  HttpRequest,
-  HttpResponse,
-  HttpErrorResponse
-} from "@angular/common/http";
-import { Observable } from "rxjs/Observable";
-import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { GlobalState } from "@tools/global/state";
 import { ShowMessage } from "@tools/global/state/message/message.actions";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 @Injectable()
 export class CatchInterceptorService implements HttpInterceptor {
   private started;
 
-  constructor(private router: Router, private store: Store<GlobalState>) {}
+  constructor(private router: Router, private store: Store<GlobalState>) { }
 
   public intercept(
     req: HttpRequest<any>,

@@ -1,15 +1,13 @@
 import { Injectable } from "@angular/core";
-import { UserApi } from "@tools/global/state/user/user-api.service";
 import { Router } from "@angular/router";
-import { Store, Action } from "@ngrx/store";
+import { Action, Store } from "@ngrx/store";
 import { GlobalState } from "@tools/global/state";
-import { ValidateUser, ValidateUserCompleted, ValidateUserFailed } from "@tools/global/state/user/user.actions";
-import { Observable } from "rxjs/Observable";
 import { ShowMessage } from "@tools/global/state/message/message.actions";
-import { map } from "rxjs/operators/map";
 import { CredentialResponse } from "@tools/global/state/user/models/credentials.model";
-import { catchError } from "rxjs/operators/catchError";
-import { of } from "rxjs/observable/of";
+import { UserApi } from "@tools/global/state/user/user-api.service";
+import { ValidateUser, ValidateUserCompleted, ValidateUserFailed } from "@tools/global/state/user/user.actions";
+import { Observable, of } from "rxjs";
+import { catchError, map } from "rxjs/operators";
 
 @Injectable()
 export class UserService {

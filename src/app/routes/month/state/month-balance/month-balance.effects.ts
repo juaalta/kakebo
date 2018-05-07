@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
-import { MonthBalanceService } from "@routes/month/state/month-balance/month-balance.service";
 import { Action } from "@ngrx/store";
-import { MonthState } from "@routes/month/state";
-import { Observable } from "rxjs/Observable";
-import { CalculateMonthBalance, MonthBalanceActionTypes, GetMonthBalance, PostMonthBalance, SetGoalMonthBalance, PutMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
+import { CalculateMonthBalance, GetMonthBalance, MonthBalanceActionTypes, PostMonthBalance, PutMonthBalance, SetGoalMonthBalance } from "@routes/month/state/month-balance/month-balance.actions";
+import { MonthBalanceService } from "@routes/month/state/month-balance/month-balance.service";
+import { Observable } from "rxjs";
 import { switchMap } from "rxjs/operators";
 
 @Injectable()
@@ -12,7 +11,7 @@ export class MonthBalanceEffects {
   constructor(
     private actions$: Actions,
     private monthBalanceService: MonthBalanceService
-  ) {}
+  ) { }
 
   @Effect()
   public calculateMonthBalance$: Observable<Action> = this.actions$.pipe(

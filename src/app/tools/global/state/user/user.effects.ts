@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
-import { Effect, ofType, Actions } from "@ngrx/effects";
-import { Observable } from "rxjs/Observable";
-import { ValidateUser, UserActionTypes } from "@tools/global/state/user/user.actions";
+import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
-import { switchMap } from "rxjs/operators/switchMap";
+import { UserActionTypes, ValidateUser } from "@tools/global/state/user/user.actions";
 import { UserService } from "@tools/global/state/user/user.service";
+import { Observable } from "rxjs";
+import { switchMap } from "rxjs/operators";
 
 @Injectable()
 export class UserEffects {
   constructor(
     private actions$: Actions,
     private user: UserService
-  ) {}
+  ) { }
 
   @Effect()
   public validateUser$: Observable<Action> = this.actions$.pipe(

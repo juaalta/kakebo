@@ -1,10 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
 import { environment } from "@environments/environment";
-import { Observable } from "rxjs/Observable";
 import { Store } from "@ngrx/store";
 import { GlobalState } from "@tools/global/state";
 import { User } from "@tools/global/state/user/models/user.model";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "kab-dashboard",
