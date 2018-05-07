@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
       .select(globalState => globalState.message)
       .subscribe((message: Message) => {
         if (message.caption) {
-          this.snackbar.open(message.caption, 'Cerrar', { duration: 3000 });
+          this.snackbar.open(message.caption, 'Close', { duration: 3000 });
         }
       });
   }
