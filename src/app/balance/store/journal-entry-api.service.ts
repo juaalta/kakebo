@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { BalanceModule } from '../balance.module';
 import { JournalEntry } from './models/journal-entry.model';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class JournalEntryApiService {
