@@ -1,9 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { FormsService } from 'app/core/forms.service';
 import { JournalEntry } from '../../store/models/journal-entry.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kab-new-expense',
   templateUrl: './new-expense.component.html',
   styleUrls: []
@@ -35,5 +47,5 @@ export class NewExpenseComponent implements OnInit {
   public onSubmitExpense = (expense: JournalEntry) => {
     expense.kind = this.expense.kind;
     this.save.next(expense);
-  }
+  };
 }

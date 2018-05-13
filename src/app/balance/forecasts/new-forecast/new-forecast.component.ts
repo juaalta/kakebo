@@ -1,19 +1,21 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  OnInit,
+  EventEmitter,
   Input,
-  Output,
-  EventEmitter
+  OnInit,
+  Output
 } from '@angular/core';
-import { JournalEntry } from '../../store/models/journal-entry.model';
-import { FormsService } from 'app/core/forms.service';
 import {
-  FormGroup,
   FormBuilder,
+  FormGroup,
   Validators
 } from '@angular/forms';
+import { FormsService } from 'app/core/forms.service';
+import { JournalEntry } from '../../store/models/journal-entry.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kab-new-forecast',
   templateUrl: './new-forecast.component.html',
   styleUrls: []

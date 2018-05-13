@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { MonthBalanceStoreService } from './store/balance-store.service';
+import { MonthBalance } from './store/models/month-balance.model';
 
 @Component({
   selector: 'kab-balance',
@@ -6,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: []
 })
 export class BalanceComponent implements OnInit {
-  constructor() {}
+  public monthBalance$: Observable<MonthBalance>;
+  constructor(private store: MonthBalanceStoreService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.monthBalance$ = this.store.selectMonthBalance$();
+  }
 }

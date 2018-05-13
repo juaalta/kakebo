@@ -54,7 +54,7 @@ export class GoalComponent implements OnInit {
   }
 
   private refreshData = () => {
-    this.mbService.getMonthBalancesList$().subscribe(list => {
+    this.mbService.getMonthBalances$().subscribe(list => {
       this.monthBalance = list[0];
       const goalControl = this.form.controls['goal'];
       goalControl.setValue(this.monthBalance.goal);

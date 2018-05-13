@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { JournalEntryApiService } from './journal-entry-api.service';
+import { journalEntryKindsEnum } from './models/journal-entry-kinds.model';
 import {
   JournalEntry,
-  journalEntriesInitialState,
   expenseInitialState,
   forecastInitialState
 } from './models/journal-entry.model';
-import { journalEntryKindsEnum } from './models/journal-entry-kinds.model';
-import { JournalEntryApiService } from './journal-entry-api.service';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { MonthBalanceService } from './month-balance.service';
 @Injectable()
 export class JournalEntryService {
@@ -47,33 +46,27 @@ export class JournalEntryService {
         )
       );
 
-  public saveJournalEntry$(
+  public saveJournalEntry$ = (
     journalEntry: JournalEntry
-  ): Observable<any> {
-    const clonedJournalEntry = {
-      ...journalEntry,
-      _id: new Date().getTime().toString()
-    };
-    return this.api
+  ): Observable<JournalEntry> =>
+    this.api
       .postJE$(journalEntry)
       .pipe(
         tap(() => this.calculateMonthBalance(journalEntry, 1))
       );
-  }
-  public deleteJournalEntry$(
+
+  public deleteJournalEntry$ = (
     journalEntry: JournalEntry
-  ): Observable<any> {
-    return this.api
+  ): Observable<JournalEntry> =>
+    this.api
       .deleteJE$(journalEntry)
       .pipe(
         tap(() => this.calculateMonthBalance(journalEntry, -1))
       );
-  }
 
-  private calculateMonthBalance(
+  private calculateMonthBalance = (
     journalEntry: JournalEntry,
     sign: number
-  ): void {
+  ): void =>
     this.mbService.calculateMonthBalance(journalEntry, sign);
-  }
 }

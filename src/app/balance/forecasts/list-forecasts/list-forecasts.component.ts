@@ -1,13 +1,15 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  OnInit,
   EventEmitter,
   Input,
+  OnInit,
   Output
 } from '@angular/core';
 import { JournalEntry } from '../../store/models/journal-entry.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kab-list-forecasts',
   templateUrl: './list-forecasts.component.html',
   styleUrls: []

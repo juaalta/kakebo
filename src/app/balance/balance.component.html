@@ -1,12 +1,12 @@
 <nav class="">
   <a routerLink="review"
-     class="button button-clear">Review</a>
+     class="button button-clear">Review Savings:{{ (monthBalance$ | async).savings }}</a>
   <a routerLink="forecasts"
-     class="button button-clear">Forecasts</a>
+     class="button button-clear">Forecasts Available: {{ (monthBalance$ | async).available }}</a>
   <a routerLink="goal"
-     class="button button-clear">Goal</a>
+     class="button button-clear">Savings Goal: {{ (monthBalance$ | async).goal }}</a>
   <a routerLink="expenses"
-     class="button button-clear">Expenses</a>
+     class="button button-clear">Current Expenses: {{ (monthBalance$ | async).expenses }}</a>
 </nav>
 <main class="container">
   <router-outlet></router-outlet>

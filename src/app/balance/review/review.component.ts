@@ -16,7 +16,7 @@ export class ReviewComponent implements OnInit {
   }
 
   private refreshData = () => {
-    this.mbService.getMonthBalancesList$().subscribe(list => {
+    this.mbService.getMonthBalances$().subscribe(list => {
       if (!list || list.length === 0) {
         this.createMonthBalance();
       } else {

@@ -1,15 +1,15 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  OnInit,
-  Input,
-  Output,
   EventEmitter,
-  OnChanges,
-  SimpleChanges
+  Input,
+  OnInit,
+  Output
 } from '@angular/core';
 import { JournalEntry } from '../../store/models/journal-entry.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'kab-list-expenses',
   templateUrl: './list-expenses.component.html',
   styleUrls: []
