@@ -1,18 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter
-} from '@angular/core';
-import { JournalEntry } from '../../store/models/journal-entry.model';
-import {
-  AbstractControl,
-  FormGroup,
-  FormBuilder,
-  Validators
-} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from 'app/core/forms.service';
+import { JournalEntry } from '../../store/models/journal-entry.model';
 
 @Component({
   selector: 'kab-new-expense',
@@ -43,6 +32,8 @@ export class NewExpenseComponent implements OnInit {
     });
   }
 
-  public onSubmitExpense = (expense: JournalEntry) =>
+  public onSubmitExpense = (expense: JournalEntry) => {
+    expense.kind = this.expense.kind;
     this.save.next(expense);
+  }
 }

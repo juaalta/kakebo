@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { JournalEntry } from '../store/models/journal-entry.model';
-import { expenseCategories } from '../store/models/expense-categories.model';
-import { JournalEntryService } from '../store/journal-entry.service';
 import { Observable } from 'rxjs';
+import { JournalEntryService } from '../store/journal-entry.service';
+import { expenseCategories } from '../store/models/expense-categories.model';
+import { JournalEntry } from '../store/models/journal-entry.model';
 
 @Component({
   selector: 'kab-expenses',
