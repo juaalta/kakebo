@@ -15,8 +15,8 @@ import { AbstractControl } from '@angular/forms';
 export class ExpensesComponent implements OnInit {
   public expenseCategories = expenseCategories;
   public numberOfExpenses = 0;
-  public expense: JournalEntry = expenseInitialState;
-  public expenses: JournalEntry[] = journalEntriesInitialState;
+  public expense: JournalEntry = { ...expenseInitialState };
+  public expenses: JournalEntry[]  = [...journalEntriesInitialState];
   public title = 'New Expense';
 
   constructor() {}
